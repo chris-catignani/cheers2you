@@ -1,5 +1,5 @@
-import { testSlice } from './slices'
+import { beerBannerSlice } from './slices'
 
 export const reducer = {
-  test: testSlice.reducer
+  beerBanner: beerBannerSlice.reducer
 }

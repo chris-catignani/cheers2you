@@ -1,1 +1,1 @@
-export * from './testSlice'
+export * from './beerBannerSlice'
