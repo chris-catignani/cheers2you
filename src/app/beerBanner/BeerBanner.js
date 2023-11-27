@@ -77,9 +77,11 @@ export const BeerBanner = () => {
                 isGenerating={animateRunCount !== -1}
                 onClick={generatePressed}
             />
-            <Flex ref={generatedPicRef} overflowX='auto' flexDirection='column' flexWrap='wrap'>
-                <Heading as='h3' size='lg' textAlign='center'>{eventName}</Heading>
-                <BeerLetters animateRunCount={animateRunCount} maxAnimateRunCountPerIdx={maxAnimateRunCountPerIdx}/>
+            <Flex overflowX='auto' flexDirection='column' flexWrap='wrap'>
+                <Box ref={generatedPicRef}>
+                    <Heading as='h3' size='lg' textAlign='center'>{eventName}</Heading>
+                    <BeerLetters animateRunCount={animateRunCount} maxAnimateRunCountPerIdx={maxAnimateRunCountPerIdx}/>
+                </Box>
             </Flex>
             <BeerModal />
             <ShareModal />
