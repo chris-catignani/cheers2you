@@ -1,0 +1,51 @@
+{
+    "brewery": {
+        "wordsToTrim": [
+            "Brewing Company",
+            "Brewing Co.",
+            "Beer Co.",
+            "Brew Co.",
+            "Breweries",
+            "Brewery",
+            "Brewing",
+            "Craft Brews",
+            "Craft Brew",
+            "Brews",
+            "Brauerei",
+            "-Brauerei",
+            "Weissbräu",
+            "Biers de",
+            "Brasserie des",
+            "Brasserie de",
+            "Brouwerij der Trappisten van",
+            "Brouwerij Van",
+            "Brouwerij",
+            "Bierbrouwerij",
+            "B.V.",
+            "& Sohn",
+            "Bryggeri"
+        ]
+    },
+    "beerName": {
+        "wordsToTrim": [
+            "Barrel Aged Nitro"
+        ],
+        "regexes": [
+            {
+                "decription": "Remove years in parenthesis, e.g (2004)",
+                "regex": "\\(\\d{4,}\\)",
+                "replacement": ""
+            },
+            {
+                "decription": "Remove range of years in parenthesis, e.g (2004-2005)",
+                "regex": "\\(\\d{4,}\\w*-\\w*\\d{4,}\\)",
+                "replacement": ""
+            },
+            {
+                "decription": "Remove years if in 20XX",
+                "regex": "\\s+20\\d{2,}\\s*",
+                "replacement": ""
+            }
+        ]
+    }
+}
