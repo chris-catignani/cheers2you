@@ -42,8 +42,8 @@ const formattedBeers = ((beers) => {
     return Object.values(beers).map(beer => {
         const breweryName = formatBreweryName(beer['brewer_name'])
         const beerName = formatBeerName(beer['beer_name'], breweryName)
-        console.log("formatted brewery: \"" + beer['brewer_name'] + "\" -> \"" + breweryName + "\"")
-        console.log("formatted beer: \"" + beer['beer_name'] + "\" -> \"" + beerName + "\"")
+        // console.log("formatted brewery: \"" + beer['brewer_name'] + "\" -> \"" + breweryName + "\"")
+        // console.log("formatted beer: \"" + beer['beer_name'] + "\" -> \"" + beerName + "\"")
         return {
             'beer_name': beerName,
             'brewer_name': breweryName,
