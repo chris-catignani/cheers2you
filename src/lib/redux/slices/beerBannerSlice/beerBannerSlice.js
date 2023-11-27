@@ -66,28 +66,28 @@ export const beerBannerSlice = createSlice({
             state.downloadGeneratedImageStatus = action.payload
         },
     },
-    extraReducers: {
-        [downloadImage.pending]: (state) => {
+    extraReducers: (builder) => {
+        builder.addCase(downloadImage.pending, (state) => {
             state.downloadGeneratedImageStatus = 'downloading';
-        },
-        [downloadImage.fulfilled]: (state, action) => {
+        })
+        .addCase(downloadImage.fulfilled, (state) => {
             state.downloadGeneratedImageStatus = ''
-        },
-        [downloadImage.rejected]: (state) => {
+        })
+        .addCase(downloadImage.rejected, (state) => {
             state.downloadGeneratedImageStatus = ''
-        },
-        [uploadImage.pending]: (state) => {
+        })
+        .addCase(uploadImage.pending, (state) => {
             state.uploadGeneratedImageStatus = 'uploading';
             state.uploadedImageData = {}
-        },
-        [uploadImage.fulfilled]: (state, action) => {
+        })
+        .addCase(uploadImage.fulfilled, (state, action) => {
             state.uploadGeneratedImageStatus = ''
             state.uploadedImageData = action.payload
-        },
-        [uploadImage.rejected]: (state) => {
+        })
+        .addCase(uploadImage.rejected, (state) => {
             state.uploadGeneratedImageStatus = ''
             state.uploadedImageData = {}
-        },
+        })
     }
 });
 
