@@ -18,7 +18,7 @@ export const generateMetadata = async ({ params: {fileId}, searchParams }) => {
   return {
     title,
     description,
-    og: {
+    openGraph: {
       title,
       description,
       images: [socialMediaInfo.imageUrl],
