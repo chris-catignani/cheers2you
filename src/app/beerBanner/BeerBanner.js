@@ -142,7 +142,7 @@ export const ShareModal = () => {
 
     const eventName = useSelector(selectEventName);
     const uploadedSocialMediaData = useSelector(selectUploadedSocialMediaData)
-    const shareUrl = 'https://cheers2you.vercel.app/' + uploadedSocialMediaData['fileId']
+    const shareUrl = 'https://cheers2you.vercel.app/shared/' + uploadedSocialMediaData['fileId']
 
     // Open the Modal if we have uploaded the image data
     useEffect(() => {
