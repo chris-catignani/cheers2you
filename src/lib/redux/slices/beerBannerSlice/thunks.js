@@ -122,17 +122,26 @@ export const generateBeerBanner = (personsName, eventName) => (dispatch, getStat
     dispatch(setPersonsName(personsName));
 };
 
-export const uploadImage = createAsyncThunk(
-    'beerBanner/uploadImage',
-    async (dataUrlPromise) => {
+export const uploadSocialMedia = createAsyncThunk(
+    'beerBanner/uploadSocialMedia',
+    async ({dataUrlPromise, personsName, eventName}) => {
         const dataUrl = await dataUrlPromise
-        const image = await fetch(dataUrl)
-        const imageArrayBuffer = await image.arrayBuffer()
 
         const uploadManager = new UploadManager({
             apiKey: "free", // Get API key: https://www.bytescale.com/get-started
         });
     
+        // const { fileUrl } = await uploadManager.upload({
+        //     data: JSON.stringify({
+        //         dataUrl,
+        //         personsName,
+        //         eventName,
+        //     }),
+        //     originalFileName: 'example.json',
+        // });
+
+        const image = await fetch(dataUrl)
+        const imageArrayBuffer = await image.arrayBuffer()
         const { fileUrl } = await uploadManager.upload({
             data: imageArrayBuffer,
             mime: 'image/jpeg',
@@ -142,7 +151,8 @@ export const uploadImage = createAsyncThunk(
         const urlSegments = fileUrl.split('/')
         return {
             appId: urlSegments[3],
-            fileId: urlSegments[6].slice(0, -5)
+            fileId: urlSegments[6].slice(0, -5),
+            fileUrl,
         }
     }
 )

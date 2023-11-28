@@ -8,7 +8,7 @@ import { EventInput } from './components/EventInput'
 import { Letter } from './components/Letter';
 import { SocialShareModal } from './components/SocialShareModal';
 import { BeerModalContent, SelectBeerModal } from './components/SelectBeerModal';
-import { downloadImage, searchForBeer, selectEventName, selectBeerLetters, selectBeerOptionsAtIdx, selectBeerSearchResults, selectDownloadGeneratedImageStatus, selectLockedBeerLetterIdxs, selectOpenBeerIdx, selectPersonsName, selectUploadGeneratedImageStatus, selectUploadedImageData, setBeerLetterAtIndex, setBeerSearchResults, setOpenBeerIdx, setsUploadedImageData, toggleLockedBeerLetterIdx, uploadImage, generateBeerBanner } from '@/lib/redux';
+import { downloadImage, searchForBeer, selectEventName, selectBeerLetters, selectBeerOptionsAtIdx, selectBeerSearchResults, selectDownloadGeneratedImageStatus, selectLockedBeerLetterIdxs, selectOpenBeerIdx, selectPersonsName, setBeerLetterAtIndex, setBeerSearchResults, setOpenBeerIdx, toggleLockedBeerLetterIdx, generateBeerBanner, uploadSocialMedia, selectUploadSocialMediaStatus, selectUploadedSocialMediaData, setUploadedSocialMediaData } from '@/lib/redux';
 import { Box, Button, ButtonGroup, Flex, Heading, IconButton, useDisclosure } from '@chakra-ui/react';
 import { isAtoZ, wrapIndex } from '@/lib/utils/utils';
 
@@ -20,7 +20,7 @@ export const BeerBanner = () => {
     const personsName = useSelector(selectPersonsName);
     const lockedBeerIdxs = useSelector(selectLockedBeerLetterIdxs);
     const downloadGeneratedImageStatus = useSelector(selectDownloadGeneratedImageStatus);
-    const uploadGeneratedImageStatus = useSelector(selectUploadGeneratedImageStatus)
+    const uploadSocialMediaStatus = useSelector(selectUploadSocialMediaStatus)
 
     const [{animateRunCount, maxAnimateRunCountPerIdx}, setAnimationProps] = useState({animateRunCount: -1, maxAnimateRunCountPerIdx: []})
 
@@ -66,7 +66,7 @@ export const BeerBanner = () => {
     const uploadOutput = async (ref) => {
         const node = ref.current;
         const dataUrlPromise = toJpeg(node, { backgroundColor: 'white', cacheBust: true, width: node.scrollWidth, height: node.scrollHeight })
-        dispatch(uploadImage(dataUrlPromise))
+        dispatch(uploadSocialMedia({dataUrlPromise, eventName, personsName}))
     }
 
     return (
@@ -87,7 +87,7 @@ export const BeerBanner = () => {
             <ShareModal />
             <ButtonGroup float={'right'}>
                 <IconButton
-                    isLoading={uploadGeneratedImageStatus === 'uploading'}
+                    isLoading={uploadSocialMediaStatus === 'uploading'}
                     onClick={() => uploadOutput(generatedPicRef)} 
                     icon={<ExternalLinkIcon />}/>
                 <IconButton
@@ -141,17 +141,17 @@ export const ShareModal = () => {
     const { isOpen, onOpen, onClose } = useDisclosure()
 
     const eventName = useSelector(selectEventName);
-    const uploadedImageData = useSelector(selectUploadedImageData)
-    const shareUrl = 'https://chris-catignani.github.io/cheers-to-you/#/shared/' + uploadedImageData['appId'] + '/' + uploadedImageData['fileId']
+    const uploadedSocialMediaData = useSelector(selectUploadedSocialMediaData)
+    const shareUrl = 'https://cheers2you.vercel.app/' + uploadedSocialMediaData['fileId']
 
     // Open the Modal if we have uploaded the image data
     useEffect(() => {
-        if (Object.keys(uploadedImageData).length === 0) {return}
+        if (Object.keys(uploadedSocialMediaData).length === 0) {return}
         onOpen()
-    }, [uploadedImageData, onOpen])
+    }, [uploadedSocialMediaData, onOpen])
 
     const clearDataOnClose = () => {
-        dispatch(setsUploadedImageData({}))
+        dispatch(setUploadedSocialMediaData({}))
         onClose()
     }
     

@@ -1,6 +1,6 @@
 import { getFromSessionStorage, setInSessionStorage } from '@/lib/utils/sessionStorage';
 import { createSlice } from '@reduxjs/toolkit';
-import { downloadImage, uploadImage } from './thunks';
+import { downloadImage, uploadSocialMedia } from './thunks';
 
 const initialState = {
     eventName: getFromSessionStorage('beerBanner.eventName', ''),
@@ -10,7 +10,7 @@ const initialState = {
     beerOptionsAtIdx: [],
     openedBeerIdx: -1,
     beerSearchResults: [],
-    uploadedImageData: {},
+    uploadedSocialMediaData: {},
     
     downloadGeneratedImageStatus: '',
     uploadGeneratedImageStatus: '',
@@ -59,8 +59,8 @@ export const beerBannerSlice = createSlice({
         setBeerSearchResults: (state, action) => {
             state.beerSearchResults = action.payload;
         },
-        setsUploadedImageData: (state, action) => {
-            state.uploadedImageData = action.payload
+        setUploadedSocialMediaData: (state, action) => {
+            state.uploadedSocialMediaData = action.payload
         },
         setDownloadGeneratedImageStatus: (state, action) => {
             state.downloadGeneratedImageStatus = action.payload
@@ -76,21 +76,21 @@ export const beerBannerSlice = createSlice({
         .addCase(downloadImage.rejected, (state) => {
             state.downloadGeneratedImageStatus = ''
         })
-        .addCase(uploadImage.pending, (state) => {
-            state.uploadGeneratedImageStatus = 'uploading';
-            state.uploadedImageData = {}
+        .addCase(uploadSocialMedia.pending, (state) => {
+            state.uploadSocialMediaStatus = 'uploading';
+            state.uploadedSocialMediaData = {}
         })
-        .addCase(uploadImage.fulfilled, (state, action) => {
-            state.uploadGeneratedImageStatus = ''
-            state.uploadedImageData = action.payload
+        .addCase(uploadSocialMedia.fulfilled, (state, action) => {
+            state.uploadSocialMediaStatus = ''
+            state.uploadedSocialMediaData = action.payload
         })
-        .addCase(uploadImage.rejected, (state) => {
-            state.uploadGeneratedImageStatus = ''
-            state.uploadedImageData = {}
+        .addCase(uploadSocialMedia.rejected, (state) => {
+            state.uploadSocialMediaStatus = ''
+            state.uploadedSocialMediaData = {}
         })
     }
 });
 
-export const { setEventName, setPersonsName, setBeerLetterAtIndex, setBeerLetters, setLockedBeerLetterIdxs, toggleLockedBeerLetterIdx, setBeerOptionsAtIdx, setOpenBeerIdx, setBeerSearchResults, setsUploadedImageData } = beerBannerSlice.actions;
+export const { setEventName, setPersonsName, setBeerLetterAtIndex, setBeerLetters, setLockedBeerLetterIdxs, toggleLockedBeerLetterIdx, setBeerOptionsAtIdx, setOpenBeerIdx, setBeerSearchResults, setUploadedSocialMediaData } = beerBannerSlice.actions;
 
 export default beerBannerSlice.reducer;

@@ -6,5 +6,5 @@ export const selectBeerOptionsAtIdx = (state) => state.beerBanner.beerOptionsAtI
 export const selectOpenBeerIdx = (state) => state.beerBanner.openedBeerIdx;
 export const selectBeerSearchResults = (state) => state.beerBanner.beerSearchResults;
 export const selectDownloadGeneratedImageStatus = (state) => state.beerBanner.downloadGeneratedImageStatus;
-export const selectUploadGeneratedImageStatus = (state) => state.beerBanner.uploadGeneratedImageStatus;
-export const selectUploadedImageData = (state) => state.beerBanner.uploadedImageData;
+export const selectUploadSocialMediaStatus = (state) => state.beerBanner.uploadSocialMediaStatus;
+export const selectUploadedSocialMediaData = (state) => state.beerBanner.uploadedSocialMediaData;
