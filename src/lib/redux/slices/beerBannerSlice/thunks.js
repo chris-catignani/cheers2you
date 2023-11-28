@@ -125,33 +125,39 @@ export const generateBeerBanner = (personsName, eventName) => (dispatch, getStat
 export const uploadSocialMedia = createAsyncThunk(
     'beerBanner/uploadSocialMedia',
     async ({dataUrlPromise, personsName, eventName}) => {
-        const dataUrl = await dataUrlPromise
 
         const uploadManager = new UploadManager({
             apiKey: "free", // Get API key: https://www.bytescale.com/get-started
         });
-    
-        // const { fileUrl } = await uploadManager.upload({
-        //     data: JSON.stringify({
-        //         dataUrl,
-        //         personsName,
-        //         eventName,
-        //     }),
-        //     originalFileName: 'example.json',
-        // });
 
+        const dataUrl = await dataUrlPromise
         const image = await fetch(dataUrl)
         const imageArrayBuffer = await image.arrayBuffer()
         const { fileUrl } = await uploadManager.upload({
             data: imageArrayBuffer,
             mime: 'image/jpeg',
-            originalFileName: 'example.jpeg',
         });
 
         const urlSegments = fileUrl.split('/')
+        const appId = urlSegments[3]
+        const fileId = urlSegments[6].slice(0, -5)
+
+        await fetch('/shared/api', {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+                personsName,
+                eventName,
+                fileId,
+                fileUrl,
+            }),
+        })
+
         return {
-            appId: urlSegments[3],
-            fileId: urlSegments[6].slice(0, -5),
+            appId,
+            fileId,
             fileUrl,
         }
     }

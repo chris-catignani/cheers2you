@@ -1,19 +1,29 @@
 import { Box } from "@chakra-ui/react";
+import { kv } from '@vercel/kv';
 import { Shared } from "./Shared";
-import { getSocialMediaShareUrl } from "@/lib/utils/utils";
+import { getSocialMediaImageUrl, getSocialMediaShareUrl } from "@/lib/utils/utils";
 
 export const getSocialMediaInfo = async (fileId) => {
-  // const socialMediaInfo = await fetch(`https://upcdn.io/W142hJk/raw/demo/${fileId}.json`).then((res) => res.json())
+  const imageUrl = getSocialMediaImageUrl(fileId)
+  const { personsName, eventName } = await kv.get(fileId);
+  
+  // TODO handle imageUrl being expired
+
   return {
-    imageUrl: `https://upcdn.io/W142hJk/raw/demo/${fileId}.jpeg`
+    personsName,
+    eventName,
+    imageUrl,
   }
 }
 
+// https://nextjs.org/docs/app/api-reference/functions/generate-metadata
 export const generateMetadata = async ({ params: {fileId}, searchParams }) => {
-  const socialMediaInfo = await getSocialMediaInfo(fileId)
+  const { personsName, eventName, imageUrl } = await getSocialMediaInfo(fileId)
 
-  const title = `Cheers2You ${socialMediaInfo.personsName}`
-  const description = `Celebrate ${socialMediaInfo.personsName} at ${socialMediaInfo.eventName} with Cheers2You`
+  const title = `Cheers2You ${personsName}`
+  const description = eventName ? 
+    `Celebrate ${personsName} at ${eventName} with Cheers2You` :
+    `Celebrate with ${personsName} and Cheers2You`
 
   return {
     title,
@@ -21,7 +31,7 @@ export const generateMetadata = async ({ params: {fileId}, searchParams }) => {
     openGraph: {
       title,
       description,
-      images: [socialMediaInfo.imageUrl],
+      images: [imageUrl],
       siteName: 'Cheers2You',
       type: 'website',
       url: getSocialMediaShareUrl(fileId),
@@ -30,7 +40,7 @@ export const generateMetadata = async ({ params: {fileId}, searchParams }) => {
       title,
       description,
       card: 'summary_large_image',
-      images: [socialMediaInfo.imageUrl],
+      images: [imageUrl],
     }
   }
 }
