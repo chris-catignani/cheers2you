@@ -65,6 +65,7 @@ const fuse = new Fuse(formattedBeers, {
     keys: [
         'beer_name',
         'brewer_name',
+        'beer_type',
     ],
     includeScore: true,
     ignoreLocation: true,
