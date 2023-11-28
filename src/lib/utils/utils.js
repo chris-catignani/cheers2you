@@ -6,3 +6,7 @@ export const wrapIndex = (min, max, v) => {
 export const isAtoZ = (letter) => {
     return /^[a-zA-Z]+$/.test(letter)
 }
+
+export const getSocialMediaShareUrl = (fileId) => {
+    return 'https://cheers2you.vercel.app/shared/' + fileId
+}

@@ -10,7 +10,7 @@ import { SocialShareModal } from './components/SocialShareModal';
 import { BeerModalContent, SelectBeerModal } from './components/SelectBeerModal';
 import { downloadImage, searchForBeer, selectEventName, selectBeerLetters, selectBeerOptionsAtIdx, selectBeerSearchResults, selectDownloadGeneratedImageStatus, selectLockedBeerLetterIdxs, selectOpenBeerIdx, selectPersonsName, setBeerLetterAtIndex, setBeerSearchResults, setOpenBeerIdx, toggleLockedBeerLetterIdx, generateBeerBanner, uploadSocialMedia, selectUploadSocialMediaStatus, selectUploadedSocialMediaData, setUploadedSocialMediaData } from '@/lib/redux';
 import { Box, Button, ButtonGroup, Flex, Heading, IconButton, useDisclosure } from '@chakra-ui/react';
-import { isAtoZ, wrapIndex } from '@/lib/utils/utils';
+import { isAtoZ, getSocialMediaShareUrl, wrapIndex } from '@/lib/utils/utils';
 
 
 export const BeerBanner = () => {
@@ -142,7 +142,7 @@ export const ShareModal = () => {
 
     const eventName = useSelector(selectEventName);
     const uploadedSocialMediaData = useSelector(selectUploadedSocialMediaData)
-    const shareUrl = 'https://cheers2you.vercel.app/shared/' + uploadedSocialMediaData['fileId']
+    const shareUrl = getSocialMediaShareUrl(uploadedSocialMediaData['fileId'])
 
     // Open the Modal if we have uploaded the image data
     useEffect(() => {

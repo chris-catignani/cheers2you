@@ -1,5 +1,6 @@
 import { Box } from "@chakra-ui/react";
 import { Shared } from "./Shared";
+import { getSocialMediaShareUrl } from "@/lib/utils/utils";
 
 export const getSocialMediaInfo = async (fileId) => {
   // const socialMediaInfo = await fetch(`https://upcdn.io/W142hJk/raw/demo/${fileId}.json`).then((res) => res.json())
@@ -17,6 +18,14 @@ export const generateMetadata = async ({ params: {fileId}, searchParams }) => {
   return {
     title,
     description,
+    og: {
+      title,
+      description,
+      images: [socialMediaInfo.imageUrl],
+      siteName: 'Cheers2You',
+      type: 'website',
+      url: getSocialMediaShareUrl(fileId),
+    },
     twitter: {
       title,
       description,
