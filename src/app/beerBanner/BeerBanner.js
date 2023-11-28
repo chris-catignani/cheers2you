@@ -8,13 +8,17 @@ import { EventInput } from './components/EventInput'
 import { Letter } from './components/Letter';
 import { SocialShareModal } from './components/SocialShareModal';
 import { BeerModalContent, SelectBeerModal } from './components/SelectBeerModal';
-import { downloadImage, searchForBeer, selectEventName, selectBeerLetters, selectBeerOptionsAtIdx, selectBeerSearchResults, selectDownloadGeneratedImageStatus, selectLockedBeerLetterIdxs, selectOpenBeerIdx, selectPersonsName, setBeerLetterAtIndex, setBeerSearchResults, setOpenBeerIdx, toggleLockedBeerLetterIdx, generateBeerBanner, uploadSocialMedia, selectUploadSocialMediaStatus, selectUploadedSocialMediaData, setUploadedSocialMediaData } from '@/lib/redux';
+import { downloadImage, searchForBeer, selectEventName, selectBeerLetters, selectBeerOptionsAtIdx, selectBeerSearchResults, selectDownloadGeneratedImageStatus, selectLockedBeerLetterIdxs, selectOpenBeerIdx, selectPersonsName, setBeerLetterAtIndex, setBeerSearchResults, setOpenBeerIdx, toggleLockedBeerLetterIdx, generateBeerBanner, uploadSocialMedia, selectUploadSocialMediaStatus, selectUploadedSocialMediaData, setUploadedSocialMediaData, generateBeerDefaults, selectBeerDefaultsPerLetter } from '@/lib/redux';
 import { Box, Button, ButtonGroup, Flex, Heading, IconButton, useDisclosure } from '@chakra-ui/react';
 import { isAtoZ, getSocialMediaShareUrl, wrapIndex } from '@/lib/utils/utils';
 
 
 export const BeerBanner = () => {
     const dispatch = useDispatch();
+
+    useEffect(() => {
+        dispatch(generateBeerDefaults())
+    }, [dispatch])
 
     const eventName = useSelector(selectEventName);
     const personsName = useSelector(selectPersonsName);
@@ -172,6 +176,7 @@ export const BeerModal = () => {
     const beerLetters = useSelector(selectBeerLetters);
     const openBeerIdx = useSelector(selectOpenBeerIdx);
     const beerSearchResults = useSelector(selectBeerSearchResults);
+    const beerDefaultsPerLetter = useSelector(selectBeerDefaultsPerLetter);
 
     const clearDataOnClose = () => {
         dispatch(setOpenBeerIdx(-1));
@@ -192,14 +197,15 @@ export const BeerModal = () => {
         dispatch(searchForBeer(bearSearchQuery))
     }
 
+    const letter = openBeerIdx !== -1 ? beerLetters[openBeerIdx]['letter'] : ''
+
     // Open the Modal if we have an openBeerIndex
     useEffect(() => {
         if (openBeerIdx !== -1) {
+            dispatch(setBeerSearchResults(beerDefaultsPerLetter[letter.toLowerCase()]))
             onOpen()
         }
-    }, [openBeerIdx, onOpen])
-
-    const letter = openBeerIdx !== -1 ? beerLetters[openBeerIdx]['letter'] : ''
+    }, [openBeerIdx, onOpen, letter, beerDefaultsPerLetter, dispatch])
 
     return (
         <SelectBeerModal 

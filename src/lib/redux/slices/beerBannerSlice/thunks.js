@@ -5,7 +5,7 @@ import Fuse from "fuse.js";
 import { UploadManager } from '@bytescale/sdk';
 import download from 'downloadjs';
 import { createAsyncThunk } from '@reduxjs/toolkit';
-import { setBeerLetters, setBeerOptionsAtIdx, setBeerSearchResults, setEventName, setLockedBeerLetterIdxs, setPersonsName } from "./beerBannerSlice";
+import { setBeerDefaultsPerLetter, setBeerLetters, setBeerOptionsAtIdx, setBeerSearchResults, setEventName, setLockedBeerLetterIdxs, setPersonsName } from "./beerBannerSlice";
 import { isAtoZ } from '@/lib/utils/utils';
 
 
@@ -92,7 +92,7 @@ export const generateBeerBanner = (personsName, eventName) => (dispatch, getStat
                 })
                 beerOptionsAtIdx.push([])
             } else {
-                const beerOptions = getDefaultBeersForLetter(letter)
+                const beerOptions = shuffle(state.beerBanner.beerDefaultsPerLetter[letter.toLowerCase()])
                 beerOptionsAtIdx.push(beerOptions)
                 beerLetters.push({
                     letter: letter.toUpperCase(),
@@ -114,7 +114,7 @@ export const generateBeerBanner = (personsName, eventName) => (dispatch, getStat
                 beerLetters.push(state.beerBanner.beerLetters[idx])
                 beerOptionsAtIdx.push(state.beerBanner.beerOptionsAtIdx[idx])
             } else {
-                const beerOptions = getDefaultBeersForLetter(letter)
+                const beerOptions = shuffle(state.beerBanner.beerDefaultsPerLetter[letter.toLowerCase()])
                 beerOptionsAtIdx.push(beerOptions)
                 beerLetters.push({
                     letter: letter.toUpperCase(),
@@ -180,7 +180,18 @@ export const downloadImage = createAsyncThunk(
     }
 )
 
-// TODO this can be cached
+export const generateBeerDefaults = () => (dispatch, getState) => {
+    const beerDefaultsPerLetter = {}
+
+    // Using for loop for (a-z):
+    for (let i = 97; i <= 122; i++) {
+        const letter = String.fromCharCode(i)
+        beerDefaultsPerLetter[letter] = getDefaultBeersForLetter(letter)
+    }
+
+    dispatch(setBeerDefaultsPerLetter(beerDefaultsPerLetter))
+}
+
 const getDefaultBeersForLetter = (letter) => {
     const beers = []
 

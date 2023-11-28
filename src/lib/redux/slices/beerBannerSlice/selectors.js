@@ -2,6 +2,7 @@ export const selectEventName = (state) => state.beerBanner.eventName;
 export const selectPersonsName = (state) => state.beerBanner.personsName;
 export const selectBeerLetters = (state) => state.beerBanner.beerLetters;
 export const selectLockedBeerLetterIdxs = (state) => state.beerBanner.lockedBeerLetterIdxs;
+export const selectBeerDefaultsPerLetter = (state) => state.beerBanner.beerDefaultsPerLetter;
 export const selectBeerOptionsAtIdx = (state) => state.beerBanner.beerOptionsAtIdx;
 export const selectOpenBeerIdx = (state) => state.beerBanner.openedBeerIdx;
 export const selectBeerSearchResults = (state) => state.beerBanner.beerSearchResults;

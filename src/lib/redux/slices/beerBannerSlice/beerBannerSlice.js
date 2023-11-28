@@ -7,6 +7,7 @@ const initialState = {
     personsName: getFromSessionStorage('beerBanner.personsName', ''),
     beerLetters: JSON.parse(getFromSessionStorage('beerBanner.beerLetters', '[]')),
     lockedBeerLetterIdxs: JSON.parse(getFromSessionStorage('beerBanner.lockedBeerLetterIdxs', '[]')),
+    beerDefaultsPerLetter: {},
     beerOptionsAtIdx: [],
     openedBeerIdx: -1,
     beerSearchResults: [],
@@ -50,6 +51,9 @@ export const beerBannerSlice = createSlice({
             state.lockedBeerLetterIdxs = tempLockedBeerLetterIdxs
             setInSessionStorage('beerBanner.lockedBeerLetterIdxs', JSON.stringify(state.lockedBeerLetterIdxs))
         },
+        setBeerDefaultsPerLetter: (state, action) => {
+            state.beerDefaultsPerLetter = action.payload
+        },
         setBeerOptionsAtIdx: (state, action) => {
             state.beerOptionsAtIdx = action.payload
         },
@@ -91,6 +95,6 @@ export const beerBannerSlice = createSlice({
     }
 });
 
-export const { setEventName, setPersonsName, setBeerLetterAtIndex, setBeerLetters, setLockedBeerLetterIdxs, toggleLockedBeerLetterIdx, setBeerOptionsAtIdx, setOpenBeerIdx, setBeerSearchResults, setUploadedSocialMediaData } = beerBannerSlice.actions;
+export const { setEventName, setPersonsName, setBeerLetterAtIndex, setBeerLetters, setLockedBeerLetterIdxs, toggleLockedBeerLetterIdx, setBeerDefaultsPerLetter, setBeerOptionsAtIdx, setOpenBeerIdx, setBeerSearchResults, setUploadedSocialMediaData } = beerBannerSlice.actions;
 
 export default beerBannerSlice.reducer;
