@@ -30,6 +30,22 @@
         "wordsToTrim": [
             "Barrel Aged Nitro"
         ],
+        "wordsToKeepCapitalized": [
+            "IPA",
+            "DIPA",
+            "AIPA",
+            "EPA",
+            "APA",
+            "ESB",
+            "NE",
+            "NEIPA",
+            "NEPA",
+            "BA",
+            "BPA",
+            "PA",
+            "XPA",
+            "NZ"
+        ],
         "regexes": [
             {
                 "decription": "Remove years in parenthesis, e.g (2004)",
