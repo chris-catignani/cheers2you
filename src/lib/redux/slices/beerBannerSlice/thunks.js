@@ -39,16 +39,24 @@ const formattedBeers = ((beers) => {
         return formattedBeerName.toLowerCase().replace(/\b\w/g, s => s.toUpperCase()) // title case
     }
 
+    const formatBeerLabelFile = (beer) => {
+        if (beer['beer_label_file_big'] === 'https://assets.untappd.com/site/assets/images/temp/badge-beer-default.png') {
+            return beer['brewer_logo_file_big']
+        }
+        return beer['beer_label_file_big']
+    }
+
     return Object.values(beers).map(beer => {
         const breweryName = formatBreweryName(beer['brewer_name'])
         const beerName = formatBeerName(beer['beer_name'], breweryName)
+        const beerLabelFile = formatBeerLabelFile(beer)
         // console.log("formatted brewery: \"" + beer['brewer_name'] + "\" -> \"" + breweryName + "\"")
         // console.log("formatted beer: \"" + beer['beer_name'] + "\" -> \"" + beerName + "\"")
         return {
             'beer_name': beerName,
             'brewer_name': breweryName,
             'beer_type': beer['beer_type'],
-            'beer_label_file': beer['beer_label_file_big'],
+            'beer_label_file': beerLabelFile,
         }
     })
 })(beers)
