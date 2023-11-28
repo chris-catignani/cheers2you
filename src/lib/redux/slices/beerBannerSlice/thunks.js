@@ -180,17 +180,23 @@ export const downloadImage = createAsyncThunk(
     }
 )
 
+// TODO this can be cached
 const getDefaultBeersForLetter = (letter) => {
-    const fuseSearchQuery = {
-        $or: [
-            { beer_name: `^${letter}` },
-            { beer_name: `" ${letter}"` },
-            { brewer_name: `^${letter}` },
-            { brewer_name: `" ${letter}"` },
-        ]
+    const beers = []
+
+    const defaultBeerLetterSearch = (fieldRegex) => {
+        if (beers.length < 10) {
+            const results = fuseSearch(fieldRegex, {scoreThreshold: 0.5})
+            beers.push(...results)
+        }
     }
 
-    return shuffle(fuseSearch(fuseSearchQuery, {scoreThreshold: 0.5}))
+    defaultBeerLetterSearch({beer_name: `^${letter}`}) // beer name starts with letter
+    defaultBeerLetterSearch({brewer_name: `^${letter}`}) // brewer starts with letter
+    defaultBeerLetterSearch({beer_name: `" ${letter}"`}) // beer name has other words starting with letter
+    defaultBeerLetterSearch({brewer_name: `" ${letter}"`}) // brewer has other words starting with letter
+
+    return shuffle(beers)
 }
 
 const fuseSearch = (query, {limit = 10, scoreThreshold = 0.5} = {}) => {
