@@ -140,12 +140,12 @@ export const BeerLetters = ({animateRunCount, maxAnimateRunCountPerIdx, generate
             letters.push(
                 <Flex flexDirection='column' textAlign='center' key={`beer-letter-${idx}`}>
                     <Heading as='h5' size='sm' mb='5' textTransform='uppercase'>{letter}</Heading>
-                    <Letter beer={beerToShow} />
+                    <Letter beer={beerToShow} width='100px'/>
                 </Flex>
             )
             const lockIcon = lockedBeerIdxs[idx] ? <UnlockIcon /> : <LockIcon />
             letterEdits.push(
-                <ButtonGroup width='150px' justifyContent='center' key={`beer-letter-edit-${idx}`}>
+                <ButtonGroup width='100px' justifyContent='center' key={`beer-letter-edit-${idx}`}>
                     <IconButton onClick={() => dispatch(setOpenBeerIdx(idx))} icon={<EditIcon />}/>
                     <IconButton onClick={() => dispatch(toggleLockedBeerLetterIdx(idx))} icon={lockIcon} />
                 </ButtonGroup>
