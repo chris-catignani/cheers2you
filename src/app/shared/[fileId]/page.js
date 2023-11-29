@@ -38,7 +38,7 @@ export const generateMetadata = async ({ params: {fileId}, searchParams }) => {
     `Celebrate ${personsName} at ${eventName} with Cheers2You` :
     `Celebrate with ${personsName} and Cheers2You`
 
-  const formattedImageUrl = getOpenGraphImageUrl(imageUrl, imageHeight, imageWidth),
+  const formattedImageUrl = getOpenGraphImageUrl(imageUrl, imageHeight, imageWidth)
 
   return {
     title,
