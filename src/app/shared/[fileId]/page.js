@@ -38,6 +38,8 @@ export const generateMetadata = async ({ params: {fileId}, searchParams }) => {
     `Celebrate ${personsName} at ${eventName} with Cheers2You` :
     `Celebrate with ${personsName} and Cheers2You`
 
+  const formattedImageUrl = getOpenGraphImageUrl(imageUrl, imageHeight, imageWidth),
+
   return {
     title,
     description,
@@ -45,7 +47,7 @@ export const generateMetadata = async ({ params: {fileId}, searchParams }) => {
       title,
       description,
       images: [{
-        url: getOpenGraphImageUrl(imageUrl, imageHeight, imageWidth),
+        url: formattedImageUrl,
         width: 1200,
         height: 630,
       }],
@@ -57,7 +59,7 @@ export const generateMetadata = async ({ params: {fileId}, searchParams }) => {
       title,
       description,
       card: 'summary_large_image',
-      images: [imageUrl],
+      images: [formattedImageUrl],
     }
   }
 }
