@@ -1,1 +1,2 @@
-export * from './beerBannerSlice'
+export * from './beersSlice'
+export * from './searchSlice'

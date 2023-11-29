@@ -5,7 +5,7 @@ import Fuse from "fuse.js";
 import { UploadManager } from '@bytescale/sdk';
 import download from 'downloadjs';
 import { createAsyncThunk } from '@reduxjs/toolkit';
-import { setBeerDefaultsPerLetter, setBeerLetters, setBeerOptionsAtIdx, setBeerSearchResults, setEventName, setLockedBeerLetterIdxs, setPersonsName } from "./beerBannerSlice";
+import { setBeerDefaultsPerLetter, setBeerLetters, setBeerOptionsAtIdx, setBeerSearchResults } from "./beersSlice";
 import { isAtoZ } from '@/lib/utils/utils';
 
 
@@ -79,62 +79,39 @@ export const searchForBeer = (beerSearchQuery) => (dispatch, getState) => {
     dispatch(setBeerSearchResults(beerSearchResults, {scoreThreshold: 0.40}))
 }
 
-export const generateBeerBanner = (personsName, eventName) => (dispatch, getState) => {
+export const generateBeerBanner = (personsName) => (dispatch, getState) => {
     const state = getState()
 
     const beerLetters = []
     const beerOptionsAtIdx = []
 
-    if (state.beerBanner.personsName !== personsName) {
-        Array.from(personsName).forEach((letter, idx) => {
-            if(!isAtoZ(letter)) {
-                beerLetters.push({
-                    letter, 
-                    isSpecialCharacter: true,
-                })
-                beerOptionsAtIdx.push([])
-            } else {
-                const beerOptions = shuffle(state.beerBanner.beerDefaultsPerLetter[letter.toLowerCase()])
-                beerOptionsAtIdx.push(beerOptions)
-                beerLetters.push({
-                    letter: letter.toUpperCase(),
-                    userGeneratedBeer: {},
-                    beer: sample(beerOptions),
-                })
-            }
-        })
-        dispatch(setLockedBeerLetterIdxs(new Array(beerLetters.length).fill(false)))
-    } else {
-        Array.from(personsName).forEach( (letter, idx) => {
-            if(!isAtoZ(letter)) {
-                beerLetters.push({
-                    letter, 
-                    isSpecialCharacter: true,
-                })
-                beerOptionsAtIdx.push([])
-            } else if (state.beerBanner.lockedBeerLetterIdxs[idx]) {
-                beerLetters.push(state.beerBanner.beerLetters[idx])
-                beerOptionsAtIdx.push(state.beerBanner.beerOptionsAtIdx[idx])
-            } else {
-                const beerOptions = shuffle(state.beerBanner.beerDefaultsPerLetter[letter.toLowerCase()])
-                beerOptionsAtIdx.push(beerOptions)
-                beerLetters.push({
-                    letter: letter.toUpperCase(),
-                    userGeneratedBeer: {},
-                    beer: sample(beerOptions),
-                })
-            }
-        })
-    }
+    Array.from(personsName).forEach( (letter, idx) => {
+        if(!isAtoZ(letter)) {
+            beerLetters.push({
+                letter, 
+                isSpecialCharacter: true,
+            })
+            beerOptionsAtIdx.push([])
+        } else if (state.beers.lockedBeerLetterIdxs[idx]) {
+            beerLetters.push(state.beers.beerLetters[idx])
+            beerOptionsAtIdx.push(state.beers.beerOptionsAtIdx[idx])
+        } else {
+            const beerOptions = shuffle(state.beers.beerDefaultsPerLetter[letter.toLowerCase()])
+            beerOptionsAtIdx.push(beerOptions)
+            beerLetters.push({
+                letter: letter.toUpperCase(),
+                userGeneratedBeer: {},
+                beer: sample(beerOptions),
+            })
+        }
+    })
 
     dispatch(setBeerLetters(beerLetters))
     dispatch(setBeerOptionsAtIdx(beerOptionsAtIdx))
-    dispatch(setEventName(eventName));
-    dispatch(setPersonsName(personsName));
 };
 
 export const uploadSocialMedia = createAsyncThunk(
-    'beerBanner/uploadSocialMedia',
+    'beers/uploadSocialMedia',
     async ({dataUrlPromise, personsName, eventName}) => {
 
         const uploadManager = new UploadManager({
@@ -175,7 +152,7 @@ export const uploadSocialMedia = createAsyncThunk(
 )
 
 export const downloadImage = createAsyncThunk(
-    'beerBanner/downloadImage',
+    'beers/downloadImage',
     async (dataUrlPromise) => {
         const dataUrl = await dataUrlPromise
         download(dataUrl, 'my-pic.jpg');

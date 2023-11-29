@@ -3,10 +3,8 @@ import { createSlice } from '@reduxjs/toolkit';
 import { downloadImage, uploadSocialMedia } from './thunks';
 
 const initialState = {
-    eventName: getFromSessionStorage('beerBanner.eventName', ''),
-    personsName: getFromSessionStorage('beerBanner.personsName', ''),
-    beerLetters: JSON.parse(getFromSessionStorage('beerBanner.beerLetters', '[]')),
-    lockedBeerLetterIdxs: JSON.parse(getFromSessionStorage('beerBanner.lockedBeerLetterIdxs', '[]')),
+    beerLetters: [], // JSON.parse(getFromSessionStorage('beers.beerLetters', '[]')),
+    lockedBeerLetterIdxs: [], // JSON.parse(getFromSessionStorage('beers.lockedBeerLetterIdxs', '[]')),
     beerDefaultsPerLetter: {},
     beerOptionsAtIdx: [],
     openedBeerIdx: -1,
@@ -14,42 +12,34 @@ const initialState = {
     uploadedSocialMediaData: {},
     
     downloadGeneratedImageStatus: '',
-    uploadGeneratedImageStatus: '',
+    uploadSocialMediaStatus: '',
 };
 
-export const beerBannerSlice = createSlice({
-    name: 'beerBanner',
+export const beersSlice = createSlice({
+    name: 'beers',
     initialState,
     reducers: {
-        setEventName: (state, action) => {
-            state.eventName = action.payload
-            setInSessionStorage('beerBanner.eventName', action.payload)
-        },
-        setPersonsName: (state, action) => {
-            state.personsName = action.payload
-            setInSessionStorage('beerBanner.personsName', action.payload)
-        },
         setBeerLetterAtIndex: (state, action) => {
             state.beerLetters[action.payload.idx] = {
                 ...state.beerLetters[action.payload.idx],
                 beer: action.payload.beer,
                 userGeneratedBeer: action.payload.userGeneratedBeer,
             }
-            setInSessionStorage('beerBanner.beerLetters', JSON.stringify(state.beerLetters))
+            // setInSessionStorage('beers.beerLetters', JSON.stringify(state.beerLetters))
         },
         setBeerLetters: (state, action) => {
             state.beerLetters = action.payload
-            setInSessionStorage('beerBanner.beerLetters', JSON.stringify(action.payload))
+            // setInSessionStorage('beers.beerLetters', JSON.stringify(action.payload))
         },
         setLockedBeerLetterIdxs: (state, action) => {
             state.lockedBeerLetterIdxs = action.payload
-            setInSessionStorage('beerBanner.lockedBeerLetterIdxs', JSON.stringify(action.payload))
+            // setInSessionStorage('beers.lockedBeerLetterIdxs', JSON.stringify(action.payload))
         },
         toggleLockedBeerLetterIdx: (state, action) => {
             const tempLockedBeerLetterIdxs = [...state.lockedBeerLetterIdxs]
             tempLockedBeerLetterIdxs[action.payload] = !tempLockedBeerLetterIdxs[action.payload]
             state.lockedBeerLetterIdxs = tempLockedBeerLetterIdxs
-            setInSessionStorage('beerBanner.lockedBeerLetterIdxs', JSON.stringify(state.lockedBeerLetterIdxs))
+            // setInSessionStorage('beers.lockedBeerLetterIdxs', JSON.stringify(state.lockedBeerLetterIdxs))
         },
         setBeerDefaultsPerLetter: (state, action) => {
             state.beerDefaultsPerLetter = action.payload
@@ -95,6 +85,6 @@ export const beerBannerSlice = createSlice({
     }
 });
 
-export const { setEventName, setPersonsName, setBeerLetterAtIndex, setBeerLetters, setLockedBeerLetterIdxs, toggleLockedBeerLetterIdx, setBeerDefaultsPerLetter, setBeerOptionsAtIdx, setOpenBeerIdx, setBeerSearchResults, setUploadedSocialMediaData } = beerBannerSlice.actions;
+export const { setBeerLetterAtIndex, setBeerLetters, setLockedBeerLetterIdxs, toggleLockedBeerLetterIdx, setBeerDefaultsPerLetter, setBeerOptionsAtIdx, setOpenBeerIdx, setBeerSearchResults, setUploadedSocialMediaData } = beersSlice.actions;
 
-export default beerBannerSlice.reducer;
+export default beersSlice.reducer;

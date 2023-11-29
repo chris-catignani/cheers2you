@@ -4,27 +4,29 @@ import { useDispatch, useSelector } from 'react-redux';
 import React, { useEffect, useRef, useState } from 'react';
 import { toJpeg } from 'html-to-image';
 import { DownloadIcon, ExternalLinkIcon } from '@chakra-ui/icons';
-import { EventInput } from './components/EventInput'
 import { Letter } from './components/Letter';
 import { SocialShareModal } from './components/SocialShareModal';
 import { BeerModalContent, SelectBeerModal } from './components/SelectBeerModal';
-import { downloadImage, searchForBeer, selectEventName, selectBeerLetters, selectBeerOptionsAtIdx, selectBeerSearchResults, selectDownloadGeneratedImageStatus, selectLockedBeerLetterIdxs, selectOpenBeerIdx, selectPersonsName, setBeerLetterAtIndex, setBeerSearchResults, setOpenBeerIdx, toggleLockedBeerLetterIdx, generateBeerBanner, uploadSocialMedia, selectUploadSocialMediaStatus, selectUploadedSocialMediaData, setUploadedSocialMediaData, generateBeerDefaults, selectBeerDefaultsPerLetter } from '@/lib/redux';
-import { Box, Button, ButtonGroup, Flex, Heading, IconButton, useDisclosure } from '@chakra-ui/react';
+import { downloadImage, searchForBeer, selectBeerLetters, selectBeerOptionsAtIdx, selectBeerSearchResults, selectDownloadGeneratedImageStatus, selectLockedBeerLetterIdxs, selectOpenBeerIdx, setBeerLetterAtIndex, setBeerSearchResults, setOpenBeerIdx, toggleLockedBeerLetterIdx, generateBeerBanner, uploadSocialMedia, selectUploadSocialMediaStatus, selectUploadedSocialMediaData, setUploadedSocialMediaData, generateBeerDefaults, selectBeerDefaultsPerLetter } from '@/lib/redux';
+import { Box, Button, ButtonGroup, Container, Flex, Heading, IconButton, useDisclosure } from '@chakra-ui/react';
 import { isAtoZ, getSocialMediaShareUrl, wrapIndex } from '@/lib/utils/utils';
 
 
-export const BeerBanner = () => {
+export const Beers = ({personsName}) => {
     const dispatch = useDispatch();
 
     const beerDefaultsPerLetter = useSelector(selectBeerDefaultsPerLetter)
+    const beerLetters = useSelector(selectBeerLetters);
     useEffect(() => {
         if (Object.keys(beerDefaultsPerLetter).length === 0) {
             dispatch(generateBeerDefaults())
         }
-    }, [dispatch, beerDefaultsPerLetter])
+        if (Object.keys(beerLetters).length === 0) {
+            dispatch(generateBeerBanner(personsName))
+        }
 
-    const eventName = useSelector(selectEventName);
-    const personsName = useSelector(selectPersonsName);
+    }, [dispatch, beerDefaultsPerLetter, beerLetters])
+
     const lockedBeerIdxs = useSelector(selectLockedBeerLetterIdxs);
     const downloadGeneratedImageStatus = useSelector(selectDownloadGeneratedImageStatus);
     const uploadSocialMediaStatus = useSelector(selectUploadSocialMediaStatus)
@@ -33,8 +35,8 @@ export const BeerBanner = () => {
 
     const generatedPicRef = useRef(null)
 
-    const generatePressed = (personsName, eventName) => {
-        dispatch(generateBeerBanner(personsName, eventName))
+    const generatePressed = () => {
+        dispatch(generateBeerBanner(personsName))
 
         let animateRunCount = 0
         let maxAnimateRunCount = 0
@@ -73,20 +75,22 @@ export const BeerBanner = () => {
     const uploadOutput = async (ref) => {
         const node = ref.current;
         const dataUrlPromise = toJpeg(node, { backgroundColor: 'white', cacheBust: true, width: node.scrollWidth, height: node.scrollHeight })
-        dispatch(uploadSocialMedia({dataUrlPromise, eventName, personsName}))
+        dispatch(uploadSocialMedia({dataUrlPromise, personsName}))
     }
 
     return (
         <Box>
-            <EventInput
-                personsName={personsName}
-                eventName={eventName}
-                isGenerating={animateRunCount !== -1}
-                onClick={generatePressed}
-            />
+            <Container maxW='md'>
+                <Button
+                    width='full'
+                    onClick={generatePressed}
+                    isLoading={animateRunCount !== -1}
+                >
+                    Spin unlocked beers
+                </Button>
+            </Container>
             <Flex overflowX='auto' flexDirection='column' flexWrap='wrap'>
                 <Box ref={generatedPicRef}>
-                    <Heading as='h3' size='lg' textAlign='center'>{eventName}</Heading>
                     <BeerLetters animateRunCount={animateRunCount} maxAnimateRunCountPerIdx={maxAnimateRunCountPerIdx}/>
                 </Box>
             </Flex>
@@ -147,7 +151,6 @@ export const ShareModal = () => {
     const dispatch = useDispatch();
     const { isOpen, onOpen, onClose } = useDisclosure()
 
-    const eventName = useSelector(selectEventName);
     const uploadedSocialMediaData = useSelector(selectUploadedSocialMediaData)
     const shareUrl = getSocialMediaShareUrl(uploadedSocialMediaData['fileId'])
 
@@ -167,7 +170,6 @@ export const ShareModal = () => {
             isOpen={isOpen}
             onClose={clearDataOnClose}
             shareUrl={shareUrl}
-            eventName={eventName}
         />
     )
 }

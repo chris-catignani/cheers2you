@@ -1,11 +1,11 @@
 import { Box } from "@chakra-ui/react";
-import { BeerBanner } from "./beerBanner/BeerBanner";
+import { Home } from "./home/Home";
 
-export default function Home() {
+export default function Page() {
   return (
     <main>
       <Box m='5'>
-        <BeerBanner />
+        <Home />
       </Box>
     </main>
   )
