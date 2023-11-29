@@ -64,8 +64,8 @@ export const Beers = ({personsName}) => {
 
     return (
         <Box>
-            <Container maxW='5xl'>
-`               <Container maxW='md' padding={0}>
+            <Container maxW='4xl'>
+                <Container maxW='md' padding={0}>
                     <Button
                         width='full'
                         onClick={generatePressed}
@@ -80,7 +80,7 @@ export const Beers = ({personsName}) => {
                     </Box>
                 </Hide>
             </Container>
-            <Container maxW='5xl' marginTop='10' padding={0}>
+            <Container maxW='4xl' padding={0}>
                 <Flex overflowX='auto' flexDirection='column' flexWrap='wrap'>
                     <BeerLetters
                         animateRunCount={animateRunCount}
@@ -91,7 +91,7 @@ export const Beers = ({personsName}) => {
             <BeerModal />
             <ShareModal />
             <Hide above='md'>
-                <Box margin='5' float='right'>
+                <Box marginTop='5' float='right'>
                     <ShareButtons generatedPicRef={generatedPicRef} />
                 </Box>
             </Hide>
@@ -143,7 +143,8 @@ export const BeerLetters = ({animateRunCount, maxAnimateRunCountPerIdx, generate
 
     return (
         <Box marginBottom='2'>
-            <Box ref={generatedPicRef}>
+            {/* marginTop defined below so screen looks nice */}
+            <Box marginTop='5' ref={generatedPicRef}>
                 <Flex justifyContent='safe center' gap='10'>
                     {letters}
                 </Flex>
@@ -156,7 +157,8 @@ export const BeerLetters = ({animateRunCount, maxAnimateRunCountPerIdx, generate
     )
 }
 
-export const ShareButtons = (generatedPicRef) => {
+export const ShareButtons = ({generatedPicRef}) => {
+    const dispatch = useDispatch();
     const downloadGeneratedImageStatus = useSelector(selectDownloadGeneratedImageStatus);
     const uploadSocialMediaStatus = useSelector(selectUploadSocialMediaStatus)
 

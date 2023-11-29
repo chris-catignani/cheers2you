@@ -16,10 +16,8 @@ export default function Page() {
   }
 
   return (
-    <main>
-      <Box m='5'>
-        <Beers personsName={name}/>
-      </Box>
-    </main>
+    <Box m='5'>
+      <Beers personsName={name}/>
+    </Box>
   )
 }
