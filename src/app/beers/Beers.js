@@ -16,7 +16,6 @@ export const Beers = ({personsName}) => {
     const dispatch = useDispatch();
 
     const beerDefaultsPerLetter = useSelector(selectBeerDefaultsPerLetter)
-    const beerLetters = useSelector(selectBeerLetters);
     useEffect(() => {
         if (Object.keys(beerDefaultsPerLetter).length === 0) {
             dispatch(generateBeerDefaults())
@@ -89,9 +88,10 @@ export const Beers = ({personsName}) => {
                 </Button>
             </Container>
             <Flex overflowX='auto' flexDirection='column' flexWrap='wrap'>
-                <Box ref={generatedPicRef}>
-                    <BeerLetters animateRunCount={animateRunCount} maxAnimateRunCountPerIdx={maxAnimateRunCountPerIdx}/>
-                </Box>
+                <BeerLetters
+                    animateRunCount={animateRunCount}
+                    maxAnimateRunCountPerIdx={maxAnimateRunCountPerIdx}
+                    generatedPicRef={generatedPicRef}/>
             </Flex>
             <BeerModal />
             <ShareModal />
@@ -109,40 +109,73 @@ export const Beers = ({personsName}) => {
     )
 }
 
-export const BeerLetters = ({animateRunCount, maxAnimateRunCountPerIdx}) => {
+// TODO refactor this. Use a helper to do the layout stuff, pass in react components
+export const BeerLetters = ({animateRunCount, maxAnimateRunCountPerIdx, generatedPicRef}) => {
     const dispatch = useDispatch();
 
     const beerLetters = useSelector(selectBeerLetters);
     const beerOptionsAtIdx = useSelector(selectBeerOptionsAtIdx);
     const lockedBeerIdxs = useSelector(selectLockedBeerLetterIdxs);
 
-    const letters = beerLetters.map( ({letter, beer, userGeneratedBeer, isSpecialCharacter}, idx) => {
+    const letters = []
+    const letterEdits = []
+
+    beerLetters.forEach( ({letter, beer, userGeneratedBeer, isSpecialCharacter}, idx) => {
         let beerToShow = beer || userGeneratedBeer
         if(animateRunCount !== -1 && animateRunCount < maxAnimateRunCountPerIdx[idx] && !isSpecialCharacter) {
             const animateIdx = wrapIndex(0, beerOptionsAtIdx[idx].length, animateRunCount)
             beerToShow = beerOptionsAtIdx[idx][animateIdx]
         }
+
+        if (isSpecialCharacter) {
+            letters.push(
+                <Heading as='h5' size='sm' width='20px' textAlign='center' textTransform='uppercase'>{letter}</Heading>
+            )
+            letterEdits.push(
+                <Box width='20px'></Box>
+            )
+        } else {
+            letters.push(
+                <Flex flexDirection='column' textAlign='center' key={`beer-letter-${idx}`}>
+                    <Heading as='h5' size='sm' mb='5' textTransform='uppercase'>{letter}</Heading>
+                    <Letter 
+                        beer={beerToShow}
+                        onClick={() => dispatch(setOpenBeerIdx(idx)) } >
+                    </Letter>
+                </Flex>
+            )
+            letterEdits.push(
+                <ButtonGroup width='150px'>
+                    <Button mt='auto' onClick={() => dispatch(toggleLockedBeerLetterIdx(idx))}>
+                        {lockedBeerIdxs[idx] ? 'Unlock beer' : 'Lock beer'}
+                    </Button>
+                </ButtonGroup>
+            )
+        }
+
         return (
             <Flex flexDirection='column' textAlign='center' key={`beer-letter-${idx}`}>
                 <Heading as='h5' size='sm' mb='5' textTransform='uppercase'>{letter}</Heading>
-{!isSpecialCharacter &&
-                    <>
                 <Letter 
                     beer={beerToShow}
                     onClick={() => dispatch(setOpenBeerIdx(idx)) } >
                 </Letter>
-<Button mt='auto' onClick={() => dispatch(toggleLockedBeerLetterIdx(idx))}>
-                            {lockedBeerIdxs[idx] ? 'Unlock beer' : 'Lock beer'}
-                        </Button>
-                    </>
-                }
             </Flex>
         )
     })
+
     return (
-        <Flex justifyContent='safe center' gap='10' p='5'>
-            {letters}
-        </Flex>
+        <>
+            <Box ref={generatedPicRef}>
+                <Flex justifyContent='safe center' gap='10' p='5'>
+                    {letters}
+                </Flex>
+            </Box>
+            <Flex justifyContent='safe center' gap='10' p='5'>
+                {letterEdits}
+            </Flex>
+        </>
+
     )
 }
 
