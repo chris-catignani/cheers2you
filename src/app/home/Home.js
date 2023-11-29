@@ -1,6 +1,6 @@
 'use client'
 
-import { generateBeerDefaults, selectBeerDefaultsPerLetter } from "@/lib/redux"
+import { generateBeerDefaults, setBeerLetters } from "@/lib/redux"
 import { useEffect } from "react"
 import { useDispatch, useSelector } from "react-redux"
 import Image from 'next/image'
@@ -13,12 +13,10 @@ export const Home = () => {
     const dispatch = useDispatch();
     const router = useRouter()
 
-    const beerDefaultsPerLetter = useSelector(selectBeerDefaultsPerLetter)
     useEffect(() => {
-        if (Object.keys(beerDefaultsPerLetter).length === 0) {
-            dispatch(generateBeerDefaults())
-        }
-    }, [dispatch, beerDefaultsPerLetter])
+        dispatch(generateBeerDefaults())
+        dispatch(setBeerLetters([]))
+    }, [dispatch])
 
     const personsName = useSelector(selectPersonsName)
 
