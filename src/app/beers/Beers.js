@@ -176,7 +176,7 @@ export const ShareButtons = ({generatedPicRef}) => {
     const uploadOutput = async () => {
         const node = generatedPicRef.current;
         const dataUrlPromise = toJpeg(node, { backgroundColor: 'white', cacheBust: true, width: node.scrollWidth, height: node.scrollHeight })
-        dispatch(uploadSocialMedia({dataUrlPromise, personsName}))
+        dispatch(uploadSocialMedia({dataUrlPromise, personsName, imageHeight: node.scrollHeight,  imageWidth: node.scrollWidth}))
     }
 
     return (

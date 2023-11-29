@@ -117,7 +117,7 @@ export const generateBeerBanner = ({personsName, freshBanner = true} = {}) => (d
 
 export const uploadSocialMedia = createAsyncThunk(
     'beers/uploadSocialMedia',
-    async ({dataUrlPromise, personsName, eventName}) => {
+    async ({dataUrlPromise, personsName, eventName, imageHeight, imageWidth}) => {
 
         const uploadManager = new UploadManager({
             apiKey: "free", // Get API key: https://www.bytescale.com/get-started
@@ -145,6 +145,8 @@ export const uploadSocialMedia = createAsyncThunk(
                 eventName,
                 fileId,
                 fileUrl,
+                imageHeight,
+                imageWidth,
             }),
         })
 

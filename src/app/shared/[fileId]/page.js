@@ -5,7 +5,7 @@ import { getSocialMediaImageUrl, getSocialMediaShareUrl } from "@/lib/utils/util
 
 export const getSocialMediaInfo = async (fileId) => {
   const imageUrl = getSocialMediaImageUrl(fileId)
-  const { personsName, eventName } = await kv.get(fileId);
+  const { personsName, eventName, imageHeight, imageWidth } = await kv.get(fileId);
   
   // TODO handle imageUrl being expired
 
@@ -13,12 +13,14 @@ export const getSocialMediaInfo = async (fileId) => {
     personsName,
     eventName,
     imageUrl,
+    imageHeight,
+    imageWidth,
   }
 }
 
 // https://nextjs.org/docs/app/api-reference/functions/generate-metadata
 export const generateMetadata = async ({ params: {fileId}, searchParams }) => {
-  const { personsName, eventName, imageUrl } = await getSocialMediaInfo(fileId)
+  const { personsName, eventName, imageUrl, imageHeight, imageWidth } = await getSocialMediaInfo(fileId)
 
   const title = `Cheers2You ${personsName}`
   const description = eventName ? 
@@ -31,7 +33,11 @@ export const generateMetadata = async ({ params: {fileId}, searchParams }) => {
     openGraph: {
       title,
       description,
-      images: [imageUrl],
+      images: [{
+        url: imageUrl,
+        width: imageWidth,
+        height: imageHeight,
+      }],
       siteName: 'Cheers2You',
       type: 'website',
       url: getSocialMediaShareUrl(fileId),
