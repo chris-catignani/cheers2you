@@ -131,7 +131,7 @@ export const BeerLetters = ({animateRunCount, maxAnimateRunCountPerIdx, generate
                     <Letter beer={beerToShow} width='100px'/>
                 </Flex>
             )
-            const lockIcon = lockedBeerIdxs[idx] ? <UnlockIcon /> : <LockIcon />
+            const lockIcon = lockedBeerIdxs[idx] ? <LockIcon /> : <UnlockIcon />
             letterEdits.push(
                 <ButtonGroup width='100px' justifyContent='center' key={`beer-letter-edit-${idx}`}>
                     <IconButton onClick={() => dispatch(setOpenBeerIdx(idx))} icon={<EditIcon />}/>
