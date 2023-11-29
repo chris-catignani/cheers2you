@@ -7,6 +7,7 @@ import download from 'downloadjs';
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import { setBeerDefaultsPerLetter, setBeerLetters, setBeerOptionsAtIdx, setBeerSearchResults, setLockedBeerLetterIdxs } from "./beersSlice";
 import { isAtoZ } from '@/lib/utils/utils';
+import { setPersonsName } from '../searchSlice';
 
 
 const formattedBeers = ((beers) => {
@@ -109,6 +110,7 @@ export const generateBeerBanner = ({personsName, freshBanner = true} = {}) => (d
     if (freshBanner) {
         dispatch(setLockedBeerLetterIdxs(new Array(beerLetters.length).fill(false)))
     }
+    dispatch(setPersonsName(personsName))
     dispatch(setBeerLetters(beerLetters))
     dispatch(setBeerOptionsAtIdx(beerOptionsAtIdx))
 };

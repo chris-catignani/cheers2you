@@ -25,7 +25,7 @@ export const Beers = ({personsName}) => {
     const storedPersonsName = useSelector(selectPersonsName)
     useEffect(() => {
         if (storedPersonsName !== personsName) {
-            dispatch(generateBeerBanner(personsName))
+            dispatch(generateBeerBanner({personsName}))
         }
     }, [dispatch, storedPersonsName, personsName])
 
@@ -163,6 +163,7 @@ export const BeerLetters = ({animateRunCount, maxAnimateRunCountPerIdx, generate
 
 export const ShareButtons = ({generatedPicRef}) => {
     const dispatch = useDispatch();
+    const personsName = useSelector(selectPersonsName)
     const downloadGeneratedImageStatus = useSelector(selectDownloadGeneratedImageStatus);
     const uploadSocialMediaStatus = useSelector(selectUploadSocialMediaStatus)
 
