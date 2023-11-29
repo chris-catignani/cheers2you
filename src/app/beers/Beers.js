@@ -151,16 +151,6 @@ export const BeerLetters = ({animateRunCount, maxAnimateRunCountPerIdx, generate
                 </ButtonGroup>
             )
         }
-
-        return (
-            <Flex flexDirection='column' textAlign='center' key={`beer-letter-${idx}`}>
-                <Heading as='h5' size='sm' mb='5' textTransform='uppercase'>{letter}</Heading>
-                <Letter 
-                    beer={beerToShow}
-                    onClick={() => dispatch(setOpenBeerIdx(idx)) } >
-                </Letter>
-            </Flex>
-        )
     })
 
     return (
