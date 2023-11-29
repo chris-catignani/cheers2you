@@ -5,7 +5,7 @@ import Fuse from "fuse.js";
 import { UploadManager } from '@bytescale/sdk';
 import download from 'downloadjs';
 import { createAsyncThunk } from '@reduxjs/toolkit';
-import { setBeerDefaultsPerLetter, setBeerLetters, setBeerOptionsAtIdx, setBeerSearchResults } from "./beersSlice";
+import { setBeerDefaultsPerLetter, setBeerLetters, setBeerOptionsAtIdx, setBeerSearchResults, setLockedBeerLetterIdxs } from "./beersSlice";
 import { isAtoZ } from '@/lib/utils/utils';
 
 
@@ -79,7 +79,7 @@ export const searchForBeer = (beerSearchQuery) => (dispatch, getState) => {
     dispatch(setBeerSearchResults(beerSearchResults, {scoreThreshold: 0.40}))
 }
 
-export const generateBeerBanner = (personsName) => (dispatch, getState) => {
+export const generateBeerBanner = ({personsName, freshBanner = true} = {}) => (dispatch, getState) => {
     const state = getState()
 
     const beerLetters = []
@@ -92,7 +92,7 @@ export const generateBeerBanner = (personsName) => (dispatch, getState) => {
                 isSpecialCharacter: true,
             })
             beerOptionsAtIdx.push([])
-        } else if (state.beers.lockedBeerLetterIdxs[idx]) {
+        } else if (!freshBanner && state.beers.lockedBeerLetterIdxs[idx]) {
             beerLetters.push(state.beers.beerLetters[idx])
             beerOptionsAtIdx.push(state.beers.beerOptionsAtIdx[idx])
         } else {
@@ -106,6 +106,9 @@ export const generateBeerBanner = (personsName) => (dispatch, getState) => {
         }
     })
 
+    if (freshBanner) {
+        dispatch(setLockedBeerLetterIdxs(new Array(beerLetters.length).fill(false)))
+    }
     dispatch(setBeerLetters(beerLetters))
     dispatch(setBeerOptionsAtIdx(beerOptionsAtIdx))
 };

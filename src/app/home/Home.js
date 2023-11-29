@@ -1,6 +1,6 @@
 'use client'
 
-import { generateBeerDefaults, setBeerLetters } from "@/lib/redux"
+import { generateBeerBanner, generateBeerDefaults, setBeerLetters } from "@/lib/redux"
 import { useEffect } from "react"
 import { useDispatch, useSelector } from "react-redux"
 import Image from 'next/image'
@@ -15,10 +15,14 @@ export const Home = () => {
 
     useEffect(() => {
         dispatch(generateBeerDefaults())
-        dispatch(setBeerLetters([]))
     }, [dispatch])
 
     const personsName = useSelector(selectPersonsName)
+
+    const onSearchClick = () => {
+        dispatch(generateBeerBanner({personsName}))
+        router.push(`/beers?name=${encodeURIComponent(personsName)}`)
+    }
 
     return (
         <Container maxW='xl'>
@@ -44,7 +48,7 @@ export const Home = () => {
                     <Button
                         mt='2'
                         width='full'
-                        onClick={() => router.push(`/beers?name=${encodeURIComponent(personsName)}`)}
+                        onClick={onSearchClick}
                     >
                         Search for matching beers
                     </Button>

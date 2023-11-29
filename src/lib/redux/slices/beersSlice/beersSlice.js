@@ -3,8 +3,8 @@ import { createSlice } from '@reduxjs/toolkit';
 import { downloadImage, uploadSocialMedia } from './thunks';
 
 const initialState = {
-    beerLetters: [], // JSON.parse(getFromSessionStorage('beers.beerLetters', '[]')),
-    lockedBeerLetterIdxs: [], // JSON.parse(getFromSessionStorage('beers.lockedBeerLetterIdxs', '[]')),
+    beerLetters: JSON.parse(getFromSessionStorage('beers.beerLetters', '[]')),
+    lockedBeerLetterIdxs: JSON.parse(getFromSessionStorage('beers.lockedBeerLetterIdxs', '[]')),
     beerDefaultsPerLetter: {},
     beerOptionsAtIdx: [],
     openedBeerIdx: -1,
@@ -25,21 +25,21 @@ export const beersSlice = createSlice({
                 beer: action.payload.beer,
                 userGeneratedBeer: action.payload.userGeneratedBeer,
             }
-            // setInSessionStorage('beers.beerLetters', JSON.stringify(state.beerLetters))
+            setInSessionStorage('beers.beerLetters', JSON.stringify(state.beerLetters))
         },
         setBeerLetters: (state, action) => {
             state.beerLetters = action.payload
-            // setInSessionStorage('beers.beerLetters', JSON.stringify(action.payload))
+            setInSessionStorage('beers.beerLetters', JSON.stringify(action.payload))
         },
         setLockedBeerLetterIdxs: (state, action) => {
             state.lockedBeerLetterIdxs = action.payload
-            // setInSessionStorage('beers.lockedBeerLetterIdxs', JSON.stringify(action.payload))
+            setInSessionStorage('beers.lockedBeerLetterIdxs', JSON.stringify(action.payload))
         },
         toggleLockedBeerLetterIdx: (state, action) => {
             const tempLockedBeerLetterIdxs = [...state.lockedBeerLetterIdxs]
             tempLockedBeerLetterIdxs[action.payload] = !tempLockedBeerLetterIdxs[action.payload]
             state.lockedBeerLetterIdxs = tempLockedBeerLetterIdxs
-            // setInSessionStorage('beers.lockedBeerLetterIdxs', JSON.stringify(state.lockedBeerLetterIdxs))
+            setInSessionStorage('beers.lockedBeerLetterIdxs', JSON.stringify(state.lockedBeerLetterIdxs))
         },
         setBeerDefaultsPerLetter: (state, action) => {
             state.beerDefaultsPerLetter = action.payload

@@ -7,7 +7,7 @@ import { DownloadIcon, EditIcon, ExternalLinkIcon, LockIcon, UnlockIcon } from '
 import { Letter } from './components/Letter';
 import { SocialShareModal } from './components/SocialShareModal';
 import { BeerModalContent, SelectBeerModal } from './components/SelectBeerModal';
-import { downloadImage, searchForBeer, selectBeerLetters, selectBeerOptionsAtIdx, selectBeerSearchResults, selectDownloadGeneratedImageStatus, selectLockedBeerLetterIdxs, selectOpenBeerIdx, setBeerLetterAtIndex, setBeerSearchResults, setOpenBeerIdx, toggleLockedBeerLetterIdx, generateBeerBanner, uploadSocialMedia, selectUploadSocialMediaStatus, selectUploadedSocialMediaData, setUploadedSocialMediaData, generateBeerDefaults, selectBeerDefaultsPerLetter } from '@/lib/redux';
+import { downloadImage, searchForBeer, selectBeerLetters, selectBeerOptionsAtIdx, selectBeerSearchResults, selectDownloadGeneratedImageStatus, selectLockedBeerLetterIdxs, selectOpenBeerIdx, setBeerLetterAtIndex, setBeerSearchResults, setOpenBeerIdx, toggleLockedBeerLetterIdx, generateBeerBanner, uploadSocialMedia, selectUploadSocialMediaStatus, selectUploadedSocialMediaData, setUploadedSocialMediaData, generateBeerDefaults, selectBeerDefaultsPerLetter, selectPersonsName } from '@/lib/redux';
 import { Box, Button, ButtonGroup, Container, Flex, Heading, Hide, IconButton, useDisclosure } from '@chakra-ui/react';
 import { isAtoZ, getSocialMediaShareUrl, wrapIndex } from '@/lib/utils/utils';
 
@@ -21,9 +21,13 @@ export const Beers = ({personsName}) => {
             dispatch(generateBeerDefaults())
         }
     }, [dispatch, beerDefaultsPerLetter])
+    
+    const storedPersonsName = useSelector(selectPersonsName)
     useEffect(() => {
-        dispatch(generateBeerBanner(personsName))
-    }, [dispatch, personsName])
+        if (storedPersonsName !== personsName) {
+            dispatch(generateBeerBanner(personsName))
+        }
+    }, [dispatch, storedPersonsName, personsName])
 
     const lockedBeerIdxs = useSelector(selectLockedBeerLetterIdxs);
 
@@ -32,7 +36,7 @@ export const Beers = ({personsName}) => {
     const generatedPicRef = useRef(null)
 
     const generatePressed = () => {
-        dispatch(generateBeerBanner(personsName))
+        dispatch(generateBeerBanner({personsName, freshBanner: false}))
 
         let maxAnimateRunCount = 8
         let maxAnimateRunCountPerIdx = []
