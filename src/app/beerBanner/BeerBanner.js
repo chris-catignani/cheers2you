@@ -16,9 +16,12 @@ import { isAtoZ, getSocialMediaShareUrl, wrapIndex } from '@/lib/utils/utils';
 export const BeerBanner = () => {
     const dispatch = useDispatch();
 
+    const beerDefaultsPerLetter = useSelector(selectBeerDefaultsPerLetter)
     useEffect(() => {
-        dispatch(generateBeerDefaults())
-    }, [dispatch])
+        if (Object.keys(beerDefaultsPerLetter).length === 0) {
+            dispatch(generateBeerDefaults())
+        }
+    }, [dispatch, beerDefaultsPerLetter])
 
     const eventName = useSelector(selectEventName);
     const personsName = useSelector(selectPersonsName);
