@@ -8,7 +8,7 @@ import { Letter } from './components/Letter';
 import { SocialShareModal } from './components/SocialShareModal';
 import { BeerModalContent, SelectBeerModal } from './components/SelectBeerModal';
 import { downloadImage, searchForBeer, selectBeerLetters, selectBeerOptionsAtIdx, selectBeerSearchResults, selectDownloadGeneratedImageStatus, selectLockedBeerLetterIdxs, selectOpenBeerIdx, setBeerLetterAtIndex, setBeerSearchResults, setOpenBeerIdx, toggleLockedBeerLetterIdx, generateBeerBanner, uploadSocialMedia, selectUploadSocialMediaStatus, selectUploadedSocialMediaData, setUploadedSocialMediaData, generateBeerDefaults, selectBeerDefaultsPerLetter } from '@/lib/redux';
-import { Box, Button, ButtonGroup, Container, Flex, Heading, IconButton, useDisclosure } from '@chakra-ui/react';
+import { Box, Button, ButtonGroup, Container, Flex, Heading, Hide, IconButton, useDisclosure } from '@chakra-ui/react';
 import { isAtoZ, getSocialMediaShareUrl, wrapIndex } from '@/lib/utils/utils';
 
 
@@ -26,8 +26,6 @@ export const Beers = ({personsName}) => {
     }, [dispatch, personsName])
 
     const lockedBeerIdxs = useSelector(selectLockedBeerLetterIdxs);
-    const downloadGeneratedImageStatus = useSelector(selectDownloadGeneratedImageStatus);
-    const uploadSocialMediaStatus = useSelector(selectUploadSocialMediaStatus)
 
     const [{animateRunCount, maxAnimateRunCountPerIdx}, setAnimationProps] = useState({animateRunCount: -1, maxAnimateRunCountPerIdx: []})
 
@@ -64,30 +62,25 @@ export const Beers = ({personsName}) => {
         }, 200);
     }
 
-    const donwloadOutput = async (ref) => {
-        const node = ref.current;
-        const dataUrlPromise = toJpeg(node, { backgroundColor: 'white', cacheBust: true, width: node.scrollWidth, height: node.scrollHeight })
-        dispatch(downloadImage(dataUrlPromise))
-    }
-
-    const uploadOutput = async (ref) => {
-        const node = ref.current;
-        const dataUrlPromise = toJpeg(node, { backgroundColor: 'white', cacheBust: true, width: node.scrollWidth, height: node.scrollHeight })
-        dispatch(uploadSocialMedia({dataUrlPromise, personsName}))
-    }
-
     return (
         <Box>
-            <Container maxW='md'>
-                <Button
-                    width='full'
-                    onClick={generatePressed}
-                    isLoading={animateRunCount !== -1}
-                >
-                    Spin unlocked beers
-                </Button>
+            <Container maxW='5xl'>
+`               <Container maxW='md' padding={0}>
+                    <Button
+                        width='full'
+                        onClick={generatePressed}
+                        isLoading={animateRunCount !== -1}
+                    >
+                        Spin unlocked beers
+                    </Button>
+                </Container>
+                <Hide below='md'>
+                    <Box float='right' marginTop='-40px'>
+                        <ShareButtons generatedPicRef={generatedPicRef} />
+                    </Box>
+                </Hide>
             </Container>
-            <Container maxW='max'>
+            <Container maxW='5xl' marginTop='10' padding={0}>
                 <Flex overflowX='auto' flexDirection='column' flexWrap='wrap'>
                     <BeerLetters
                         animateRunCount={animateRunCount}
@@ -97,16 +90,11 @@ export const Beers = ({personsName}) => {
             </Container>
             <BeerModal />
             <ShareModal />
-            <ButtonGroup float={'right'}>
-                <IconButton
-                    isLoading={uploadSocialMediaStatus === 'uploading'}
-                    onClick={() => uploadOutput(generatedPicRef)} 
-                    icon={<ExternalLinkIcon />}/>
-                <IconButton
-                    isLoading={downloadGeneratedImageStatus === 'downloading'}
-                    onClick={() => donwloadOutput(generatedPicRef)}
-                    icon={<DownloadIcon />} />
-            </ButtonGroup>
+            <Hide above='md'>
+                <Box margin='5' float='right'>
+                    <ShareButtons generatedPicRef={generatedPicRef} />
+                </Box>
+            </Hide>
         </Box>
     )
 }
@@ -154,7 +142,7 @@ export const BeerLetters = ({animateRunCount, maxAnimateRunCountPerIdx, generate
     })
 
     return (
-        <Box marginY='10'>
+        <Box marginBottom='2'>
             <Box ref={generatedPicRef}>
                 <Flex justifyContent='safe center' gap='10'>
                     {letters}
@@ -165,6 +153,36 @@ export const BeerLetters = ({animateRunCount, maxAnimateRunCountPerIdx, generate
             </Flex>
         </Box>
 
+    )
+}
+
+export const ShareButtons = (generatedPicRef) => {
+    const downloadGeneratedImageStatus = useSelector(selectDownloadGeneratedImageStatus);
+    const uploadSocialMediaStatus = useSelector(selectUploadSocialMediaStatus)
+
+    const donwloadOutput = async () => {
+        const node = generatedPicRef.current;
+        const dataUrlPromise = toJpeg(node, { backgroundColor: 'white', cacheBust: true, width: node.scrollWidth, height: node.scrollHeight })
+        dispatch(downloadImage(dataUrlPromise))
+    }
+
+    const uploadOutput = async () => {
+        const node = generatedPicRef.current;
+        const dataUrlPromise = toJpeg(node, { backgroundColor: 'white', cacheBust: true, width: node.scrollWidth, height: node.scrollHeight })
+        dispatch(uploadSocialMedia({dataUrlPromise, personsName}))
+    }
+
+    return (
+        <ButtonGroup>
+            <IconButton
+                isLoading={uploadSocialMediaStatus === 'uploading'}
+                onClick={() => uploadOutput()} 
+                icon={<ExternalLinkIcon />}/>
+            <IconButton
+                isLoading={downloadGeneratedImageStatus === 'downloading'}
+                onClick={() => donwloadOutput()}
+                icon={<DownloadIcon />} />
+        </ButtonGroup>
     )
 }
 
