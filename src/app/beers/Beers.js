@@ -34,8 +34,7 @@ export const Beers = ({personsName}) => {
     const generatePressed = () => {
         dispatch(generateBeerBanner(personsName))
 
-        let animateRunCount = 0
-        let maxAnimateRunCount = 0
+        let maxAnimateRunCount = 8
         let maxAnimateRunCountPerIdx = []
         for(let i = 0; i < personsName.length; i++) {
             if (lockedBeerIdxs[i] || !isAtoZ(personsName[i])) {
@@ -46,8 +45,9 @@ export const Beers = ({personsName}) => {
             }
         }
 
+        let animateRunCount = 0
         setAnimationProps({animateRunCount, maxAnimateRunCountPerIdx})
-
+        
         const intervalId = setInterval(() => {
             animateRunCount += 1
             if(animateRunCount > maxAnimateRunCount) {
