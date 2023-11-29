@@ -46,7 +46,7 @@ export const Home = () => {
                     <Button
                         mt='2'
                         width='full'
-                        onClick={() => router.push(`/beers?name=${personsName}`)}
+                        onClick={() => router.push(`/beers?name=${encodeURIComponent(personsName)}`)}
                     >
                         Search for matching beers
                     </Button>

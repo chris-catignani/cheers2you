@@ -21,11 +21,10 @@ export const Beers = ({personsName}) => {
         if (Object.keys(beerDefaultsPerLetter).length === 0) {
             dispatch(generateBeerDefaults())
         }
-        if (Object.keys(beerLetters).length === 0) {
-            dispatch(generateBeerBanner(personsName))
-        }
-
-    }, [dispatch, beerDefaultsPerLetter, beerLetters])
+    }, [dispatch, beerDefaultsPerLetter])
+    useEffect(() => {
+        dispatch(generateBeerBanner(personsName))
+    }, [dispatch, personsName])
 
     const lockedBeerIdxs = useSelector(selectLockedBeerLetterIdxs);
     const downloadGeneratedImageStatus = useSelector(selectDownloadGeneratedImageStatus);
@@ -126,13 +125,13 @@ export const BeerLetters = ({animateRunCount, maxAnimateRunCountPerIdx}) => {
         return (
             <Flex flexDirection='column' textAlign='center' key={`beer-letter-${idx}`}>
                 <Heading as='h5' size='sm' mb='5' textTransform='uppercase'>{letter}</Heading>
-                {!isSpecialCharacter &&
+{!isSpecialCharacter &&
                     <>
-                        <Letter 
-                            beer={beerToShow}
-                            onClick={() => dispatch(setOpenBeerIdx(idx)) } >
-                        </Letter>
-                        <Button mt='auto' onClick={() => dispatch(toggleLockedBeerLetterIdx(idx))}>
+                <Letter 
+                    beer={beerToShow}
+                    onClick={() => dispatch(setOpenBeerIdx(idx)) } >
+                </Letter>
+<Button mt='auto' onClick={() => dispatch(toggleLockedBeerLetterIdx(idx))}>
                             {lockedBeerIdxs[idx] ? 'Unlock beer' : 'Lock beer'}
                         </Button>
                     </>
