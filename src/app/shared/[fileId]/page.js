@@ -18,6 +18,17 @@ export const getSocialMediaInfo = async (fileId) => {
   }
 }
 
+export const getOpenGraphImageUrl = (imageUrl, imageHeight, imageWidth) => {
+  const ratio = imageHeight / imageWidth
+  const newHeight = 1200 * ratio
+  const heightExtend = Math.floor(630 - newHeight)
+
+  return (heightExtend > 0 ? 
+      `${imageUrl.replace('/raw/', '/image/')}?w=1200&fit=width&extend-y=${heightExtend}&extend-color=%23FFFFFF` :
+      `${imageUrl.replace('/raw/', '/image/')}?w=1200&fit=width`
+  )
+}
+
 // https://nextjs.org/docs/app/api-reference/functions/generate-metadata
 export const generateMetadata = async ({ params: {fileId}, searchParams }) => {
   const { personsName, eventName, imageUrl, imageHeight, imageWidth } = await getSocialMediaInfo(fileId)
@@ -34,9 +45,9 @@ export const generateMetadata = async ({ params: {fileId}, searchParams }) => {
       title,
       description,
       images: [{
-        url: imageUrl,
-        width: imageWidth,
-        height: imageHeight,
+        url: getOpenGraphImageUrl(imageUrl, imageHeight, imageWidth),
+        width: 1200,
+        height: 630,
       }],
       siteName: 'Cheers2You',
       type: 'website',
