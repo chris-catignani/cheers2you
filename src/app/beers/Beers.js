@@ -3,7 +3,7 @@
 import { useDispatch, useSelector } from 'react-redux';
 import React, { useEffect, useRef, useState } from 'react';
 import { toJpeg } from 'html-to-image';
-import { DownloadIcon, ExternalLinkIcon } from '@chakra-ui/icons';
+import { DownloadIcon, EditIcon, ExternalLinkIcon, LockIcon, UnlockIcon } from '@chakra-ui/icons';
 import { Letter } from './components/Letter';
 import { SocialShareModal } from './components/SocialShareModal';
 import { BeerModalContent, SelectBeerModal } from './components/SelectBeerModal';
@@ -87,12 +87,14 @@ export const Beers = ({personsName}) => {
                     Spin unlocked beers
                 </Button>
             </Container>
-            <Flex overflowX='auto' flexDirection='column' flexWrap='wrap'>
-                <BeerLetters
-                    animateRunCount={animateRunCount}
-                    maxAnimateRunCountPerIdx={maxAnimateRunCountPerIdx}
-                    generatedPicRef={generatedPicRef}/>
-            </Flex>
+            <Container maxW='max'>
+                <Flex overflowX='auto' flexDirection='column' flexWrap='wrap'>
+                    <BeerLetters
+                        animateRunCount={animateRunCount}
+                        maxAnimateRunCountPerIdx={maxAnimateRunCountPerIdx}
+                        generatedPicRef={generatedPicRef}/>
+                </Flex>
+            </Container>
             <BeerModal />
             <ShareModal />
             <ButtonGroup float={'right'}>
@@ -129,26 +131,23 @@ export const BeerLetters = ({animateRunCount, maxAnimateRunCountPerIdx, generate
 
         if (isSpecialCharacter) {
             letters.push(
-                <Heading as='h5' size='sm' width='20px' textAlign='center' textTransform='uppercase'>{letter}</Heading>
+                <Heading as='h5' size='sm' width='20px' textAlign='center' textTransform='uppercase' key={`beer-letter-${idx}`}>{letter}</Heading>
             )
             letterEdits.push(
-                <Box width='20px'></Box>
+                <Box width='20px' key={`beer-letter-edit-${idx}`}></Box>
             )
         } else {
             letters.push(
                 <Flex flexDirection='column' textAlign='center' key={`beer-letter-${idx}`}>
                     <Heading as='h5' size='sm' mb='5' textTransform='uppercase'>{letter}</Heading>
-                    <Letter 
-                        beer={beerToShow}
-                        onClick={() => dispatch(setOpenBeerIdx(idx)) } >
-                    </Letter>
+                    <Letter beer={beerToShow} />
                 </Flex>
             )
+            const lockIcon = lockedBeerIdxs[idx] ? <UnlockIcon /> : <LockIcon />
             letterEdits.push(
-                <ButtonGroup width='150px'>
-                    <Button mt='auto' onClick={() => dispatch(toggleLockedBeerLetterIdx(idx))}>
-                        {lockedBeerIdxs[idx] ? 'Unlock beer' : 'Lock beer'}
-                    </Button>
+                <ButtonGroup width='150px' justifyContent='center' key={`beer-letter-edit-${idx}`}>
+                    <IconButton onClick={() => dispatch(setOpenBeerIdx(idx))} icon={<EditIcon />}/>
+                    <IconButton onClick={() => dispatch(toggleLockedBeerLetterIdx(idx))} icon={lockIcon} />
                 </ButtonGroup>
             )
         }
@@ -165,16 +164,16 @@ export const BeerLetters = ({animateRunCount, maxAnimateRunCountPerIdx, generate
     })
 
     return (
-        <>
+        <Box marginY='10'>
             <Box ref={generatedPicRef}>
-                <Flex justifyContent='safe center' gap='10' p='5'>
+                <Flex justifyContent='safe center' gap='10'>
                     {letters}
                 </Flex>
             </Box>
-            <Flex justifyContent='safe center' gap='10' p='5'>
+            <Flex justifyContent='safe center' gap='10'>
                 {letterEdits}
             </Flex>
-        </>
+        </Box>
 
     )
 }
