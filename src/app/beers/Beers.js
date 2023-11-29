@@ -59,7 +59,7 @@ export const Beers = ({personsName}) => {
             } else {
                 setAnimationProps({animateRunCount, maxAnimateRunCountPerIdx})
             }
-        }, 200);
+        }, 100);
     }
 
     return (
