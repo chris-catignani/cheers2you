@@ -1,16 +1,15 @@
 'use client'
 
-import { generateBeerBanner, generateBeerDefaults, setBeerLetters } from "@/lib/redux"
+import { generateBeerBanner, generateBeerDefaults, setPersonsName, selectPersonsName } from "@/lib/redux"
 import { useEffect } from "react"
 import { useDispatch, useSelector } from "react-redux"
 import Image from 'next/image'
 import { Box, Button, Container, Flex, Heading, Input, Text } from "@chakra-ui/react"
-import { useRouter } from 'next/navigation'
-import { selectPersonsName } from "@/lib/redux/slices/searchSlice"
-import { setPersonsName } from "@/lib/redux/slices/searchSlice/searchSlice"
+import { useRouter, useSearchParams } from 'next/navigation'
 
 export const Home = () => {
     const dispatch = useDispatch();
+    const searchParams = useSearchParams()
     const router = useRouter()
 
     useEffect(() => {
@@ -21,7 +20,9 @@ export const Home = () => {
 
     const onSearchClick = () => {
         dispatch(generateBeerBanner({personsName}))
-        router.push(`/beers?name=${encodeURIComponent(personsName)}`)
+        const newSearchParams = new URLSearchParams(searchParams)
+        newSearchParams.set('name', personsName)
+        router.push(`/beers?${newSearchParams}`)
     }
 
     return (
