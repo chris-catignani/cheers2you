@@ -2,6 +2,7 @@ import { createSlice } from '@reduxjs/toolkit';
 
 const initialState = {
     venueName: '',
+    knownVenueNames: ['beers', 'beers2'],
 };
 
 export const venueSlice = createSlice({

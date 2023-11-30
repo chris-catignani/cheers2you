@@ -4,7 +4,7 @@ import { Box } from "@chakra-ui/react";
 import { Home } from "./home/Home";
 import { useSearchParams } from "next/navigation";
 import { useDispatch } from "react-redux";
-import { setVenueName } from "@/lib/redux";
+import { setVenue } from "@/lib/redux";
 import { useEffect } from "react";
 
 export default function Page() {
@@ -13,7 +13,7 @@ export default function Page() {
   
   const venueName = searchParams.get('venue') || ''
   useEffect(() => {
-    dispatch(setVenueName(venueName))
+    dispatch(setVenue(venueName))
   }, [dispatch, venueName])
 
   return (
