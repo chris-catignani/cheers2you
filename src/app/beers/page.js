@@ -18,14 +18,14 @@ export default function Page() {
   const personsName = searchParams.get('name') || ''
   const venueName = searchParams.get('venue') || defaultVenueName
 
+  useEffect(() => {
+    dispatch(setVenue(venueName))
+  }, [dispatch, venueName])
+
   if (!personsName || !venueName) {
     router.push('/?' + searchParams)
     return (<></>)
   }
-
-  useEffect(() => {
-    dispatch(setVenue(venueName))
-  }, [dispatch, venueName])
 
   return (
     <Box m='5'>

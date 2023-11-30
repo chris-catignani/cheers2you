@@ -14,7 +14,7 @@ export const Home = ({venueName}) => {
 
     useEffect(() => {
         dispatch(generateBeerDefaults(venueName))
-    }, [dispatch])
+    }, [dispatch, venueName])
 
     const personsName = useSelector(selectPersonsName)
 

@@ -1,13 +1,13 @@
 import { Box, Image } from "@chakra-ui/react"
 
 
-export const Shared = ({socialMediaInfo}) => {
+export const Shared = ({socialMediaInfo: {imageUrl, personsName}}) => {
 
     return (
         <>
             <Box>
                 {/* <Image src={`https://upcdn.io/${appId}/raw/demo/${fileId}.jpeg`}/> */}
-                <Image src={socialMediaInfo.imageUrl}/>
+                <Image src={imageUrl} alt={`Beer banner for ${personsName}`}/>
             </Box>
         </>
     )

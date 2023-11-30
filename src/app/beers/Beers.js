@@ -20,7 +20,7 @@ export const Beers = ({personsName, venueName}) => {
         if (Object.keys(beerDefaultsPerLetter).length === 0) {
             dispatch(generateBeerDefaults(venueName))
         }
-    }, [dispatch, beerDefaultsPerLetter])
+    }, [dispatch, beerDefaultsPerLetter, venueName])
     
     const storedPersonsName = useSelector(selectPersonsName)
     useEffect(() => {
