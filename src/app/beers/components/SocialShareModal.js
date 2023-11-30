@@ -2,7 +2,10 @@ import { CopyIcon } from "@chakra-ui/icons"
 import { Button, Flex, IconButton, Modal, ModalBody, ModalCloseButton, ModalContent, ModalFooter, ModalHeader, ModalOverlay } from "@chakra-ui/react"
 import { EmailIcon, EmailShareButton, FacebookIcon, FacebookShareButton, TwitterShareButton, WhatsappIcon, WhatsappShareButton, XIcon } from "react-share"
 
-export const SocialShareModal = ({isOpen, onClose, shareUrl, eventName}) => {
+export const SocialShareModal = ({isOpen, onClose, shareUrl, personsName}) => {
+
+    const title = `Raise a toast to ${personsName} with Cheers2You!`
+
     return (
         <Modal isOpen={isOpen} onClose={onClose} size='xl'>
             <ModalOverlay />
@@ -11,26 +14,31 @@ export const SocialShareModal = ({isOpen, onClose, shareUrl, eventName}) => {
             <ModalCloseButton />
             <ModalBody>
                 <Flex gap='2'>
-                    <FacebookShareButton url={shareUrl}>
+                    <FacebookShareButton
+                        url={shareUrl}
+                        hashtag={'#Cheers2You'}
+                    >
                         <FacebookIcon size={40} round />
                     </FacebookShareButton>
                     <TwitterShareButton
                         url={shareUrl}
-                        title={eventName}
+                        title={title}
+                        hashtags={['Cheers2You']}
                     >
                         <XIcon size={40} round />
                     </TwitterShareButton>
                     <WhatsappShareButton
                         url={shareUrl}
-                        title={eventName}
-                        separator=":: "
+                        title={title}
+                        separator=' '
                     >
                         <WhatsappIcon size={40} round />
                     </WhatsappShareButton>
                     <EmailShareButton
                         url={shareUrl}
-                        subject={eventName}
-                        body="body"
+                        subject={title}
+                        body={`Check out this beer banner made for ${personsName} using Cheers2You:`}
+                        separator=' '
                     >
                         <EmailIcon size={40} round />
                     </EmailShareButton>

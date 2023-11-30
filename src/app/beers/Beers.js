@@ -197,6 +197,7 @@ export const ShareModal = () => {
     const dispatch = useDispatch();
     const { isOpen, onOpen, onClose } = useDisclosure()
 
+    const personsName = useSelector(selectPersonsName)
     const uploadedSocialMediaData = useSelector(selectUploadedSocialMediaData)
     const shareUrl = getSocialMediaShareUrl(uploadedSocialMediaData['fileId'])
 
@@ -216,6 +217,7 @@ export const ShareModal = () => {
             isOpen={isOpen}
             onClose={clearDataOnClose}
             shareUrl={shareUrl}
+            personsName={personsName}
         />
     )
 }
