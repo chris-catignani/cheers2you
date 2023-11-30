@@ -2,7 +2,7 @@ import { setVenueName } from "./venueSlice"
 
 export const setVenue = (venueName) => (dispatch, getState) => {
     const { venue: { knownVenueNames }} = getState()
-    if (!(venueName in knownVenueNames)) {
+    if (!knownVenueNames.includes(venueName)) {
         console.error(`unknown venue ${venueName}`)
         // TODO dispatch error
     }

@@ -12,13 +12,13 @@ import { Box, Button, ButtonGroup, Container, Flex, Heading, Hide, IconButton, u
 import { isAtoZ, getSocialMediaShareUrl, wrapIndex } from '@/lib/utils/utils';
 
 
-export const Beers = ({personsName}) => {
+export const Beers = ({personsName, venueName}) => {
     const dispatch = useDispatch();
 
     const beerDefaultsPerLetter = useSelector(selectBeerDefaultsPerLetter)
     useEffect(() => {
         if (Object.keys(beerDefaultsPerLetter).length === 0) {
-            dispatch(generateBeerDefaults())
+            dispatch(generateBeerDefaults(venueName))
         }
     }, [dispatch, beerDefaultsPerLetter])
     

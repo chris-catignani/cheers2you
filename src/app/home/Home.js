@@ -7,13 +7,13 @@ import Image from 'next/image'
 import { Box, Button, Container, Flex, Heading, Input, Text } from "@chakra-ui/react"
 import { useRouter, useSearchParams } from 'next/navigation'
 
-export const Home = () => {
+export const Home = ({venueName}) => {
     const dispatch = useDispatch();
     const searchParams = useSearchParams()
     const router = useRouter()
 
     useEffect(() => {
-        dispatch(generateBeerDefaults())
+        dispatch(generateBeerDefaults(venueName))
     }, [dispatch])
 
     const personsName = useSelector(selectPersonsName)

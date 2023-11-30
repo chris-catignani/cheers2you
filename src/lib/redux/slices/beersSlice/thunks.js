@@ -1,4 +1,4 @@
-import beers from '../../data/beers2.json';
+import beers from '../../data/beers.json';
 import beerRules from '../../data/beer_rules.json';
 import { sample, shuffle } from 'lodash-es';
 import Fuse from "fuse.js";
@@ -9,8 +9,7 @@ import { setBeerDefaultsPerLetter, setBeerLetters, setBeerOptionsAtIdx, setBeerS
 import { isAtoZ } from '@/lib/utils/utils';
 import { setPersonsName } from '../searchSlice';
 
-
-const formattedBeers = ((beers) => {
+const formatBeers = (beers) => {
     const breweryWordsToTrim = new RegExp(beerRules['brewery']['wordsToTrim'].join('|'), 'gi')
     const beerNameRegexes = [
         {
@@ -62,18 +61,24 @@ const formattedBeers = ((beers) => {
             'beer_label_file': beerLabelFile,
         }
     })
-})(beers)
+}
 
-const fuse = new Fuse(formattedBeers, {
-    keys: [
-        'beer_name',
-        'brewer_name',
-        'beer_type',
-    ],
-    includeScore: true,
-    ignoreLocation: true,
-    useExtendedSearch: true,
-});
+const initFuse = (beers) => {
+    return new Fuse(beers, {
+        keys: [
+            'beer_name',
+            'brewer_name',
+            'beer_type',
+        ],
+        includeScore: true,
+        ignoreLocation: true,
+        useExtendedSearch: true,
+    });
+}
+
+const fuses = {
+    'beers': initFuse(formatBeers(beers)),
+}
 
 export const searchForBeer = (beerSearchQuery) => (dispatch, getState) => {
     const beerSearchResults = fuseSearch(beerSearchQuery)
@@ -166,24 +171,24 @@ export const downloadImage = createAsyncThunk(
     }
 )
 
-export const generateBeerDefaults = () => (dispatch, getState) => {
+export const generateBeerDefaults = (venueName) => (dispatch, getState) => {
     const beerDefaultsPerLetter = {}
 
     // Using for loop for (a-z):
     for (let i = 97; i <= 122; i++) {
         const letter = String.fromCharCode(i)
-        beerDefaultsPerLetter[letter] = getDefaultBeersForLetter(letter)
+        beerDefaultsPerLetter[letter] = getDefaultBeersForLetter(letter, venueName)
     }
 
     dispatch(setBeerDefaultsPerLetter(beerDefaultsPerLetter))
 }
 
-const getDefaultBeersForLetter = (letter) => {
+const getDefaultBeersForLetter = (letter, venueName) => {
     const beers = []
 
     const defaultBeerLetterSearch = (fieldRegex) => {
         if (beers.length < 10) {
-            const results = fuseSearch(fieldRegex, {scoreThreshold: 0.5})
+            const results = fuseSearch(fieldRegex, venueName, {scoreThreshold: 0.5})
             beers.push(...results)
         }
     }
@@ -196,12 +201,12 @@ const getDefaultBeersForLetter = (letter) => {
     return shuffle(beers)
 }
 
-const fuseSearch = (query, {limit = 10, scoreThreshold = 0.5} = {}) => {
+const fuseSearch = (query, venueName, {limit = 10, scoreThreshold = 0.5} = {}) => {
     if (!query) {
         return []
     }
 
-    const fuseResults = fuse.search(query, {limit})
+    const fuseResults = (fuses[venueName] || fuses['beers']).search(query, {limit})
     return fuseResults.reduce((results, result) => {
         if (result['score'] < scoreThreshold) {
             results.push(result['item'])
