@@ -1,5 +1,5 @@
-import beers from '../../data/beers.json';
 import beerRules from '../../data/beer_rules.json';
+import beerLists from '../../data/beer_lists.json';
 import { sample, shuffle } from 'lodash-es';
 import Fuse from "fuse.js";
 import { UploadManager } from '@bytescale/sdk';
@@ -63,22 +63,22 @@ const formatBeers = (beers) => {
     })
 }
 
-const initFuse = (beers) => {
-    return new Fuse(beers, {
-        keys: [
-            'beer_name',
-            'brewer_name',
-            'beer_type',
-        ],
-        includeScore: true,
-        ignoreLocation: true,
-        useExtendedSearch: true,
-    });
-}
-
-const fuses = {
-    'beers': initFuse(formatBeers(beers)),
-}
+const fuses = (() => {
+    return beerLists.reduce( (results, beerList) => {
+        const beers = require(`../../data/${beerList.fileName}`)
+        results[beerList.urlParam] = {
+            'urlParam': beerList.urlParam,
+            'venueName': beerList.venueName,
+            'fuse': new Fuse(formatBeers(beers), {
+                keys: ['beer_name', 'brewer_name', 'beer_type'],
+                includeScore: true,
+                ignoreLocation: true,
+                useExtendedSearch: true,
+            })
+        }
+        return results
+    }, {})
+})()
 
 export const searchForBeer = (beerSearchQuery) => (dispatch, getState) => {
     const beerSearchResults = fuseSearch(beerSearchQuery)
@@ -206,7 +206,8 @@ const fuseSearch = (query, venueName, {limit = 10, scoreThreshold = 0.5} = {}) =
         return []
     }
 
-    const fuseResults = (fuses[venueName] || fuses['beers']).search(query, {limit})
+    const fuse = fuses[venueName]?.fuse || fuses[beerLists[0].urlParam].fuse
+    const fuseResults = fuse.search(query, {limit})
     return fuseResults.reduce((results, result) => {
         if (result['score'] < scoreThreshold) {
             results.push(result['item'])

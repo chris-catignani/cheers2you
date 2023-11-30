@@ -1,8 +1,10 @@
+import beerLists from '../../data/beer_lists.json';
 import { createSlice } from '@reduxjs/toolkit';
 
 const initialState = {
     venueName: '',
-    knownVenueNames: ['beers'],
+    defaultVenueName: beerLists[0].urlParam,
+    knownVenueNames: beerLists.map(beerList => beerList.urlParam),
 };
 
 export const venueSlice = createSlice({

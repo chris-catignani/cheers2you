@@ -5,15 +5,18 @@ import { Box } from "@chakra-ui/react";
 import { Beers } from "./Beers";
 import { useSearchParams } from "next/navigation";
 import { useEffect } from 'react';
-import { useDispatch } from 'react-redux';
-import { setVenue } from '@/lib/redux';
+import { useDispatch, useSelector } from 'react-redux';
+import { selectDefaultVenueName, setVenue } from '@/lib/redux';
 
 export default function Page() {
   const dispatch = useDispatch()
   const router = useRouter()
   const searchParams = useSearchParams()
+
+  const defaultVenueName = useSelector(selectDefaultVenueName)
+
   const personsName = searchParams.get('name') || ''
-  const venueName = searchParams.get('venue') || ''
+  const venueName = searchParams.get('venue') || defaultVenueName
 
   if (!personsName || !venueName) {
     router.push('/?' + searchParams)
