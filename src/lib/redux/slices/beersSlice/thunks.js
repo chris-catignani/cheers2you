@@ -122,17 +122,16 @@ export const generateBeerBanner = ({personsName, freshBanner = true} = {}) => (d
 
 export const uploadSocialMedia = createAsyncThunk(
     'beers/uploadSocialMedia',
-    async ({dataUrlPromise, personsName, eventName, imageHeight, imageWidth}) => {
+    async ({canvasPromise, personsName, eventName, imageHeight, imageWidth}) => {
 
         const uploadManager = new UploadManager({
             apiKey: "free", // Get API key: https://www.bytescale.com/get-started
         });
 
-        const dataUrl = await dataUrlPromise
-        const image = await fetch(dataUrl)
-        const imageArrayBuffer = await image.arrayBuffer()
+        const canvas = await canvasPromise
+        const image = await new Promise(resolve => canvas.toBlob(resolve, 'image/jpeg', 0.95));
         const { fileUrl } = await uploadManager.upload({
-            data: imageArrayBuffer,
+            data: image,
             mime: 'image/jpeg',
         });
 
@@ -165,8 +164,9 @@ export const uploadSocialMedia = createAsyncThunk(
 
 export const downloadImage = createAsyncThunk(
     'beers/downloadImage',
-    async (dataUrlPromise) => {
-        const dataUrl = await dataUrlPromise
+    async (canvasPromise) => {
+        const canvas = await canvasPromise
+        const dataUrl = canvas.toDataURL('image/jpeg')
         download(dataUrl, 'my-pic.jpg');
     }
 )

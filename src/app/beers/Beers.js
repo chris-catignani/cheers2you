@@ -2,7 +2,6 @@
 
 import { useDispatch, useSelector } from 'react-redux';
 import React, { useEffect, useRef, useState } from 'react';
-import { toJpeg } from 'html-to-image';
 import { DownloadIcon, EditIcon, ExternalLinkIcon, LockIcon, UnlockIcon } from '@chakra-ui/icons';
 import { Letter } from './components/Letter';
 import { SocialShareModal } from './components/SocialShareModal';
@@ -10,6 +9,7 @@ import { BeerModalContent, SelectBeerModal } from './components/SelectBeerModal'
 import { downloadImage, searchForBeer, selectBeerLetters, selectBeerOptionsAtIdx, selectBeerSearchResults, selectDownloadGeneratedImageStatus, selectLockedBeerLetterIdxs, selectOpenBeerIdx, setBeerLetterAtIndex, setBeerSearchResults, setOpenBeerIdx, toggleLockedBeerLetterIdx, generateBeerBanner, uploadSocialMedia, selectUploadSocialMediaStatus, selectUploadedSocialMediaData, setUploadedSocialMediaData, generateBeerDefaults, selectBeerDefaultsPerLetter, selectPersonsName } from '@/lib/redux';
 import { Box, Button, ButtonGroup, Container, Flex, Heading, Hide, IconButton, useDisclosure } from '@chakra-ui/react';
 import { isAtoZ, getSocialMediaShareUrl, wrapIndex } from '@/lib/utils/utils';
+import html2canvas from 'html2canvas';
 
 
 export const Beers = ({personsName, venueName}) => {
@@ -169,14 +169,29 @@ export const ShareButtons = ({generatedPicRef}) => {
 
     const donwloadOutput = async () => {
         const node = generatedPicRef.current;
-        const dataUrlPromise = toJpeg(node, { backgroundColor: 'white', cacheBust: true, width: node.scrollWidth, height: node.scrollHeight })
-        dispatch(downloadImage(dataUrlPromise))
+        const canvasPromise = html2canvas(node, {
+            backgroundColor: 'white',
+            width: node.scrollWidth,
+            height: node.scrollHeight,
+            proxy: '/beers/api',
+        })
+        dispatch(downloadImage(canvasPromise))
     }
 
     const uploadOutput = async () => {
         const node = generatedPicRef.current;
-        const dataUrlPromise = toJpeg(node, { backgroundColor: 'white', cacheBust: true, width: node.scrollWidth, height: node.scrollHeight })
-        dispatch(uploadSocialMedia({dataUrlPromise, personsName, imageHeight: node.scrollHeight,  imageWidth: node.scrollWidth}))
+        const canvasPromise = html2canvas(node, {
+            backgroundColor: 'white',
+            width: node.scrollWidth,
+            height: node.scrollHeight,
+            proxy: '/beers/api'
+        })
+        dispatch(uploadSocialMedia({
+            canvasPromise,
+            personsName,
+            imageHeight: node.scrollHeight,
+            imageWidth: node.scrollWidth,
+        }))
     }
 
     return (
