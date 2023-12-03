@@ -129,7 +129,7 @@ export const uploadSocialMedia = createAsyncThunk(
         });
 
         const canvas = await canvasPromise
-        const image = await new Promise(resolve => canvas.toBlob(resolve, 'image/jpeg', 0.95));
+        const image = await new Promise(resolve => canvas.toBlob(resolve, 'image/jpeg'));
         const { fileUrl } = await uploadManager.upload({
             data: image,
             mime: 'image/jpeg',
