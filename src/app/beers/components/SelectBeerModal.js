@@ -25,11 +25,7 @@ export const SelectBeerModal = ({isOpen, onClose, header, children}) => {
                 <ModalBody>
                     {children}
                 </ModalBody>
-                <ModalFooter>
-                <Button onClick={onClose}>
-                    Cancel
-                </Button>
-                </ModalFooter>
+                <BeerModalFooter onClose={onClose} />
             </ModalContent>
         </Modal>
     )
@@ -81,5 +77,21 @@ export const BeerModalContent = ({onBeerSelected, onChangeBeerSearchQuery, beerS
                 />
             </Flex>
         </>
+    )
+}
+
+const BeerModalFooter = ({onClose}) => {
+    const [useHorizontalLayout] = useMediaQuery('(max-height: 450px)')
+    if (useHorizontalLayout) {
+        return <></>
+    }
+
+
+    return (
+        <ModalFooter>
+            <Button onClick={onClose}>
+                Cancel
+            </Button>
+        </ModalFooter>
     )
 }
