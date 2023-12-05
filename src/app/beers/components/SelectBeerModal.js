@@ -1,12 +1,24 @@
-import { Button, Flex, Input, Modal, ModalBody, ModalCloseButton, ModalContent, ModalFooter, ModalHeader, ModalOverlay } from "@chakra-ui/react";
+import { Button, Flex, Input, Modal, ModalBody, ModalCloseButton, ModalContent, ModalFooter, ModalHeader, ModalOverlay, useBreakpointValue } from "@chakra-ui/react";
 import { useState } from "react";
 import { BeerUGCInput } from "./BeerUGCInput";
 import { AddYourOwn } from "./AddYourOwn";
 import { Letter } from "./Letter";
 
 export const SelectBeerModal = ({isOpen, onClose, header, children}) => {
+    
+    const size = useBreakpointValue(
+        {
+            base: '2xl',
+            sm: 'full',
+            lg: '2xl',
+        },
+        {
+            fallback: 'base',
+        },
+    )
+
     return (
-        <Modal isOpen={isOpen} onClose={onClose} size='xl'>
+        <Modal isOpen={isOpen} onClose={onClose} size={size}>
             <ModalOverlay />
             <ModalContent margin='auto'>
                 <ModalHeader margin='auto'>{header}</ModalHeader>
