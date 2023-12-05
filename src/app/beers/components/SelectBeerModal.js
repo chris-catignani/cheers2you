@@ -1,4 +1,4 @@
-import { Button, Flex, Input, Modal, ModalBody, ModalCloseButton, ModalContent, ModalFooter, ModalHeader, ModalOverlay, useBreakpointValue } from "@chakra-ui/react";
+import { Button, Flex, Input, Modal, ModalBody, ModalCloseButton, ModalContent, ModalFooter, ModalHeader, ModalOverlay, useBreakpointValue, useMediaQuery } from "@chakra-ui/react";
 import { useState } from "react";
 import { BeerUGCInput } from "./BeerUGCInput";
 import { AddYourOwn } from "./AddYourOwn";
@@ -6,7 +6,7 @@ import { Letter } from "./Letter";
 
 export const SelectBeerModal = ({isOpen, onClose, header, children}) => {
     
-    const size = useBreakpointValue(
+    const modalSize = useBreakpointValue(
         {
             base: '2xl',
             sm: 'full',
@@ -18,7 +18,7 @@ export const SelectBeerModal = ({isOpen, onClose, header, children}) => {
     )
 
     return (
-        <Modal isOpen={isOpen} onClose={onClose} size={size}>
+        <Modal isOpen={isOpen} onClose={onClose} size={modalSize}>
             <ModalOverlay />
             <ModalContent margin='auto'>
                 <ModalHeader margin='auto'>{header}</ModalHeader>
@@ -46,6 +46,9 @@ export const BeerModalContent = ({onBeerSelected, onChangeBeerSearchQuery, beerS
             }} />
         )
     }
+
+    const [useHorizontalLayout] = useMediaQuery('(max-height: 450px)')
+    console.log(useHorizontalLayout)
 
     return (
         <Flex justifyContent='safe center' flexWrap='wrap' columnGap='5'>
