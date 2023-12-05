@@ -18,7 +18,7 @@ export const SelectBeerModal = ({isOpen, onClose, header, children}) => {
     )
 
     return (
-        <Modal isOpen={isOpen} onClose={onClose} size={modalSize}>
+        <Modal isOpen={isOpen} onClose={onClose} scrollBehavior='inside' size={modalSize}>
             <ModalOverlay />
             <ModalContent margin='auto'>
                 <ModalHeader margin='auto'>{header}</ModalHeader>
