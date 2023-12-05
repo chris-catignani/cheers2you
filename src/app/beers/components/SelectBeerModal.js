@@ -1,4 +1,4 @@
-import { Button, Flex, Input, Modal, ModalBody, ModalCloseButton, ModalContent, ModalFooter, ModalHeader, ModalOverlay, useBreakpointValue } from "@chakra-ui/react";
+import { Button, Flex, Input, Modal, ModalBody, ModalCloseButton, ModalContent, ModalFooter, ModalHeader, ModalOverlay, useBreakpointValue, useMediaQuery } from "@chakra-ui/react";
 import { useState } from "react";
 import { BeerUGCInput } from "./BeerUGCInput";
 import { AddYourOwn } from "./AddYourOwn";
@@ -8,12 +8,11 @@ export const SelectBeerModal = ({isOpen, onClose, header, children}) => {
     
     const modalSize = useBreakpointValue(
         {
-            base: '2xl',
-            sm: 'full',
+            base: 'full',
             lg: '2xl',
         },
         {
-            fallback: 'base',
+            fallback: 'lg',
         },
     )
 
@@ -39,6 +38,7 @@ export const SelectBeerModal = ({isOpen, onClose, header, children}) => {
 export const BeerModalContent = ({onBeerSelected, onChangeBeerSearchQuery, beerSearchResults}) => {
     const [isInBeerUGCMode, setIsInBeerUGCMode] = useState(false);
     const [beerSearchQuery, setBeerSearchQuery] = useState('');
+    const [useHorizontalLayout] = useMediaQuery('(max-height: 450px)')
 
     if (isInBeerUGCMode) {
         return (
@@ -59,6 +59,10 @@ export const BeerModalContent = ({onBeerSelected, onChangeBeerSearchQuery, beerS
         )
     })
 
+    const flexProperties = {
+        flexWrap: useHorizontalLayout ? '' : 'wrap'
+    }
+
     return (
         <>
             <Input
@@ -70,7 +74,7 @@ export const BeerModalContent = ({onBeerSelected, onChangeBeerSearchQuery, beerS
                     onChangeBeerSearchQuery(e.target.value);
                 }}
             />
-            <Flex justifyContent='safe center' flexWrap='wrap' columnGap='5'>
+            <Flex justifyContent='safe center' columnGap='5' overflow='auto' {...flexProperties}>
                 {beerSearchResultsAsLetters}
                 <AddYourOwn 
                     onClick={() => setIsInBeerUGCMode(true)}
