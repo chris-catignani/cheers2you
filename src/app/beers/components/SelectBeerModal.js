@@ -38,6 +38,7 @@ export const SelectBeerModal = ({isOpen, onClose, header, children}) => {
 
 export const BeerModalContent = ({onBeerSelected, onChangeBeerSearchQuery, beerSearchResults}) => {
     const [isInBeerUGCMode, setIsInBeerUGCMode] = useState(false);
+    const [beerSearchQuery, setBeerSearchQuery] = useState('');
 
     if (isInBeerUGCMode) {
         return (
@@ -46,22 +47,6 @@ export const BeerModalContent = ({onBeerSelected, onChangeBeerSearchQuery, beerS
             }} />
         )
     }
-
-    return (
-        <Flex justifyContent='safe center' flexWrap='wrap' columnGap='5'>
-            <BeerSearch
-                beerSearchResults={beerSearchResults}
-                onChangeBeerSearchQuery={onChangeBeerSearchQuery}
-                onBeerSelected={onBeerSelected} />
-            <AddYourOwn 
-                onClick={() => setIsInBeerUGCMode(true)}
-            />
-        </Flex>
-    )
-}
-
-export const BeerSearch = ({onBeerSelected, onChangeBeerSearchQuery, beerSearchResults}) => {
-    const [beerSearchQuery, setBeerSearchQuery] = useState('');
 
     const beerSearchResultsAsLetters = beerSearchResults.map( (beer, idx) => {
         return (
@@ -85,7 +70,12 @@ export const BeerSearch = ({onBeerSelected, onChangeBeerSearchQuery, beerSearchR
                     onChangeBeerSearchQuery(e.target.value);
                 }}
             />
-            {beerSearchResultsAsLetters}
+            <Flex justifyContent='safe center' flexWrap='wrap' columnGap='5'>
+                {beerSearchResultsAsLetters}
+                <AddYourOwn 
+                    onClick={() => setIsInBeerUGCMode(true)}
+                />
+            </Flex>
         </>
     )
 }
