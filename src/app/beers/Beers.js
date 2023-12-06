@@ -6,7 +6,7 @@ import { DownloadIcon, ExternalLinkIcon } from '@chakra-ui/icons';
 import { Letter } from './components/Letter';
 import { SocialShareModal } from './components/SocialShareModal';
 import { BeerModalContent, SelectBeerModal } from './components/SelectBeerModal';
-import { downloadImage, searchForBeer, selectBeerLetters, selectBeerOptionsAtIdx, selectBeerSearchResults, selectDownloadGeneratedImageStatus, selectLockedBeerLetterIdxs, selectOpenBeerIdx, setBeerLetterAtIndex, setBeerSearchResults, setOpenBeerIdx, toggleLockedBeerLetterIdx, generateBeerBanner, uploadSocialMedia, selectUploadSocialMediaStatus, selectUploadedSocialMediaData, setUploadedSocialMediaData, generateBeerDefaults, selectBeerDefaultsPerLetter, selectPersonsName, selectIsChallangeMode, selectIsChallengeModeExplainerDisplayed, setIsChallengeModeExplainerDisplayed, setIsChallengeMode, incrementChallengeModeSpinCount, selectChallengeModeSpinCount } from '@/lib/redux';
+import { downloadImage, searchForBeer, selectBeerLetters, selectBeerOptionsAtIdx, selectBeerSearchResults, selectDownloadGeneratedImageStatus, selectLockedBeerLetterIdxs, selectOpenBeerIdx, setBeerLetterAtIndex, setBeerSearchResults, setOpenBeerIdx, toggleLockedBeerLetterIdx, generateBeerBanner, uploadSocialMedia, selectUploadSocialMediaStatus, selectUploadedSocialMediaData, setUploadedSocialMediaData, generateBeerDefaults, selectBeerDefaultsPerLetter, selectPersonsName, selectIsChallangeMode, selectIsChallengeModeExplainerDisplayed, setIsChallengeModeExplainerDisplayed, setIsChallengeMode, incrementChallengeModeSpinCount, selectChallengeModeSpinCount, selectVenueName } from '@/lib/redux';
 import { Box, Button, ButtonGroup, Center, Container, Flex, Heading, IconButton, Text, useDisclosure, useMediaQuery } from '@chakra-ui/react';
 import { isAtoZ, getSocialMediaShareUrl, wrapIndex } from '@/lib/utils/utils';
 import html2canvas from 'html2canvas';
@@ -322,6 +322,7 @@ const BeerModal = () => {
     const dispatch = useDispatch();
     const { isOpen, onOpen, onClose } = useDisclosure()
 
+    const venueName = useSelector(selectVenueName);
     const beerLetters = useSelector(selectBeerLetters);
     const openBeerIdx = useSelector(selectOpenBeerIdx);
     const beerSearchResults = useSelector(selectBeerSearchResults);
@@ -342,8 +343,11 @@ const BeerModal = () => {
         clearDataOnClose()
     }
 
-    const onChangeBeerSearchQuery = (bearSearchQuery) => {
-        dispatch(searchForBeer(bearSearchQuery))
+    const onChangeBeerSearchQuery = (beerSearchQuery) => {
+        dispatch(searchForBeer({
+            query: beerSearchQuery,
+            venueName
+        }))
     }
 
     const letter = openBeerIdx !== -1 ? beerLetters[openBeerIdx]['letter'] : ''

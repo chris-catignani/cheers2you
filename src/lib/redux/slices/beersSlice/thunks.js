@@ -97,8 +97,8 @@ const fuses = (() => {
     }, {})
 })()
 
-export const searchForBeer = (beerSearchQuery) => (dispatch, getState) => {
-    const beerSearchResults = fuseSearch(beerSearchQuery)
+export const searchForBeer = ({query, venueName}) => (dispatch, getState) => {
+    const beerSearchResults = fuseSearch(query, venueName)
     dispatch(setBeerSearchResults(beerSearchResults, {scoreThreshold: 0.40}))
 }
 
