@@ -69,5 +69,12 @@
                 "replacement": ""
             }
         ]
+    },
+    "beer_type": {
+        "wordsToChange": [
+            {
+                "description": ""
+            }
+        ]
     }
 }

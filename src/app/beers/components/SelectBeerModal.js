@@ -71,7 +71,7 @@ export const BeerModalContent = ({onBeerSelected, onChangeBeerSearchQuery, beerS
                     onChangeBeerSearchQuery(e.target.value);
                 }}
             />
-            <Flex justifyContent='safe center' columnGap='5' overflow='auto' {...flexProperties}>
+            <Flex justifyContent='safe center' gap='5' overflow='auto' {...flexProperties}>
                 {beerSearchResultsAsLetters}
                 <AddYourOwn 
                     onClick={() => setIsInBeerUGCMode(true)}
