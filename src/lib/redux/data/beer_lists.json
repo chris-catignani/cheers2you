@@ -1,5 +1,4 @@
-[
-    
+[    
     {
         "_comment": "The first entry in this file is also the fallback incase the user does not specify a venue",
         "venueName": "big bar",
@@ -17,7 +16,7 @@
         "fileName": "aha_bmth.json"
     },
     {
-        "venueName": "Hlaf UK Beers List",
+        "venueName": "Half UK Beers List",
         "urlParam": "c2y_part_uk",
         "fileName": "c2y_partial_uk_beers.json"
     }
