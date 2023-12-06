@@ -18,10 +18,10 @@ export const ChallangeModeExplainerModal = ({isOpen, onClose, onOptIn}) => {
             <ModalFooter margin='auto'>
                 <ButtonGroup spacing='20'>
                     <Button onClick={onOptIn}>
-                        I'm in
+                        I&apos;m in
                     </Button>
                     <Button onClick={onClose}>
-                        I'm out
+                        I&apos;m out
                     </Button>
                 </ButtonGroup>
             </ModalFooter>
