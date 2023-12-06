@@ -207,7 +207,7 @@ const getDefaultBeersForLetter = (letter, venueName) => {
 
     const defaultBeerLetterSearch = (fieldRegex) => {
         if (beers.length < 10) {
-            const results = fuseSearch(fieldRegex, venueName, {scoreThreshold: 0.5})
+            const results = fuseSearch(fieldRegex, venueName)
             beers.push(...results.map(result => result.beer))
         }
     }
@@ -220,7 +220,7 @@ const getDefaultBeersForLetter = (letter, venueName) => {
     return shuffle(beers)
 }
 
-const fuseSearch = (query, venueName, {limit = 10, scoreThreshold = 0.5} = {}) => {
+const fuseSearch = (query, venueName, {limit = 10, scoreThreshold = 0.3} = {}) => {
     if (!query) {
         return []
     }
