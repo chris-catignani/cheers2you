@@ -15,5 +15,10 @@
         "venueName": "All Hail Ale, Bournmouth",
         "urlParam": "aha_bmth",
         "fileName": "aha_bmth.json"
+    },
+    {
+        "venueName": "Hlaf UK Beers List",
+        "urlParam": "c2y_part_uk",
+        "fileName": "c2y_partial_uk_beers.json"
     }
 ]
