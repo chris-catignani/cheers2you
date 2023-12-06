@@ -97,14 +97,18 @@ export const downloadImage = createAsyncThunk(
 
 // TODO:
 // error handling
-// url escaping
 // statuses
 // throttle requests
+// default venues
 
 export const generateBeerDefaults = createAsyncThunk(
     'beers/generateBeerDefaults',
     async (venueName) => {
-        const response = await fetch(`beers/api?op=defaults&venue=${venueName}`)
+        const searchParams = new URLSearchParams()
+        searchParams.set('op', 'defaults');
+        searchParams.set('venue', venueName)
+
+        const response = await fetch(`beers/api?${searchParams.toString()}`)
         return response.json()
     }
 )
@@ -112,7 +116,12 @@ export const generateBeerDefaults = createAsyncThunk(
 export const searchForBeer = createAsyncThunk(
     'beers/searchForBeer',
     async ({query, venueName}) => {
-        const response = await fetch(`beers/api?op=search&venue=${venueName}&q=${query}`)
+        const searchParams = new URLSearchParams()
+        searchParams.set('op', 'search');
+        searchParams.set('venue', venueName)
+        searchParams.set('q', query)
+
+        const response = await fetch(`beers/api?${searchParams.toString()}`)
         return response.json()
     }
 )
