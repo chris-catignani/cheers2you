@@ -7,7 +7,7 @@ import { Letter } from './components/Letter';
 import { SocialShareModal } from './components/SocialShareModal';
 import { BeerModalContent, SelectBeerModal } from './components/SelectBeerModal';
 import { downloadImage, searchForBeer, selectBeerLetters, selectBeerOptionsAtIdx, selectBeerSearchResults, selectDownloadGeneratedImageStatus, selectLockedBeerLetterIdxs, selectOpenBeerIdx, setBeerLetterAtIndex, setBeerSearchResults, setOpenBeerIdx, toggleLockedBeerLetterIdx, generateBeerBanner, uploadSocialMedia, selectUploadSocialMediaStatus, selectUploadedSocialMediaData, setUploadedSocialMediaData, generateBeerDefaults, selectBeerDefaultsPerLetter, selectPersonsName, selectIsChallangeMode, selectIsChallengeModeExplainerDisplayed, setIsChallengeModeExplainerDisplayed, setIsChallengeMode, incrementChallengeModeSpinCount, selectChallengeModeSpinCount } from '@/lib/redux';
-import { Box, Button, ButtonGroup, Center, Container, Flex, Heading, Hide, IconButton, Text, useDisclosure } from '@chakra-ui/react';
+import { Box, Button, ButtonGroup, Center, Container, Flex, Heading, IconButton, Text, useDisclosure } from '@chakra-ui/react';
 import { isAtoZ, getSocialMediaShareUrl, wrapIndex } from '@/lib/utils/utils';
 import html2canvas from 'html2canvas';
 import { ChallangeModeExplainerModal } from './components/ChallangeModeExplainerModal';
@@ -78,11 +78,6 @@ export const Beers = ({personsName, venueName}) => {
                     onSpinUnlockedBeersPressed={spinUnlockedBeersPressed}
                     onChallengeModePressed={onChallengeModePressed}
                     isLoading={animateRunCount !== -1} />
-                <Hide below='md'>
-                    <Box float='right' marginTop='-40px'>
-                        <ShareButtons generatedPicRef={generatedPicRef} />
-                    </Box>
-                </Hide>
             </Container>
             <Container maxW='4xl' padding={0}>
                 <BeerLetters
@@ -93,11 +88,9 @@ export const Beers = ({personsName, venueName}) => {
             <ChallengeModeModal />
             <BeerModal />
             <ShareModal />
-            <Hide above='md'>
-                <Box marginTop='5' float='right'>
-                    <ShareButtons generatedPicRef={generatedPicRef} />
-                </Box>
-            </Hide>
+            <Box marginTop='5' float='right'>
+                <ShareButtons generatedPicRef={generatedPicRef} />
+            </Box>
         </Box>
     )
 }
@@ -126,7 +119,7 @@ const BeersHeader = ({onSpinUnlockedBeersPressed, onChallengeModePressed, isLoad
     } else {
         return (
             <Heading as='h5' size='sm'>
-                <Flex flexWrap='wrap'>
+                <Flex flexWrap='wrap' justifyContent='center'>
                     <Text as="span" whiteSpace='nowrap' _after={{content: '"\\00a0"'}}>
                         Tap the suggested beers to choose your own.
                     </Text>
