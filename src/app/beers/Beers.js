@@ -7,7 +7,7 @@ import { Letter } from './components/Letter';
 import { SocialShareModal } from './components/SocialShareModal';
 import { BeerModalContent, SelectBeerModal } from './components/SelectBeerModal';
 import { downloadImage, searchForBeer, selectBeerLetters, selectBeerOptionsAtIdx, selectBeerSearchResults, selectDownloadGeneratedImageStatus, selectLockedBeerLetterIdxs, selectOpenBeerIdx, setBeerLetterAtIndex, setBeerSearchResults, setOpenBeerIdx, toggleLockedBeerLetterIdx, generateBeerBanner, uploadSocialMedia, selectUploadSocialMediaStatus, selectUploadedSocialMediaData, setUploadedSocialMediaData, generateBeerDefaults, selectBeerDefaultsPerLetter, selectPersonsName, selectIsChallangeMode, selectIsChallengeModeExplainerDisplayed, setIsChallengeModeExplainerDisplayed, setIsChallengeMode, incrementChallengeModeSpinCount, selectChallengeModeSpinCount } from '@/lib/redux';
-import { Box, Button, ButtonGroup, Center, Container, Flex, Heading, IconButton, Text, useDisclosure } from '@chakra-ui/react';
+import { Box, Button, ButtonGroup, Center, Container, Flex, Heading, IconButton, Text, useDisclosure, useMediaQuery } from '@chakra-ui/react';
 import { isAtoZ, getSocialMediaShareUrl, wrapIndex } from '@/lib/utils/utils';
 import html2canvas from 'html2canvas';
 import { ChallangeModeExplainerModal } from './components/ChallangeModeExplainerModal';
@@ -31,6 +31,7 @@ export const Beers = ({personsName, venueName}) => {
     }, [dispatch, storedPersonsName, personsName])
 
     const [{animateRunCount, maxAnimateRunCountPerIdx}, setAnimationProps] = useState({animateRunCount: -1, maxAnimateRunCountPerIdx: []})
+    const [isLandscapePhone] = useMediaQuery('(max-height: 450px)')
     const lockedBeerIdxs = useSelector(selectLockedBeerLetterIdxs);
 
     const generatedPicRef = useRef(null)
@@ -71,6 +72,15 @@ export const Beers = ({personsName, venueName}) => {
         dispatch(setIsChallengeModeExplainerDisplayed(true))
     }
 
+    let landscapePhoneShareButtonProps = {}
+    if (isLandscapePhone) {
+        landscapePhoneShareButtonProps = {
+            position: 'absolute',
+            right: '10px',
+            top: '-20px',
+        }
+    }
+
     return (
         <Box>
             <Container maxW='4xl'>
@@ -88,7 +98,7 @@ export const Beers = ({personsName, venueName}) => {
             <ChallengeModeModal />
             <BeerModal />
             <ShareModal />
-            <Box marginTop='5' float='right'>
+            <Box marginTop='5' float='right' {...landscapePhoneShareButtonProps}>
                 <ShareButtons generatedPicRef={generatedPicRef} />
             </Box>
         </Box>
