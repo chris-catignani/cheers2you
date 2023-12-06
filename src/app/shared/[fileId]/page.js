@@ -21,7 +21,7 @@ export const getSocialMediaInfo = async (fileId) => {
 export const getOpenGraphImageUrl = (imageUrl, imageHeight, imageWidth) => {
   const ratio = imageHeight / imageWidth
   const newHeight = 1200 * ratio
-  const heightExtend = Math.floor(630 - newHeight)
+  const heightExtend = Math.floor((630 - newHeight) / 2)
 
   return (heightExtend > 0 ? 
       `${imageUrl.replace('/raw/', '/image/')}?w=1200&fit=width&extend-y=${heightExtend}&extend-color=%23FFFFFF` :
