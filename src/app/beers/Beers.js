@@ -82,26 +82,23 @@ export const Beers = ({personsName, venueName}) => {
     }
 
     return (
-        <Box>
-            <Container maxW='4xl'>
-                <BeersHeader
-                    onSpinUnlockedBeersPressed={spinUnlockedBeersPressed}
-                    onChallengeModePressed={onChallengeModePressed}
-                    isLoading={animateRunCount !== -1} />
-            </Container>
-            <Container maxW='4xl' padding={0}>
-                <BeerLetters
-                    animateRunCount={animateRunCount}
-                    maxAnimateRunCountPerIdx={maxAnimateRunCountPerIdx}
-                    generatedPicRef={generatedPicRef}/>
-            </Container>
+        <Container maxW='4xl' padding={0}>
+            <BeersHeader
+                onSpinUnlockedBeersPressed={spinUnlockedBeersPressed}
+                onChallengeModePressed={onChallengeModePressed}
+                isLoading={animateRunCount !== -1} />
+
+            <BeerLetters
+                animateRunCount={animateRunCount}
+                maxAnimateRunCountPerIdx={maxAnimateRunCountPerIdx}
+                generatedPicRef={generatedPicRef}/>
             <ChallengeModeModal />
             <BeerModal />
             <ShareModal />
             <Box marginTop='5' float='right' {...landscapePhoneShareButtonProps}>
                 <ShareButtons generatedPicRef={generatedPicRef} />
             </Box>
-        </Box>
+        </Container>
     )
 }
 
@@ -128,19 +125,21 @@ const BeersHeader = ({onSpinUnlockedBeersPressed, onChallengeModePressed, isLoad
         )
     } else {
         return (
-            <Heading as='h5' size='sm'>
-                <Flex flexWrap='wrap' justifyContent='center'>
-                    <Text as="span" whiteSpace='nowrap' _after={{content: '"\\00a0"'}}>
-                        Tap the suggested beers to choose your own.
-                    </Text>
-                    <Text as="span" whiteSpace='nowrap'>
-                        <Text as="span" _after={{content: '" "'}}>
-                            Feeling Frisky? Try the
+            <Container maxW='xl'>
+                <Heading as='h5' size='sm'>
+                    <Flex flexWrap='wrap' justifyContent='center'>
+                        <Text as="span" whiteSpace='nowrap' _after={{content: '"\\00a0"'}}>
+                            Tap the suggested beers to choose your own.
                         </Text>
-                        <Button onClick={onChallengeModePressed} variant='link' colorScheme='teal'>C2Y Challenge</Button>
-                    </Text>
-                </Flex>
-            </Heading>
+                        <Text as="span" whiteSpace='nowrap'>
+                            <Text as="span" _after={{content: '" "'}}>
+                                Feeling Frisky? Try the
+                            </Text>
+                            <Button onClick={onChallengeModePressed} variant='link' colorScheme='teal'>C2Y Challenge</Button>
+                        </Text>
+                    </Flex>
+                </Heading>
+            </Container>
         )
     }
 }
