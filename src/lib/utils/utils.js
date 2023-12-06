@@ -14,3 +14,7 @@ export const getSocialMediaShareUrl = (fileId) => {
 export const getSocialMediaImageUrl = (fileId) => {
     return `https://upcdn.io/W142hJk/raw/demo/${fileId}.jpeg`
 }
+
+export const tokeniseStringWithQuotesBySpaces = (string) => {
+    return string.match(/("[^"]*?"|[^"\s]+)+(?=\s*|\s*$)/g) ?? []
+}

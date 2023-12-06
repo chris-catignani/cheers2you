@@ -6,7 +6,7 @@ import { UploadManager } from '@bytescale/sdk';
 import download from 'downloadjs';
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import { setBeerDefaultsPerLetter, setBeerLetters, setBeerOptionsAtIdx, setBeerSearchResults, setLockedBeerLetterIdxs } from "./beersSlice";
-import { isAtoZ } from '@/lib/utils/utils';
+import { isAtoZ, tokeniseStringWithQuotesBySpaces } from '@/lib/utils/utils';
 import { setPersonsName } from '../searchSlice';
 import { setChallengeModeSpinCount, setIsChallengeMode } from '../challengeModeSlice';
 
@@ -98,7 +98,30 @@ const fuses = (() => {
 })()
 
 export const searchForBeer = ({query, venueName}) => (dispatch, getState) => {
-    const beerSearchResults = fuseSearch(query, venueName)
+
+    /**
+     * Fuse.js does not allow searching across multiple fields.
+     * So if you search for brewer + beer_name, it will return 0 results.
+     * Thus, we tokenize the search query by spaces, and search multiple fields at once.
+     * https://github.com/krisk/Fuse/issues/235#issuecomment-850269634
+     */
+    const tokenizedQuery = tokeniseStringWithQuotesBySpaces(query)
+
+    const extendedQuery = {
+        $and: tokenizedQuery.map((searchToken) => {
+            const orFields = [
+                { 'beer_name': searchToken },
+                { 'brewer_name': searchToken },
+                { 'beer_type': searchToken },
+            ];
+        
+            return {
+                $or: orFields,
+            };
+        })
+    }
+
+    const beerSearchResults = fuseSearch(extendedQuery, venueName)
     dispatch(setBeerSearchResults(beerSearchResults, {scoreThreshold: 0.40}))
 }
 
@@ -251,6 +274,7 @@ const fuseSearch = (query, venueName, {limit = 10, scoreThreshold = 0.3} = {}) =
 
     const fuse = fuses[venueName]?.fuse || fuses[beerLists[0].urlParam].fuse
     const fuseResults = fuse.search(query, {limit})
+    console.log(fuseResults)
     return fuseResults.reduce((results, result) => {
         if (result['score'] < scoreThreshold) {
             results.push({
