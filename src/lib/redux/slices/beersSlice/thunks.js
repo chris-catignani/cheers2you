@@ -8,6 +8,7 @@ import { createAsyncThunk } from '@reduxjs/toolkit';
 import { setBeerDefaultsPerLetter, setBeerLetters, setBeerOptionsAtIdx, setBeerSearchResults, setLockedBeerLetterIdxs } from "./beersSlice";
 import { isAtoZ } from '@/lib/utils/utils';
 import { setPersonsName } from '../searchSlice';
+import { setChallengeModeSpinCount, setIsChallengeMode } from '../challengeModeSlice';
 
 const formatBeers = (beers) => {
     const breweryWordsToTrim = new RegExp(beerRules['brewery']['wordsToTrim'].join('|'), 'gi')
@@ -113,6 +114,8 @@ export const generateBeerBanner = ({personsName, freshBanner = true} = {}) => (d
     })
 
     if (freshBanner) {
+        dispatch(setIsChallengeMode(false))
+        dispatch(setChallengeModeSpinCount(0))
         dispatch(setLockedBeerLetterIdxs(new Array(beerLetters.length).fill(false)))
     }
     dispatch(setPersonsName(personsName))

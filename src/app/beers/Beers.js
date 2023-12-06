@@ -2,14 +2,15 @@
 
 import { useDispatch, useSelector } from 'react-redux';
 import React, { useEffect, useRef, useState } from 'react';
-import { DownloadIcon, EditIcon, ExternalLinkIcon, LockIcon, UnlockIcon } from '@chakra-ui/icons';
+import { DownloadIcon, ExternalLinkIcon } from '@chakra-ui/icons';
 import { Letter } from './components/Letter';
 import { SocialShareModal } from './components/SocialShareModal';
 import { BeerModalContent, SelectBeerModal } from './components/SelectBeerModal';
-import { downloadImage, searchForBeer, selectBeerLetters, selectBeerOptionsAtIdx, selectBeerSearchResults, selectDownloadGeneratedImageStatus, selectLockedBeerLetterIdxs, selectOpenBeerIdx, setBeerLetterAtIndex, setBeerSearchResults, setOpenBeerIdx, toggleLockedBeerLetterIdx, generateBeerBanner, uploadSocialMedia, selectUploadSocialMediaStatus, selectUploadedSocialMediaData, setUploadedSocialMediaData, generateBeerDefaults, selectBeerDefaultsPerLetter, selectPersonsName } from '@/lib/redux';
-import { Box, Button, ButtonGroup, Container, Flex, Heading, Hide, IconButton, useDisclosure } from '@chakra-ui/react';
+import { downloadImage, searchForBeer, selectBeerLetters, selectBeerOptionsAtIdx, selectBeerSearchResults, selectDownloadGeneratedImageStatus, selectLockedBeerLetterIdxs, selectOpenBeerIdx, setBeerLetterAtIndex, setBeerSearchResults, setOpenBeerIdx, toggleLockedBeerLetterIdx, generateBeerBanner, uploadSocialMedia, selectUploadSocialMediaStatus, selectUploadedSocialMediaData, setUploadedSocialMediaData, generateBeerDefaults, selectBeerDefaultsPerLetter, selectPersonsName, selectIsChallangeMode, selectIsChallengeModeExplainerDisplayed, setIsChallengeModeExplainerDisplayed, setIsChallengeMode, incrementChallengeModeSpinCount, selectChallengeModeSpinCount } from '@/lib/redux';
+import { Box, Button, ButtonGroup, Center, Container, Flex, Heading, Hide, IconButton, Text, useDisclosure } from '@chakra-ui/react';
 import { isAtoZ, getSocialMediaShareUrl, wrapIndex } from '@/lib/utils/utils';
 import html2canvas from 'html2canvas';
+import { ChallangeModeExplainerModal } from './components/ChallangeModeExplainerModal';
 
 
 export const Beers = ({personsName, venueName}) => {
@@ -29,13 +30,13 @@ export const Beers = ({personsName, venueName}) => {
         }
     }, [dispatch, storedPersonsName, personsName])
 
-    const lockedBeerIdxs = useSelector(selectLockedBeerLetterIdxs);
-
     const [{animateRunCount, maxAnimateRunCountPerIdx}, setAnimationProps] = useState({animateRunCount: -1, maxAnimateRunCountPerIdx: []})
+    const lockedBeerIdxs = useSelector(selectLockedBeerLetterIdxs);
 
     const generatedPicRef = useRef(null)
 
-    const generatePressed = () => {
+    const spinUnlockedBeersPressed = () => {
+        dispatch(incrementChallengeModeSpinCount())
         dispatch(generateBeerBanner({personsName, freshBanner: false}))
 
         let maxAnimateRunCount = 8
@@ -66,18 +67,17 @@ export const Beers = ({personsName, venueName}) => {
         }, 100);
     }
 
+    const onChallengeModePressed = () => {
+        dispatch(setIsChallengeModeExplainerDisplayed(true))
+    }
+
     return (
         <Box>
             <Container maxW='4xl'>
-                <Container maxW='md' padding={0}>
-                    <Button
-                        width='full'
-                        onClick={generatePressed}
-                        isLoading={animateRunCount !== -1}
-                    >
-                        Spin unlocked beers
-                    </Button>
-                </Container>
+                <BeersHeader
+                    onSpinUnlockedBeersPressed={spinUnlockedBeersPressed}
+                    onChallengeModePressed={onChallengeModePressed}
+                    isLoading={animateRunCount !== -1} />
                 <Hide below='md'>
                     <Box float='right' marginTop='-40px'>
                         <ShareButtons generatedPicRef={generatedPicRef} />
@@ -85,13 +85,12 @@ export const Beers = ({personsName, venueName}) => {
                 </Hide>
             </Container>
             <Container maxW='4xl' padding={0}>
-                <Flex overflowX='auto' flexDirection='column' flexWrap='wrap'>
-                    <BeerLetters
-                        animateRunCount={animateRunCount}
-                        maxAnimateRunCountPerIdx={maxAnimateRunCountPerIdx}
-                        generatedPicRef={generatedPicRef}/>
-                </Flex>
+                <BeerLetters
+                    animateRunCount={animateRunCount}
+                    maxAnimateRunCountPerIdx={maxAnimateRunCountPerIdx}
+                    generatedPicRef={generatedPicRef}/>
             </Container>
+            <ChallengeModeModal />
             <BeerModal />
             <ShareModal />
             <Hide above='md'>
@@ -103,10 +102,51 @@ export const Beers = ({personsName, venueName}) => {
     )
 }
 
+const BeersHeader = ({onSpinUnlockedBeersPressed, onChallengeModePressed, isLoading}) => {
+    const isChallengeMode = useSelector(selectIsChallangeMode);
+    const challengeModeSpinCount = useSelector(selectChallengeModeSpinCount)
+    
+    if(isChallengeMode) {
+        const maxSpinsReached = challengeModeSpinCount >= 3
+        return (
+            <Container maxW='md' padding={0}>
+                <Button
+                    width='full'
+                    onClick={onSpinUnlockedBeersPressed}
+                    isLoading={isLoading}
+                    isDisabled={maxSpinsReached}
+                >
+                    {maxSpinsReached ? 'No more spins. Drink up!' : 'Spin unlocked beers'}
+                </Button>
+                <Center>
+                    <Text>Spins remaining: {3 - challengeModeSpinCount}</Text>
+                </Center>
+            </Container>
+        )
+    } else {
+        return (
+            <Heading as='h5' size='sm'>
+                <Flex flexWrap='wrap'>
+                    <Text as="span" whiteSpace='nowrap' _after={{content: '"\\00a0"'}}>
+                        Tap the suggested beers to choose your own.
+                    </Text>
+                    <Text as="span" whiteSpace='nowrap'>
+                        <Text as="span" _after={{content: '" "'}}>
+                            Feeling Frisky? Try the
+                        </Text>
+                        <Button onClick={onChallengeModePressed} variant='link' colorScheme='teal'>C2Y Challenge</Button>
+                    </Text>
+                </Flex>
+            </Heading>
+        )
+    }
+}
+
 // TODO refactor this. Use a helper to do the layout stuff, pass in react components
-export const BeerLetters = ({animateRunCount, maxAnimateRunCountPerIdx, generatedPicRef}) => {
+const BeerLetters = ({animateRunCount, maxAnimateRunCountPerIdx, generatedPicRef}) => {
     const dispatch = useDispatch();
 
+    const isChallengeMode = useSelector(selectIsChallangeMode);
     const beerLetters = useSelector(selectBeerLetters);
     const beerOptionsAtIdx = useSelector(selectBeerOptionsAtIdx);
     const lockedBeerIdxs = useSelector(selectLockedBeerLetterIdxs);
@@ -132,21 +172,25 @@ export const BeerLetters = ({animateRunCount, maxAnimateRunCountPerIdx, generate
             letters.push(
                 <Flex flexDirection='column' textAlign='center' key={`beer-letter-${idx}`}>
                     <Heading as='h5' size='sm' mb='5' textTransform='uppercase'>{letter}</Heading>
-                    <Letter beer={beerToShow} width='100px'/>
+                    <Letter beer={beerToShow} width='100px' onClick={() => dispatch(setOpenBeerIdx(idx))}/>
                 </Flex>
             )
-            const lockIcon = lockedBeerIdxs[idx] ? <LockIcon /> : <UnlockIcon />
+            const lockButtonText = lockedBeerIdxs[idx] ? 'Unlock Beer' : 'Lock Beer'
             letterEdits.push(
-                <ButtonGroup width='100px' justifyContent='center' key={`beer-letter-edit-${idx}`}>
-                    <IconButton onClick={() => dispatch(setOpenBeerIdx(idx))} icon={<EditIcon />}/>
-                    <IconButton onClick={() => dispatch(toggleLockedBeerLetterIdx(idx))} icon={lockIcon} />
-                </ButtonGroup>
+                <Button
+                    width='100px'
+                    marginBottom='1'
+                    key={`beer-letter-lock-${idx}`}
+                    onClick={() => dispatch(toggleLockedBeerLetterIdx(idx))}
+                >
+                    {lockButtonText}
+                </Button>
             )
         }
     })
 
     return (
-        <Box marginBottom='2'>
+        <Flex overflowX='auto' flexDirection='column' flexWrap='wrap' marginBottom='2'>
             {/* marginTop defined below so screen looks nice */}
             <Box marginTop='5' ref={generatedPicRef}>
                 <Flex justifyContent='safe center' gap='10'>
@@ -154,14 +198,13 @@ export const BeerLetters = ({animateRunCount, maxAnimateRunCountPerIdx, generate
                 </Flex>
             </Box>
             <Flex justifyContent='safe center' gap='10'>
-                {letterEdits}
+                {isChallengeMode && letterEdits}
             </Flex>
-        </Box>
-
+        </Flex>
     )
 }
 
-export const ShareButtons = ({generatedPicRef}) => {
+const ShareButtons = ({generatedPicRef}) => {
     const dispatch = useDispatch();
     const personsName = useSelector(selectPersonsName)
     const downloadGeneratedImageStatus = useSelector(selectDownloadGeneratedImageStatus);
@@ -208,7 +251,38 @@ export const ShareButtons = ({generatedPicRef}) => {
     )
 }
 
-export const ShareModal = () => {
+const ChallengeModeModal = () => {
+    const dispatch = useDispatch();
+    const { isOpen, onOpen, onClose } = useDisclosure()
+
+    const isChallengeModeExplainerDisplayed = useSelector(selectIsChallengeModeExplainerDisplayed)
+
+    useEffect(() => {
+        if (isChallengeModeExplainerDisplayed) {
+            onOpen()
+        }
+    }, [isChallengeModeExplainerDisplayed, onOpen])
+
+    const onCloseModal = () => {
+        dispatch(setIsChallengeModeExplainerDisplayed(false))
+        onClose()
+    }
+
+    const onOptIn = () => {
+        dispatch(setIsChallengeMode(true))
+        onCloseModal()
+    }
+
+    return (
+        <ChallangeModeExplainerModal
+            isOpen={isOpen}
+            onClose={onCloseModal}
+            onOptIn={onOptIn}
+        />
+    )
+}
+
+const ShareModal = () => {
     const dispatch = useDispatch();
     const { isOpen, onOpen, onClose } = useDisclosure()
 
@@ -237,7 +311,7 @@ export const ShareModal = () => {
     )
 }
 
-export const BeerModal = () => {
+const BeerModal = () => {
     const dispatch = useDispatch();
     const { isOpen, onOpen, onClose } = useDisclosure()
 
