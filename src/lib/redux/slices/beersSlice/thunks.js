@@ -1,6 +1,6 @@
 import beerRules from '../../data/beer_rules.json';
 import beerLists from '../../data/beer_lists.json';
-import { sample, shuffle } from 'lodash-es';
+import { escapeRegExp, sample, shuffle } from 'lodash-es';
 import Fuse from "fuse.js";
 import { UploadManager } from '@bytescale/sdk';
 import download from 'downloadjs';
@@ -29,16 +29,16 @@ const formatBeers = (beers) => {
     const beerNameCapitalLettersRegex = new RegExp(`(?!${wordsToKeepCapitalized})\\b([A-Z]+)\\b`, 'g')
 
     const formatBreweryName = (breweryName) => {
-        const trimmedString = breweryName.replace(breweryWordsToTrim, '').trim().replace(multispaceRegex, ' ')
+        const trimmedString = breweryName.toString().replace(breweryWordsToTrim, '').trim().replace(multispaceRegex, ' ')
         return trimmedString.toLowerCase().replace(/\b\w/g, s => s.toUpperCase()) // title case
     }
 
     const formatBeerName = (beerName, breweryName) => {
-        let formattedBeerName = beerName
+        let formattedBeerName = beerName.toString()
         beerNameRegexes.forEach( ({regex, replacement}) => {
             formattedBeerName = formattedBeerName.replace(regex, replacement).trim().replace(multispaceRegex, ' ')
         })
-        formattedBeerName = formattedBeerName.replace(new RegExp(`^${breweryName} `,'i'), '')
+        formattedBeerName = formattedBeerName.replace(new RegExp(`^${escapeRegExp(breweryName)} `,'i'), '')
         return formattedBeerName.replace(beerNameCapitalLettersRegex, s => s.toLowerCase().replace(/\b\w/g, s => s.toUpperCase())) // title case except certain terms
     }
 
