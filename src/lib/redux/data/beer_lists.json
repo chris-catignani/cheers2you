@@ -10,5 +10,10 @@
         "venueName": "small bar",
         "urlParam": "small_bar",
         "fileName": "beers.json"
+    },
+    {
+        "venueName": "All Hail Ale, Bournmouth",
+        "urlParam": "aha_bmth",
+        "fileName": "aha_bmth.json"
     }
 ]
