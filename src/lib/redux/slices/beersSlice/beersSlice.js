@@ -1,6 +1,6 @@
 import { getFromSessionStorage, setInSessionStorage } from '@/lib/utils/sessionStorage';
 import { createSlice } from '@reduxjs/toolkit';
-import { downloadImage, uploadSocialMedia } from './thunks';
+import { downloadImage, generateBeerDefaults, searchForBeer, uploadSocialMedia } from './thunks';
 
 const initialState = {
     beerLetters: JSON.parse(getFromSessionStorage('beers.beerLetters', '[]')),
@@ -41,9 +41,6 @@ export const beersSlice = createSlice({
             state.lockedBeerLetterIdxs = tempLockedBeerLetterIdxs
             setInSessionStorage('beers.lockedBeerLetterIdxs', JSON.stringify(state.lockedBeerLetterIdxs))
         },
-        setBeerDefaultsPerLetter: (state, action) => {
-            state.beerDefaultsPerLetter = action.payload
-        },
         setBeerOptionsAtIdx: (state, action) => {
             state.beerOptionsAtIdx = action.payload
         },
@@ -81,6 +78,12 @@ export const beersSlice = createSlice({
         .addCase(uploadSocialMedia.rejected, (state) => {
             state.uploadSocialMediaStatus = ''
             state.uploadedSocialMediaData = {}
+        })
+        .addCase(generateBeerDefaults.fulfilled, (state, action) => {
+            state.beerDefaultsPerLetter = action.payload
+        })
+        .addCase(searchForBeer.fulfilled, (state, action) => {
+            state.beerSearchResults = action.payload
         })
     }
 });
