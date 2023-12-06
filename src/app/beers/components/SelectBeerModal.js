@@ -44,10 +44,11 @@ export const BeerModalContent = ({onBeerSelected, onChangeBeerSearchQuery, beerS
         )
     }
 
-    const beerSearchResultsAsLetters = beerSearchResults.map( (beer, idx) => {
+    const beerSearchResultsAsLetters = beerSearchResults.map( ({beer, matchedFields}, idx) => {
         return (
             <Letter
                 beer={beer}
+                matchedFields={matchedFields}
                 width='100px'
                 displayBeerType={true}
                 onClick={() => onBeerSelected({beer})}

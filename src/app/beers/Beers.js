@@ -351,7 +351,7 @@ const BeerModal = () => {
     // Open the Modal if we have an openBeerIndex
     useEffect(() => {
         if (openBeerIdx !== -1) {
-            dispatch(setBeerSearchResults(beerDefaultsPerLetter[letter.toLowerCase()]))
+            dispatch(setBeerSearchResults(beerDefaultsPerLetter[letter.toLowerCase()].map(beer => { return {beer} } )))
             onOpen()
         }
     }, [openBeerIdx, onOpen, letter, beerDefaultsPerLetter, dispatch])

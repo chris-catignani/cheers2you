@@ -88,6 +88,7 @@ const fuses = (() => {
             'fuse': new Fuse(formatBeers(beers), {
                 keys: ['beer_name', 'brewer_name', 'beer_type'],
                 includeScore: true,
+                includeMatches: true,
                 ignoreLocation: true,
                 useExtendedSearch: true,
             })
@@ -207,7 +208,7 @@ const getDefaultBeersForLetter = (letter, venueName) => {
     const defaultBeerLetterSearch = (fieldRegex) => {
         if (beers.length < 10) {
             const results = fuseSearch(fieldRegex, venueName, {scoreThreshold: 0.5})
-            beers.push(...results)
+            beers.push(...results.map(result => result.beer))
         }
     }
 
@@ -224,11 +225,39 @@ const fuseSearch = (query, venueName, {limit = 10, scoreThreshold = 0.5} = {}) =
         return []
     }
 
+    const getMatchedFields = (result) => {
+        const biggestMatch = result['matches'].reduce( (biggestMatch, curMatch) => {
+            const curMatchLength = curMatch['indices'].reduce( (a, b) => {
+                return Math.max( a, (b[1] - b[0]) )
+            }, 0)
+
+            if (curMatchLength > biggestMatch['matchLength']) {
+                return {
+                    match: curMatch,
+                    matchLength: curMatchLength,
+                }
+            }
+            return biggestMatch
+        },
+        // acculumlator defaults to the first element, but with a 0 match length
+        {
+            match: result['matches']?.[0],
+            matchLength: 0,
+        })
+
+        // currently only returning one field
+        return [ biggestMatch['match']['key'] ]
+    }
+
     const fuse = fuses[venueName]?.fuse || fuses[beerLists[0].urlParam].fuse
     const fuseResults = fuse.search(query, {limit})
     return fuseResults.reduce((results, result) => {
         if (result['score'] < scoreThreshold) {
-            results.push(result['item'])
+            results.push({
+                'beer': result['item'],
+                'score': result['score'],
+                'matchedFields': getMatchedFields(result),
+            })
         }
         return results
     }, [])
