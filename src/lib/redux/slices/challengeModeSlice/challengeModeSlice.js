@@ -2,8 +2,8 @@ import { getFromSessionStorage, setInSessionStorage } from '@/lib/utils/sessionS
 import { createSlice } from '@reduxjs/toolkit';
 
 const initialState = {
-    isChallengeMode: getFromSessionStorage('challengeMode.isChallangeMode', false),
-    challengeModeSpinCount: getFromSessionStorage('challengeMode.challengeModeSpinCount', 0),
+    isChallengeMode: getFromSessionStorage('challengeMode.isChallangeMode', "false") === "true",
+    challengeModeSpinCount: parseInt(getFromSessionStorage('challengeMode.challengeModeSpinCount', "0")),
     isChallengeModeExplainerDisplayed: false,
 };
 
