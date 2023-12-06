@@ -49,6 +49,7 @@ export const BeerModalContent = ({onBeerSelected, onChangeBeerSearchQuery, beerS
             <Letter
                 beer={beer}
                 width='100px'
+                displayBeerType={true}
                 onClick={() => onBeerSelected({beer})}
                 key={`beer-picker-${idx}}`}>
             </Letter>
