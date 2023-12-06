@@ -16,8 +16,8 @@
         "fileName": "aha_bmth.json"
     },
     {
-        "venueName": "Half UK Beers List",
-        "urlParam": "c2y_part_uk",
-        "fileName": "c2y_partial_uk_beers.json"
+        "venueName": "50k UK Beers List",
+        "urlParam": "c2y_50k_beers",
+        "fileName": "c2y_50k_beers.json"
     }
 ]
