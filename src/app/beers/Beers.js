@@ -87,7 +87,6 @@ export const Beers = ({personsName, venueName}) => {
                 onSpinUnlockedBeersPressed={spinUnlockedBeersPressed}
                 onChallengeModePressed={onChallengeModePressed}
                 isLoading={animateRunCount !== -1} />
-
             <BeerLetters
                 animateRunCount={animateRunCount}
                 maxAnimateRunCountPerIdx={maxAnimateRunCountPerIdx}
@@ -156,6 +155,12 @@ const BeerLetters = ({animateRunCount, maxAnimateRunCountPerIdx, generatedPicRef
     const letters = []
     const letterEdits = []
 
+    const beerClicked = (idx) => {
+        if (!isChallengeMode) {
+            dispatch(setOpenBeerIdx(idx))
+        }
+    }
+
     beerLetters.forEach( ({letter, beer, userGeneratedBeer, isSpecialCharacter}, idx) => {
         let beerToShow = beer || userGeneratedBeer
         if(animateRunCount !== -1 && animateRunCount < maxAnimateRunCountPerIdx[idx] && !isSpecialCharacter) {
@@ -174,7 +179,7 @@ const BeerLetters = ({animateRunCount, maxAnimateRunCountPerIdx, generatedPicRef
             letters.push(
                 <Flex flexDirection='column' textAlign='center' key={`beer-letter-${idx}`}>
                     <Heading as='h5' size='sm' mb='5' textTransform='uppercase'>{letter}</Heading>
-                    <Letter beer={beerToShow} width='100px' onClick={() => dispatch(setOpenBeerIdx(idx))}/>
+                    <Letter beer={beerToShow} width='100px' onClick={() => beerClicked(idx)}/>
                 </Flex>
             )
             const lockButtonText = lockedBeerIdxs[idx] ? 'Unlock Beer' : 'Lock Beer'
