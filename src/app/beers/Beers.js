@@ -223,7 +223,7 @@ const ShareButtons = ({generatedPicRef}) => {
             backgroundColor: 'white',
             width: node.scrollWidth,
             height: node.scrollHeight,
-            proxy: '/beers/api',
+            proxy: '/beers/api/imageProxy',
         })
         dispatch(downloadImage(canvasPromise))
     }
@@ -234,7 +234,7 @@ const ShareButtons = ({generatedPicRef}) => {
             backgroundColor: 'white',
             width: node.scrollWidth,
             height: node.scrollHeight,
-            proxy: '/beers/api'
+            proxy: '/beers/api/imageProxy',
         })
         dispatch(uploadSocialMedia({
             canvasPromise,
