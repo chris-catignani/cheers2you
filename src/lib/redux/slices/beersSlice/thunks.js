@@ -24,6 +24,12 @@ const formatBeers = (beers) => {
             }
         })
     ]
+    const beerTypeRegexes = beerRules.beerType.regexes.map(({regex, replacement}) => {
+        return {
+            regex: new RegExp(escapeRegExp(regex)),
+            replacement,
+        }
+    })
     const multispaceRegex = new RegExp(' {2,}', 'g')
     const wordsToKeepCapitalized = beerRules?.beerName?.wordsToKeepCapitalized.join('|')
     const beerNameCapitalLettersRegex = new RegExp(`(?!${wordsToKeepCapitalized})\\b([A-Z]+)\\b`, 'g')
@@ -42,6 +48,14 @@ const formatBeers = (beers) => {
         return formattedBeerName.replace(beerNameCapitalLettersRegex, s => s.toLowerCase().replace(/\b\w/g, s => s.toUpperCase())) // title case except certain terms
     }
 
+    const formatBeerType = (beerType) => {
+        let formattedBeerType = beerType.toString()
+        beerTypeRegexes.forEach( ({regex, replacement}) => {
+            formattedBeerType = formattedBeerType.replace(regex, replacement).trim().replace(multispaceRegex, ' ')
+        })
+        return formattedBeerType
+    }
+
     const formatBeerLabelFile = (beer) => {
         if (beer['beer_label_file_big'] === 'https://assets.untappd.com/site/assets/images/temp/badge-beer-default.png') {
             return beer['brewer_logo_file_big']
@@ -52,13 +66,14 @@ const formatBeers = (beers) => {
     return Object.values(beers).map(beer => {
         const breweryName = formatBreweryName(beer['brewer_name'])
         const beerName = formatBeerName(beer['beer_name'], breweryName)
+        const beerType = formatBeerType(beer['beer_type'])
         const beerLabelFile = formatBeerLabelFile(beer)
         // console.log("formatted brewery: \"" + beer['brewer_name'] + "\" -> \"" + breweryName + "\"")
         // console.log("formatted beer: \"" + beer['beer_name'] + "\" -> \"" + beerName + "\"")
         return {
             'beer_name': beerName,
             'brewer_name': breweryName,
-            'beer_type': beer['beer_type'],
+            'beer_type': beerType,
             'beer_label_file': beerLabelFile,
         }
     })

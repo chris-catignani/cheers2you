@@ -70,10 +70,11 @@
             }
         ]
     },
-    "beer_type": {
-        "wordsToChange": [
+    "beerType": {
+        "regexes": [
             {
-                "description": ""
+                "regex": "IPA - New England / Hazy",
+                "replacement": "IPA - Hazy"
             }
         ]
     }
