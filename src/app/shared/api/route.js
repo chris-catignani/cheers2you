@@ -1,7 +1,5 @@
 import { kv } from "@vercel/kv";
 
-export const dynamic = 'force-dynamic' // defaults to force-static
-
 export async function POST(request) {
     const requestJson = await request.json()
 

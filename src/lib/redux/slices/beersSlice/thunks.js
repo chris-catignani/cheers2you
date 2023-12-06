@@ -81,17 +81,18 @@ const formatBeers = (beers) => {
 
 const fuses = (() => {
     return beerLists.reduce( (results, beerList) => {
-        const beers = require(`../../data/${beerList.fileName}`)
+        const beers = formatBeers(require(`../../data/${beerList.fileName}`))
+        const fuseOptions = {
+            keys: ['beer_name', 'brewer_name', 'beer_type'],
+            includeScore: true,
+            includeMatches: true,
+            ignoreLocation: true,
+            useExtendedSearch: true,
+        }
         results[beerList.urlParam] = {
             'urlParam': beerList.urlParam,
             'venueName': beerList.venueName,
-            'fuse': new Fuse(formatBeers(beers), {
-                keys: ['beer_name', 'brewer_name', 'beer_type'],
-                includeScore: true,
-                includeMatches: true,
-                ignoreLocation: true,
-                useExtendedSearch: true,
-            })
+            'fuse': new Fuse(beers, fuseOptions)
         }
         return results
     }, {})
@@ -274,7 +275,6 @@ const fuseSearch = (query, venueName, {limit = 10, scoreThreshold = 0.3} = {}) =
 
     const fuse = fuses[venueName]?.fuse || fuses[beerLists[0].urlParam].fuse
     const fuseResults = fuse.search(query, {limit})
-    console.log(fuseResults)
     return fuseResults.reduce((results, result) => {
         if (result['score'] < scoreThreshold) {
             results.push({
