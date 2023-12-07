@@ -1,6 +1,6 @@
 import { getFromSessionStorage, setInSessionStorage } from '@/lib/utils/sessionStorage';
 import { createSlice } from '@reduxjs/toolkit';
-import { downloadImage, generateBeerDefaults, searchForBeer, uploadSocialMedia } from './thunks';
+import { downloadImage, generateBeerDefaults, searchForBeerThunk, uploadSocialMedia } from './thunks';
 
 const initialState = {
     beerLetters: JSON.parse(getFromSessionStorage('beers.beerLetters', '[]')),
@@ -82,7 +82,7 @@ export const beersSlice = createSlice({
         .addCase(generateBeerDefaults.fulfilled, (state, action) => {
             state.beerDefaultsPerLetter = action.payload
         })
-        .addCase(searchForBeer.fulfilled, (state, action) => {
+        .addCase(searchForBeerThunk.fulfilled, (state, action) => {
             state.beerSearchResults = action.payload
         })
     }

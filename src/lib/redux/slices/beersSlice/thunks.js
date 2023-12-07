@@ -1,4 +1,4 @@
-import { sample, shuffle } from 'lodash-es';
+import { debounce,sample, shuffle } from 'lodash-es';
 import { UploadManager } from '@bytescale/sdk';
 import download from 'downloadjs';
 import { createAsyncThunk } from '@reduxjs/toolkit';
@@ -98,8 +98,6 @@ export const downloadImage = createAsyncThunk(
 // TODO:
 // error handling
 // statuses
-// throttle requests
-// default venues
 
 export const generateBeerDefaults = createAsyncThunk(
     'beers/generateBeerDefaults',
@@ -113,7 +111,7 @@ export const generateBeerDefaults = createAsyncThunk(
     }
 )
 
-export const searchForBeer = createAsyncThunk(
+export const searchForBeerThunk = createAsyncThunk(
     'beers/searchForBeer',
     async ({query, venueName}) => {
         const searchParams = new URLSearchParams()
@@ -125,3 +123,5 @@ export const searchForBeer = createAsyncThunk(
         return response.json()
     }
 )
+const debouncedSearchForBeer = debounce((arg, dispatch) => dispatch(searchForBeerThunk(arg)), 200);
+export const searchForBeer = (arg) => (dispatch) => debouncedSearchForBeer(arg, dispatch)
