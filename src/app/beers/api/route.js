@@ -82,6 +82,7 @@ const fuses = (() => {
             includeMatches: true,
             ignoreLocation: true,
             useExtendedSearch: true,
+            threshold: 0.3,
         }
         results[beerList.urlParam] = {
             'urlParam': beerList.urlParam,
@@ -95,7 +96,7 @@ const fuses = (() => {
     return results
 })()
 
-const fuseSearch = (query, venueName, {limit = 10, scoreThreshold = 0.3} = {}) => {
+const fuseSearch = (query, venueName, {limit = 10} = {}) => {
     if (!query) {
         return []
     }
@@ -126,16 +127,13 @@ const fuseSearch = (query, venueName, {limit = 10, scoreThreshold = 0.3} = {}) =
 
     const fuse = fuses[venueName]?.fuse || fuses[beerLists[0].urlParam].fuse
     const fuseResults = fuse.search(query, {limit})
-    return fuseResults.reduce((results, result) => {
-        if (result['score'] < scoreThreshold) {
-            results.push({
-                'beer': result['item'],
-                'score': result['score'],
-                'matchedFields': getMatchedFields(result),
-            })
+    return fuseResults.map((result) => {
+        return {
+            'beer': result['item'],
+            'score': result['score'],
+            'matchedFields': getMatchedFields(result),
         }
-        return results
-    }, [])
+    })
 }
 
 const tokeniseStringWithQuotesBySpaces = (string) => {
@@ -147,22 +145,33 @@ const searchBeers = (query, venueName) => {
      * Fuse.js does not allow searching across multiple fields.
      * So if you search for brewer + beer_name, it will return 0 results.
      * Thus, we tokenize the search query by spaces, and search multiple fields at once.
-     * https://github.com/krisk/Fuse/issues/235#issuecomment-850269634
+     * Based on: https://github.com/krisk/Fuse/issues/235#issuecomment-850269634 but with some changes
      */
     const tokenizedQuery = tokeniseStringWithQuotesBySpaces(query)
 
+    const orFields = (searchToken) => {
+        return [
+            { 'beer_name': searchToken },
+            { 'brewer_name': searchToken },
+            { 'beer_type': searchToken },
+        ];
+    }
+
     const extendedQuery = {
-        $and: tokenizedQuery.map((searchToken) => {
-            const orFields = [
-                { 'beer_name': searchToken },
-                { 'brewer_name': searchToken },
-                { 'beer_type': searchToken },
-            ];
-        
-            return {
-                $or: orFields,
-            };
-        })
+        $or: [
+            // search for the entire query
+            {
+                $or: orFields(query),
+            },
+            // tokenize and search for each word across the various fields
+            {
+                $and: tokenizedQuery.map((searchToken) => {
+                    return {
+                        $or: orFields(searchToken),
+                    };
+                })
+            }
+        ]
     }
 
     return fuseSearch(extendedQuery, venueName)
