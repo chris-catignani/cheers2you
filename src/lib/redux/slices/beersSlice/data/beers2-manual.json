@@ -1,0 +1,11 @@
+{
+    "1": {
+        "beer_name": "ASPALL DRAUGHT CYDER",
+        "beer_type": "Cider - Dry",
+        "beer_label_file_small": "https://assets.untappd.com/site/beer_logos_hd/beer-2118515_2d032_hd.jpeg",
+        "beer_label_file_big": "https://assets.untappd.com/site/beer_logos_hd/beer-2118515_2d032_hd.jpeg",
+        "brewer_name": "Aspall",
+        "brewer_logo_file_small": "https://assets.untappd.com/site/brewery_logos_hd/brewery-3468_4ee08_hd.jpeg",
+        "brewer_logo_file_big": "https://assets.untappd.com/site/brewery_logos_hd/brewery-3468_4ee08_hd.jpeg"
+    }
+}

@@ -1,18 +1,17 @@
-[    
+[
     {
-        "_comment": "The first entry in this file is also the fallback incase the user does not specify a venue",
         "venueName": "big bar",
         "urlParam": "big_bar",
-        "fileName": "beers2.json"
+        "fileNames": ["beers2.json", "beers2-manual.json"]
     },
     {
         "venueName": "small bar",
         "urlParam": "small_bar",
-        "fileName": "beers.json"
+        "fileNames": ["beers.json"]
     },
     {
         "venueName": "All Hail Ale, Bournmouth",
         "urlParam": "aha_bmth",
-        "fileName": "aha_bmth.json"
+        "fileNames": ["aha_bmth.json"]
     }
 ]

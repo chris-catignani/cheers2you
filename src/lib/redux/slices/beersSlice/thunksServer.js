@@ -87,7 +87,10 @@ const formatBeers = (beers) => {
 const fuses = (() => {
     const start = performance.now()
     const results = beerLists.reduce( (results, beerList) => {
-        const beers = formatBeers(require(`./data/${beerList.fileName}`))
+        const beers = beerList.fileNames.reduce((beers, beerfileName) => {
+            return beers.concat(formatBeers(require(`./data/${beerfileName}`)))
+        }, [])
+
         const fuseOptions = {
             keys: ['beer_name', 'brewer_name', 'beer_type'],
             includeScore: true,
@@ -96,6 +99,7 @@ const fuses = (() => {
             useExtendedSearch: true,
             threshold: 0.3,
         }
+        
         results[beerList.urlParam] = {
             'urlParam': beerList.urlParam,
             'venueName': beerList.venueName,
