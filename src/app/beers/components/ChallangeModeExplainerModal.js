@@ -10,7 +10,7 @@ export const ChallangeModeExplainerModal = ({isOpen, onClose, onOptIn}) => {
             <ModalCloseButton />
             <ModalBody>
                 <Text>
-                    It works a little like an old school slot of fruit machine.
+                    It works a little like an old school slot or fruit machine.
                     You spin the beers for the name and you get to hold the ones you like and spin the others.
                     You only have a maximum of 3 spins then you have to drink the beers!
                 </Text>
