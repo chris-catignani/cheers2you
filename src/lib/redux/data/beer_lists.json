@@ -17,8 +17,8 @@
     },
     {
         "venueName": "113k of UK Beers",
-        "urlParam": "c2y_113k_beers",
-        "fileName": "c2y_113k_beers.json"
+        "urlParam": "c2y_113k_uk_beers",
+        "fileName": "c2y_113k_uk_beers.json"
     },
     {
         "venueName": "All Hail Ale, Bournmouth",
