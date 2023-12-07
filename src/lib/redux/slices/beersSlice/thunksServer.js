@@ -3,6 +3,11 @@ import beerLists from './data/beer_lists.json';
 import { escapeRegExp, shuffle } from 'lodash-es';
 import Fuse from "fuse.js";
 
+/**
+ * This file has beer search functionality like it would be on a server.
+ * Allowing us to hopefully make that cut a bit cleaner later
+ */
+
 const formatBeers = (beers) => {
     const breweryWordsToTrim = new RegExp(beerRules['brewery']['wordsToTrim'].join('|'), 'gi')
     const beerNameRegexes = [
@@ -207,22 +212,18 @@ const getDefaultBeers = (venueName) => {
     return beerDefaultsPerLetter
 }
 
-/**
- * Getter entry point
- */
-export async function GET(req) {
-    const { searchParams } = new URL(req.url)
-    const operation = searchParams.get('op')
-    const venueName = searchParams.get('venue')
-    const query = searchParams.get('q')
+const stall = async (stallTime = 100) => {
+    await new Promise(resolve => setTimeout(resolve, stallTime));
+}
 
-    if (operation === 'search') {
-        const searchResults = searchBeers(query, venueName)
-        return Response.json(searchResults)
-    } else if (operation === 'defaults') {
-        const defaultBeers = getDefaultBeers(venueName)
-        return Response.json(defaultBeers)
-    }
+export const pretendServerBeerSearch = async (query, venueName) => {
+    await stall()
 
-    throw new Error(`unknown operation ${operation}`)
+    return searchBeers(query, venueName)
+}
+
+export const pretendServerGetDefaultBeers = async (venueName) => {
+    await stall()
+
+    return getDefaultBeers(venueName)
 }

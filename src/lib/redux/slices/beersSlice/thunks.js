@@ -6,6 +6,7 @@ import { setBeerLetters, setBeerOptionsAtIdx, setLockedBeerLetterIdxs } from "./
 import { isAtoZ } from '@/lib/utils/utils';
 import { setPersonsName } from '../searchSlice';
 import { setChallengeModeSpinCount, setIsChallengeMode } from '../challengeModeSlice';
+import { pretendServerBeerSearch, pretendServerGetDefaultBeers } from './thunksServer';
 
 export const generateBeerBanner = ({personsName, freshBanner = true} = {}) => (dispatch, getState) => {
     const state = getState()
@@ -95,33 +96,18 @@ export const downloadImage = createAsyncThunk(
     }
 )
 
-// TODO:
-// error handling
-// statuses
-
 export const generateBeerDefaults = createAsyncThunk(
     'beers/generateBeerDefaults',
     async (venueName) => {
-        const searchParams = new URLSearchParams()
-        searchParams.set('op', 'defaults');
-        searchParams.set('venue', venueName)
-
-        const response = await fetch(`beers/api?${searchParams.toString()}`)
-        return response.json()
+        return await pretendServerGetDefaultBeers(venueName)
     }
 )
 
 export const searchForBeerThunk = createAsyncThunk(
     'beers/searchForBeer',
     async ({query, venueName}) => {
-        const searchParams = new URLSearchParams()
-        searchParams.set('op', 'search');
-        searchParams.set('venue', venueName)
-        searchParams.set('q', query)
-
-        const response = await fetch(`beers/api?${searchParams.toString()}`)
-        return response.json()
+        return await pretendServerBeerSearch(query, venueName)
     }
 )
-const debouncedSearchForBeer = debounce((arg, dispatch) => dispatch(searchForBeerThunk(arg)), 200);
+const debouncedSearchForBeer = debounce((arg, dispatch) => dispatch(searchForBeerThunk(arg)), 100);
 export const searchForBeer = (arg) => (dispatch) => debouncedSearchForBeer(arg, dispatch)
