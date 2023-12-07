@@ -26,7 +26,7 @@ export const Beers = ({personsName, venueName}) => {
     const storedPersonsName = useSelector(selectPersonsName)
     useEffect(() => {
         if (storedPersonsName !== personsName) {
-            dispatch(generateBeerBanner({personsName}))
+            dispatch(generateBeerBanner({personsName, venueName}))
         }
     }, [dispatch, storedPersonsName, personsName])
 
@@ -38,7 +38,7 @@ export const Beers = ({personsName, venueName}) => {
 
     const spinUnlockedBeersPressed = () => {
         dispatch(incrementChallengeModeSpinCount())
-        dispatch(generateBeerBanner({personsName, freshBanner: false}))
+        dispatch(generateBeerBanner({personsName, venueName, freshBanner: false}))
 
         let maxAnimateRunCount = 8
         let maxAnimateRunCountPerIdx = []

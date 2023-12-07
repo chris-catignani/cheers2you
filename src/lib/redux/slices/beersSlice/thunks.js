@@ -8,11 +8,17 @@ import { setPersonsName } from '../searchSlice';
 import { setChallengeModeSpinCount, setIsChallengeMode } from '../challengeModeSlice';
 import { pretendServerBeerSearch, pretendServerGetDefaultBeers } from './thunksServer';
 
-export const generateBeerBanner = ({personsName, freshBanner = true} = {}) => (dispatch, getState) => {
-    const state = getState()
+export const generateBeerBanner = createAsyncThunk(
+    'beers/generateBeerBanner',
+    async ({personsName, venueName, freshBanner = true}, {dispatch, getState}) => {
 
     const beerLetters = []
     const beerOptionsAtIdx = []
+
+    let beerDefaults = getState().beers.beerDefaultsPerLetter
+    if (Object.keys(beerDefaults).length === 0) {
+        beerDefaults = await pretendServerGetDefaultBeers(venueName)
+    }
 
     Array.from(personsName).forEach( (letter, idx) => {
         if(!isAtoZ(letter)) {
@@ -21,11 +27,11 @@ export const generateBeerBanner = ({personsName, freshBanner = true} = {}) => (d
                 isSpecialCharacter: true,
             })
             beerOptionsAtIdx.push([])
-        } else if (!freshBanner && state.beers.lockedBeerLetterIdxs[idx]) {
-            beerLetters.push(state.beers.beerLetters[idx])
-            beerOptionsAtIdx.push(state.beers.beerOptionsAtIdx[idx])
+        } else if (!freshBanner && getState().beers.lockedBeerLetterIdxs[idx]) {
+            beerLetters.push(getState().beers.beerLetters[idx])
+            beerOptionsAtIdx.push(getState().beers.beerOptionsAtIdx[idx])
         } else {
-            const beerOptions = shuffle(state.beers.beerDefaultsPerLetter[letter.toLowerCase()])
+            const beerOptions = shuffle(beerDefaults[letter.toLowerCase()])
             beerOptionsAtIdx.push(beerOptions)
             beerLetters.push({
                 letter: letter.toUpperCase(),
@@ -43,7 +49,7 @@ export const generateBeerBanner = ({personsName, freshBanner = true} = {}) => (d
     dispatch(setPersonsName(personsName))
     dispatch(setBeerLetters(beerLetters))
     dispatch(setBeerOptionsAtIdx(beerOptionsAtIdx))
-};
+});
 
 export const uploadSocialMedia = createAsyncThunk(
     'beers/uploadSocialMedia',

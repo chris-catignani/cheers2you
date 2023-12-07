@@ -19,7 +19,7 @@ export const Home = ({venueName}) => {
     const personsName = useSelector(selectPersonsName)
 
     const onSearchClick = () => {
-        dispatch(generateBeerBanner({personsName}))
+        dispatch(generateBeerBanner({personsName, venueName}))
         const newSearchParams = new URLSearchParams(searchParams)
         newSearchParams.set('name', personsName)
         router.push(`/beers?${newSearchParams}`)
