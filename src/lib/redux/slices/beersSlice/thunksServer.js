@@ -29,12 +29,19 @@ const formatBeers = (beers) => {
         }
     })
     const multispaceRegex = new RegExp(' {2,}', 'g')
-    const wordsToKeepCapitalized = beerRules?.beerName?.wordsToKeepCapitalized.join('|')
-    const beerNameCapitalLettersRegex = new RegExp(`(?!${wordsToKeepCapitalized})\\b([A-Z]+)\\b`, 'g')
+    const wordsToKeepCapitalized = '\\b' + beerRules?.beerName?.wordsToKeepCapitalized.join('\\b|\\b') + '\\b'
+    const beerNameCapitalLettersRegex = new RegExp(`(?!${wordsToKeepCapitalized})\\b(\\S+)\\b`, 'g')
+
+    const toTitleCase = (aString) => {
+        return aString.replace(
+            /\w\S*/g,
+            txt => txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase()
+        )
+    }
 
     const formatBreweryName = (breweryName) => {
         const trimmedString = breweryName.toString().replace(breweryWordsToTrim, '').trim().replace(multispaceRegex, ' ')
-        return trimmedString.toLowerCase().replace(/\b\w/g, s => s.toUpperCase()) // title case
+        return toTitleCase(trimmedString)
     }
 
     const formatBeerName = (beerName, breweryName) => {
@@ -43,7 +50,7 @@ const formatBeers = (beers) => {
             formattedBeerName = formattedBeerName.replace(regex, replacement).trim().replace(multispaceRegex, ' ')
         })
         formattedBeerName = formattedBeerName.replace(new RegExp(`^${escapeRegExp(breweryName)} `,'i'), '')
-        return formattedBeerName.replace(beerNameCapitalLettersRegex, s => s.toLowerCase().replace(/\b\w/g, s => s.toUpperCase())) // title case except certain terms
+        return formattedBeerName.replace(beerNameCapitalLettersRegex, s => toTitleCase(s))
     }
 
     const formatBeerType = (beerType) => {
