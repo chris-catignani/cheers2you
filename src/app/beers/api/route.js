@@ -73,7 +73,8 @@ const formatBeers = (beers) => {
 }
 
 const fuses = (() => {
-    return beerLists.reduce( (results, beerList) => {
+    const start = performance.now()
+    const results = beerLists.reduce( (results, beerList) => {
         const beers = formatBeers(require(`./data/${beerList.fileName}`))
         const fuseOptions = {
             keys: ['beer_name', 'brewer_name', 'beer_type'],
@@ -89,6 +90,9 @@ const fuses = (() => {
         }
         return results
     }, {})
+    const end = performance.now()
+    console.log(`fuse.js spin up time: ${end - start}ms`)
+    return results
 })()
 
 const fuseSearch = (query, venueName, {limit = 10, scoreThreshold = 0.3} = {}) => {
