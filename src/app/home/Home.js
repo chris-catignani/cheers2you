@@ -3,8 +3,7 @@
 import { generateBeerBanner, generateBeerDefaults, setPersonsName, selectPersonsName } from "@/lib/redux"
 import { useEffect } from "react"
 import { useDispatch, useSelector } from "react-redux"
-import Image from 'next/image'
-import { Box, Button, Container, Flex, Heading, Input, Text } from "@chakra-ui/react"
+import { Box, Button, Container, Flex, Heading, Image, Input, Text } from "@chakra-ui/react"
 import { useRouter, useSearchParams } from 'next/navigation'
 
 export const Home = ({venueName}) => {
@@ -63,20 +62,18 @@ export const Home = ({venueName}) => {
                     </Text>
                 </Box>
                 <Box border='2px' borderColor='gray.600'>
-                    {/* Below is a Nextjs Image not a Chakra Image */}
                     <Image
-                        src={'/david_logo_example.png'}
+                        src='/david_logo_example.png'
                         alt='David beer banner example'
-                        width={800}
-                        height={500}/>
+                        htmlWidth={800}
+                        htmlHeight={500}/>
                 </Box>
                 <Box border='2px' borderColor='gray.600'>
-                    {/* Below is a Nextjs Image not a Chakra Image */}
                     <Image
-                        src={'/sarah_logo_example.png'}
+                        src='/sarah_logo_example.png'
                         alt='Sarah beer banner example'
-                        width={800}
-                        height={500}/>
+                        htmlWidth={800}
+                        htmlHeight={500}/>
                 </Box>
             </Flex>
         </Container>
