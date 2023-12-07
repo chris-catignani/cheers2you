@@ -3,19 +3,17 @@
 import { Box } from "@chakra-ui/react";
 import { Home } from "./home/Home";
 import { useSearchParams } from "next/navigation";
-import { useDispatch, useSelector } from "react-redux";
-import { selectDefaultVenueName, setVenue } from "@/lib/redux";
+import { useDispatch } from "react-redux";
+import { setVenueName } from "@/lib/redux";
 import { useEffect } from "react";
 
 export default function Page() {
   const dispatch = useDispatch();
   const searchParams = useSearchParams()
-
-  const defaultVenueName = useSelector(selectDefaultVenueName)
   
-  const venueName = searchParams.get('venue') || defaultVenueName
+  const venueName = searchParams.get('venue')
   useEffect(() => {
-    dispatch(setVenue(venueName))
+    dispatch(setVenueName(venueName))
   }, [dispatch, venueName])
 
   return (
