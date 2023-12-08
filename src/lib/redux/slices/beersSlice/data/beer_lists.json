@@ -2,7 +2,7 @@
     {
         "venueName": "big bar",
         "urlParam": "big_bar",
-        "fileNames": ["beers2.json", "beers2-manual.json"]
+        "fileNames": ["beers2.json", "beers2-manual.json, fill_in_drinks.json"]
     },
     {
         "venueName": "small bar",
@@ -12,6 +12,6 @@
     {
         "venueName": "All Hail Ale, Bournemouth",
         "urlParam": "aha_bmth",
-        "fileNames": ["aha_bmth.json"]
+        "fileNames": ["aha_bmth.json, fill_in_drinks.json"]
     }
 ]
