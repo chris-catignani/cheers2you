@@ -138,7 +138,7 @@ const BeerModalFooter = ({onClose, onAddYourOwn, py}) => {
 
 const Divider = ({text, mb=0} = {}) => {
     return (
-        <Box as='fieldset' mb={mb} borderTop='1px solid black'>
+        <Box as='fieldset' mb={mb} borderTop='1px' borderColor='gray.600'>
             <Box as='legend' textAlign='center' px='2'>{text}</Box>
         </Box>
     )
