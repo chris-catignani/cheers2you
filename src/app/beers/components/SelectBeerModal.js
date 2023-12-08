@@ -32,7 +32,7 @@ export const SelectBeerModal = ({isOpen, onClose, letter, onBeerSelected, onChan
         <Modal isOpen={isOpen} onClose={onCloseInner} scrollBehavior='inside' size={modalSize}>
             <ModalOverlay />
             <ModalContent margin='auto'>
-                <ModalHeader margin='auto' {...headerFooterProps}>{`Pick Your Beer For "{letter.toUpperCase()}"`}</ModalHeader>
+                <ModalHeader margin='auto' {...headerFooterProps}>{`Pick Your Beer For "${letter.toUpperCase()}"`}</ModalHeader>
                 <ModalCloseButton />
                 <ModalBody>
                     <BeerUGCModalContent
