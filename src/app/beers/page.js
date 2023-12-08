@@ -14,7 +14,7 @@ export default function Page() {
   const searchParams = useSearchParams()
 
   const personsName = searchParams.get('name') || ''
-  const venueName = searchParams.get('venue')
+  const venueName = searchParams.get('venue') || ''
 
   useEffect(() => {
     dispatch(setVenueName(venueName))

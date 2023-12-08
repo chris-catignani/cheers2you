@@ -32,10 +32,10 @@ export const Home = ({venueName}) => {
                 </Heading>
                 <Box>
                     <Text>
-                        Raise a toast by spelling names with beers.
+                        Do you and your friends love beer? Need a new reason to drink a few?
                     </Text>
                     <Text mt='2'>
-                        Enter a name and search our database for beers to match each letter.
+                        Celebrate a special event by drinking beers to spell a friends name. Each beer will represent a letter in the name… get creative
                     </Text>
                 </Box>
 
@@ -50,15 +50,15 @@ export const Home = ({venueName}) => {
                         width='full'
                         onClick={onSearchClick}
                     >
-                        Search for matching beers
+                        GIVE IT A GO
                     </Button>
                 </Box>
                 <Box>
                     <Text>
-                        Celebrate birthdays, engagements, births, deaths or marriages.
+                        Commemorate birthdays, graduations, engagements, marriages etc..
                     </Text>
                     <Text mt='2'>
-                        We create a memorable keepsake to share on your socials. Also download the design to create a card, plaque, poster, t-shirt etc.
+                        Share the C2U badge on your socials and use it to create a memorable gift, card, plaque, poster, t-shirt, anything!
                     </Text>
                 </Box>
                 <Box border='2px' borderColor='gray.600'>
