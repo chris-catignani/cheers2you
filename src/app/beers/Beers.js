@@ -13,7 +13,7 @@ import html2canvas from 'html2canvas';
 import { ChallangeModeExplainerModal } from './components/ChallangeModeExplainerModal';
 
 
-export const Beers = ({personsName, venueName}) => {
+export const Beers = ({ personsName, venueName }) => {
     const dispatch = useDispatch();
 
     const beerDefaultsPerLetter = useSelector(selectBeerDefaultsPerLetter)
@@ -22,15 +22,15 @@ export const Beers = ({personsName, venueName}) => {
             dispatch(generateBeerDefaults(venueName))
         }
     }, [dispatch, beerDefaultsPerLetter, venueName])
-    
+
     const storedPersonsName = useSelector(selectPersonsName)
     useEffect(() => {
         if (storedPersonsName !== personsName) {
-            dispatch(generateBeerBanner({personsName, venueName}))
+            dispatch(generateBeerBanner({ personsName, venueName }))
         }
     }, [dispatch, storedPersonsName, personsName, venueName])
 
-    const [{animateRunCount, maxAnimateRunCountPerIdx}, setAnimationProps] = useState({animateRunCount: -1, maxAnimateRunCountPerIdx: []})
+    const [{ animateRunCount, maxAnimateRunCountPerIdx }, setAnimationProps] = useState({ animateRunCount: -1, maxAnimateRunCountPerIdx: [] })
     const [isLandscapePhone] = useMediaQuery('(max-height: 450px)')
     const lockedBeerIdxs = useSelector(selectLockedBeerLetterIdxs);
 
@@ -38,11 +38,11 @@ export const Beers = ({personsName, venueName}) => {
 
     const spinUnlockedBeersPressed = () => {
         dispatch(incrementChallengeModeSpinCount())
-        dispatch(generateBeerBanner({personsName, venueName, freshBanner: false}))
+        dispatch(generateBeerBanner({ personsName, venueName, freshBanner: false }))
 
         let maxAnimateRunCount = 8
         let maxAnimateRunCountPerIdx = []
-        for(let i = 0; i < personsName.length; i++) {
+        for (let i = 0; i < personsName.length; i++) {
             if (lockedBeerIdxs[i] || !isAtoZ(personsName[i])) {
                 maxAnimateRunCountPerIdx.push(-1)
             } else {
@@ -52,18 +52,18 @@ export const Beers = ({personsName, venueName}) => {
         }
 
         let animateRunCount = 0
-        setAnimationProps({animateRunCount, maxAnimateRunCountPerIdx})
-        
+        setAnimationProps({ animateRunCount, maxAnimateRunCountPerIdx })
+
         const intervalId = setInterval(() => {
             animateRunCount += 1
-            if(animateRunCount > maxAnimateRunCount) {
+            if (animateRunCount > maxAnimateRunCount) {
                 clearInterval(intervalId)
                 setAnimationProps({
                     animateRunCount: -1,
                     maxAnimateRunCountPerIdx: []
                 })
             } else {
-                setAnimationProps({animateRunCount, maxAnimateRunCountPerIdx})
+                setAnimationProps({ animateRunCount, maxAnimateRunCountPerIdx })
             }
         }, 100);
     }
@@ -90,7 +90,7 @@ export const Beers = ({personsName, venueName}) => {
             <BeerLetters
                 animateRunCount={animateRunCount}
                 maxAnimateRunCountPerIdx={maxAnimateRunCountPerIdx}
-                generatedPicRef={generatedPicRef}/>
+                generatedPicRef={generatedPicRef} />
             <ChallengeModeModal />
             <BeerModal />
             <ShareModal />
@@ -101,11 +101,11 @@ export const Beers = ({personsName, venueName}) => {
     )
 }
 
-const BeersHeader = ({onSpinUnlockedBeersPressed, onChallengeModePressed, isLoading}) => {
+const BeersHeader = ({ onSpinUnlockedBeersPressed, onChallengeModePressed, isLoading }) => {
     const isChallengeMode = useSelector(selectIsChallangeMode);
     const challengeModeSpinCount = useSelector(selectChallengeModeSpinCount)
-    
-    if(isChallengeMode) {
+
+    if (isChallengeMode) {
         const maxSpinsReached = challengeModeSpinCount >= 3
         return (
             <Container maxW='md' padding={0}>
@@ -131,7 +131,7 @@ const BeersHeader = ({onSpinUnlockedBeersPressed, onChallengeModePressed, isLoad
                             Tap the suggested beers to choose your own.
                         </Text>
                         <Text as="span" whiteSpace='nowrap'>
-                            <Text as="span" _after={{content: '" "'}}>
+                            <Text as="span" _after={{ content: '" "' }}>
                                 Feeling Frisky? Try the
                             </Text>
                             <Button onClick={onChallengeModePressed} variant='link' colorScheme='teal'>C2Y Challenge</Button>
@@ -144,7 +144,7 @@ const BeersHeader = ({onSpinUnlockedBeersPressed, onChallengeModePressed, isLoad
 }
 
 // TODO refactor this. Use a helper to do the layout stuff, pass in react components
-const BeerLetters = ({animateRunCount, maxAnimateRunCountPerIdx, generatedPicRef}) => {
+const BeerLetters = ({ animateRunCount, maxAnimateRunCountPerIdx, generatedPicRef }) => {
     const dispatch = useDispatch();
 
     const isChallengeMode = useSelector(selectIsChallangeMode);
@@ -161,9 +161,9 @@ const BeerLetters = ({animateRunCount, maxAnimateRunCountPerIdx, generatedPicRef
         }
     }
 
-    beerLetters.forEach( ({letter, beer, userGeneratedBeer, isSpecialCharacter}, idx) => {
+    beerLetters.forEach(({ letter, beer, userGeneratedBeer, isSpecialCharacter }, idx) => {
         let beerToShow = beer || userGeneratedBeer
-        if(animateRunCount !== -1 && animateRunCount < maxAnimateRunCountPerIdx[idx] && !isSpecialCharacter) {
+        if (animateRunCount !== -1 && animateRunCount < maxAnimateRunCountPerIdx[idx] && !isSpecialCharacter) {
             const animateIdx = wrapIndex(0, beerOptionsAtIdx[idx].length, animateRunCount)
             beerToShow = beerOptionsAtIdx[idx][animateIdx]
         }
@@ -179,7 +179,7 @@ const BeerLetters = ({animateRunCount, maxAnimateRunCountPerIdx, generatedPicRef
             letters.push(
                 <Flex flexDirection='column' textAlign='center' key={`beer-letter-${idx}`}>
                     <Heading as='h5' size='sm' mb='5' textTransform='uppercase'>{letter}</Heading>
-                    <Letter beer={beerToShow} width='100px' onClick={() => beerClicked(idx)}/>
+                    <Letter beer={beerToShow} width='100px' onClick={() => beerClicked(idx)} />
                 </Flex>
             )
             const lockButtonText = lockedBeerIdxs[idx] ? 'Unlock Beer' : 'Lock Beer'
@@ -211,7 +211,7 @@ const BeerLetters = ({animateRunCount, maxAnimateRunCountPerIdx, generatedPicRef
     )
 }
 
-const ShareButtons = ({generatedPicRef}) => {
+const ShareButtons = ({ generatedPicRef }) => {
     const dispatch = useDispatch();
     const personsName = useSelector(selectPersonsName)
     const downloadGeneratedImageStatus = useSelector(selectDownloadGeneratedImageStatus);
@@ -248,8 +248,8 @@ const ShareButtons = ({generatedPicRef}) => {
         <ButtonGroup>
             <IconButton
                 isLoading={uploadSocialMediaStatus === 'uploading'}
-                onClick={() => uploadOutput()} 
-                icon={<ExternalLinkIcon />}/>
+                onClick={() => uploadOutput()}
+                icon={<ExternalLinkIcon />} />
             <IconButton
                 isLoading={downloadGeneratedImageStatus === 'downloading'}
                 onClick={() => donwloadOutput()}
@@ -299,7 +299,7 @@ const ShareModal = () => {
 
     // Open the Modal if we have uploaded the image data
     useEffect(() => {
-        if (Object.keys(uploadedSocialMediaData).length === 0) {return}
+        if (Object.keys(uploadedSocialMediaData).length === 0) { return }
         onOpen()
     }, [uploadedSocialMediaData, onOpen])
 
@@ -307,9 +307,9 @@ const ShareModal = () => {
         dispatch(setUploadedSocialMediaData({}))
         onClose()
     }
-    
+
     return (
-        <SocialShareModal 
+        <SocialShareModal
             isOpen={isOpen}
             onClose={clearDataOnClose}
             shareUrl={shareUrl}
@@ -336,7 +336,7 @@ const BeerModal = () => {
         onClose()
     }
 
-    const onBeerSelected = ({beer, userGeneratedBeer}) => {
+    const onBeerSelected = ({ beer, userGeneratedBeer }) => {
         dispatch(setBeerLetterAtIndex({
             idx: openBeerIdx,
             beer,
@@ -347,7 +347,7 @@ const BeerModal = () => {
 
     const onChangeBeerSearchQuery = (beerSearchQuery) => {
         if (!beerSearchQuery) {
-            dispatch(setBeerSearchResults(beerDefaultsPerLetter[letter].map(beer => { return {beer} } )))
+            dispatch(setBeerSearchResults(beerDefaultsPerLetter[letter].map(beer => { return { beer } })))
         } else {
             dispatch(searchForBeer({
                 query: beerSearchQuery,
@@ -359,13 +359,13 @@ const BeerModal = () => {
     // Open the Modal if we have an openBeerIndex
     useEffect(() => {
         if (openBeerIdx !== -1) {
-            dispatch(setBeerSearchResults(beerDefaultsPerLetter[letter].map(beer => { return {beer} } )))
+            dispatch(setBeerSearchResults(beerDefaultsPerLetter[letter].map(beer => { return { beer } })))
             onOpen()
         }
     }, [openBeerIdx, onOpen, letter, beerDefaultsPerLetter, dispatch])
 
     return (
-        <SelectBeerModal 
+        <SelectBeerModal
             isOpen={isOpen}
             onClose={clearDataOnClose}
             letter={letter.toUpperCase()}
