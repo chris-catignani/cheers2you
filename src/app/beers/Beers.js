@@ -5,7 +5,7 @@ import React, { useEffect, useRef, useState } from 'react';
 import { DownloadIcon, ExternalLinkIcon } from '@chakra-ui/icons';
 import { Letter } from './components/Letter';
 import { SocialShareModal } from './components/SocialShareModal';
-import { BeerModalContent, SelectBeerModal } from './components/SelectBeerModal';
+import { SelectBeerModal } from './components/SelectBeerModal';
 import { downloadImage, searchForBeer, selectBeerLetters, selectBeerOptionsAtIdx, selectBeerSearchResults, selectDownloadGeneratedImageStatus, selectLockedBeerLetterIdxs, selectOpenBeerIdx, setBeerLetterAtIndex, setBeerSearchResults, setOpenBeerIdx, toggleLockedBeerLetterIdx, generateBeerBanner, uploadSocialMedia, selectUploadSocialMediaStatus, selectUploadedSocialMediaData, setUploadedSocialMediaData, generateBeerDefaults, selectBeerDefaultsPerLetter, selectPersonsName, selectIsChallangeMode, selectIsChallengeModeExplainerDisplayed, setIsChallengeModeExplainerDisplayed, setIsChallengeMode, incrementChallengeModeSpinCount, selectChallengeModeSpinCount, selectVenueName } from '@/lib/redux';
 import { Box, Button, ButtonGroup, Center, Container, Flex, Heading, IconButton, Text, useDisclosure, useMediaQuery } from '@chakra-ui/react';
 import { isAtoZ, getSocialMediaShareUrl, wrapIndex } from '@/lib/utils/utils';
@@ -364,13 +364,10 @@ const BeerModal = () => {
         <SelectBeerModal 
             isOpen={isOpen}
             onClose={clearDataOnClose}
-            header={`Pick Your Beer For "${letter.toUpperCase()}"`}
-        >
-            <BeerModalContent
-                onBeerSelected={onBeerSelected}
-                onChangeBeerSearchQuery={onChangeBeerSearchQuery}
-                beerSearchResults={beerSearchResults}
-            />
-        </SelectBeerModal>
+            letter={letter.toUpperCase()}
+            onBeerSelected={onBeerSelected}
+            onChangeBeerSearchQuery={onChangeBeerSearchQuery}
+            beerSearchResults={beerSearchResults}
+        />
     )
 }
