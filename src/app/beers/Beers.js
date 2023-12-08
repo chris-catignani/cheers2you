@@ -127,7 +127,7 @@ const BeersHeader = ({onSpinUnlockedBeersPressed, onChallengeModePressed, isLoad
             <Container maxW='xl'>
                 <Heading as='h5' size='sm'>
                     <Flex flexWrap='wrap' justifyContent='center'>
-                        <Text as="span" whiteSpace='nowrap' _after={{content: '"\\00a0"'}}>
+                        <Text as="span" whiteSpace='nowrap'>
                             Tap the suggested beers to choose your own.
                         </Text>
                         <Text as="span" whiteSpace='nowrap'>
