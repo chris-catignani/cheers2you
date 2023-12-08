@@ -32,7 +32,7 @@ export const Home = ({venueName}) => {
                 </Heading>
                 <Box>
                     <Text>
-                        Do you and your friends love beer? Need a new reason to drink a few?
+                        Do youzz and your friends love beer? Need a new reason to drink a few?
                     </Text>
                     <Text mt='2'>
                         Celebrate a special event by drinking beers to spell a friends name. Each beer will represent a letter in the name… get creative
