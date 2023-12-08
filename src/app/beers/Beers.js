@@ -161,11 +161,15 @@ const BeerLetters = ({ animateRunCount, maxAnimateRunCountPerIdx, generatedPicRe
         }
     }
 
+    const aLetterIsAnimating = animateRunCount !== -1 && animateRunCount < Math.max(...maxAnimateRunCountPerIdx)
+
     beerLetters.forEach(({ letter, beer, userGeneratedBeer, isSpecialCharacter }, idx) => {
         let beerToShow = beer || userGeneratedBeer
+        let isAnimating = false
         if (animateRunCount !== -1 && animateRunCount < maxAnimateRunCountPerIdx[idx] && !isSpecialCharacter) {
             const animateIdx = wrapIndex(0, beerOptionsAtIdx[idx].length, animateRunCount)
             beerToShow = beerOptionsAtIdx[idx][animateIdx]
+            isAnimating = true
         }
 
         if (isSpecialCharacter) {
@@ -179,7 +183,7 @@ const BeerLetters = ({ animateRunCount, maxAnimateRunCountPerIdx, generatedPicRe
             letters.push(
                 <Flex flexDirection='column' textAlign='center' key={`beer-letter-${idx}`}>
                     <Heading as='h5' size='sm' mb='5' textTransform='uppercase'>{letter}</Heading>
-                    <Letter beer={beerToShow} width='100px' onClick={() => beerClicked(idx)} />
+                    <Letter beer={beerToShow} width='100px' onClick={() => beerClicked(idx)} isAnimating={isAnimating} />
                 </Flex>
             )
             const lockButtonText = lockedBeerIdxs[idx] ? 'Unlock Beer' : 'Lock Beer'
@@ -189,6 +193,7 @@ const BeerLetters = ({ animateRunCount, maxAnimateRunCountPerIdx, generatedPicRe
                     marginBottom='1'
                     key={`beer-letter-lock-${idx}`}
                     onClick={() => dispatch(toggleLockedBeerLetterIdx(idx))}
+                    hidden={aLetterIsAnimating}
                 >
                     {lockButtonText}
                 </Button>
