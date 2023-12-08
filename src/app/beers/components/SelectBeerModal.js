@@ -1,4 +1,4 @@
-import { Box, Button, Flex, Input, Modal, ModalBody, ModalCloseButton, ModalContent, ModalFooter, ModalHeader, ModalOverlay, useBreakpointValue, useMediaQuery } from "@chakra-ui/react";
+import { Box, Button, Center, Flex, Input, Modal, ModalBody, ModalCloseButton, ModalContent, ModalFooter, ModalHeader, ModalOverlay, useBreakpointValue, useMediaQuery } from "@chakra-ui/react";
 import { useState } from "react";
 import { BeerUGCInput } from "./BeerUGCInput";
 import { AddYourOwn } from "./AddYourOwn";
@@ -32,9 +32,12 @@ export const SelectBeerModal = ({isOpen, onClose, letter, onBeerSelected, onChan
         <Modal isOpen={isOpen} onClose={onCloseInner} scrollBehavior='inside' size={modalSize}>
             <ModalOverlay />
             <ModalContent margin='auto'>
-                <ModalHeader margin='auto' {...headerFooterProps}>{`Pick Your Beer For "${letter.toUpperCase()}"`}</ModalHeader>
+                <BeerModalHeader
+                    {...headerFooterProps}
+                    letter={letter}
+                    onChangeBeerSearchQuery={onChangeBeerSearchQuery} />
                 <ModalCloseButton />
-                <ModalBody>
+                <ModalBody py='0'>
                     <BeerUGCModalContent
                         isInBeerUGCMode={isInBeerUGCMode}
                         onUGCBeerCreated={onBeerSelected} />
@@ -52,6 +55,26 @@ export const SelectBeerModal = ({isOpen, onClose, letter, onBeerSelected, onChan
     )
 }
 
+const BeerModalHeader = ({onChangeBeerSearchQuery, letter, py}) => {
+    const [beerSearchQuery, setBeerSearchQuery] = useState('');
+
+    return (
+        <ModalHeader py={py}>
+            <Center>
+                <Input
+                    placeholder={`Search for an "${letter}" beer`}
+                    value={beerSearchQuery}
+                    width='90%'
+                    onChange={e => {
+                        setBeerSearchQuery(e.target.value);
+                        onChangeBeerSearchQuery(e.target.value);
+                    }}
+                />
+            </Center>
+        </ModalHeader>
+    )
+}
+
 const BeerUGCModalContent = ({isInBeerUGCMode, onUGCBeerCreated}) => {
     if (isInBeerUGCMode) {
         return (
@@ -65,9 +88,7 @@ const BeerUGCModalContent = ({isInBeerUGCMode, onUGCBeerCreated}) => {
 }
 
 
-const BeerPickerModalContent = ({isInBeerUGCMode, letter, useHorizontalLayout, onBeerSelected, onChangeBeerSearchQuery, beerSearchResults}) => {
-    const [beerSearchQuery, setBeerSearchQuery] = useState('');
-
+const BeerPickerModalContent = ({isInBeerUGCMode, letter, useHorizontalLayout, onBeerSelected, beerSearchResults}) => {
     if (isInBeerUGCMode) {
         return (<></>)
     }
@@ -91,15 +112,6 @@ const BeerPickerModalContent = ({isInBeerUGCMode, letter, useHorizontalLayout, o
 
     return (
         <>
-            <Input
-                placeholder='Search for beer'
-                value={beerSearchQuery}
-                mb='1'
-                onChange={e => {
-                    setBeerSearchQuery(e.target.value);
-                    onChangeBeerSearchQuery(e.target.value);
-                }}
-            />
             <Divider mb='1' text={`Suggested beers for "${letter}"`} />
             <Flex justifyContent='safe center' gap='5' overflow='auto' {...flexProperties}>
                 {beerSearchResultsAsLetters}
