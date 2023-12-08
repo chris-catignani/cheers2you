@@ -30,6 +30,13 @@
             "B.V.",
             "& Sohn",
             "Bryggeri"
+        ],
+        "regexes": [
+            {
+                "decription": "Remove '- Huyghe' from the brewery: Delirium - Huyghe",
+                "regex": "Delirium - Huyghe",
+                "replacement": "Delirium"
+            }
         ]
     },
     "beerName": {
