@@ -17,6 +17,6 @@
     {
         "venueName": "All Hail Ale, Bournemouth",
         "urlParam": "aha_bmth",
-        "fileNames": ["aha_bmth.json, "fill_in_drinks.json"]
+        "fileNames": ["aha_bmth.json", "fill_in_drinks.json"]
     }
 ]
