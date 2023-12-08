@@ -1,4 +1,4 @@
-import { Box, Button, Center, Flex, Input, Modal, ModalBody, ModalCloseButton, ModalContent, ModalFooter, ModalHeader, ModalOverlay, useBreakpointValue, useMediaQuery } from "@chakra-ui/react";
+import { Box, Button, Center, Flex, Input, Modal, ModalBody, ModalCloseButton, ModalContent, ModalFooter, ModalHeader, ModalOverlay, Text, useBreakpointValue, useMediaQuery } from "@chakra-ui/react";
 import { useState } from "react";
 import { BeerUGCInput } from "./BeerUGCInput";
 import { AddYourOwn } from "./AddYourOwn";
@@ -22,10 +22,23 @@ export const SelectBeerModal = ({isOpen, onClose, letter, onBeerSelected, onChan
     }
 
     const [isInBeerUGCMode, setIsInBeerUGCMode] = useState(false);
+    const [beerSearchQuery, setBeerSearchQuery] = useState('');
 
     const onCloseInner = () => {
         onClose()
         setIsInBeerUGCMode(false)
+        setBeerSearchQuery('')
+    }
+
+    const onBeerSelectedInner = (beer) => {
+        onBeerSelected(beer)
+        setIsInBeerUGCMode(false)
+        setBeerSearchQuery('')
+    }
+
+    const onChangeBeerSearchQueryInner = (query) => {
+        setBeerSearchQuery(query)
+        onChangeBeerSearchQuery(query)
     }
 
     return (
@@ -35,19 +48,24 @@ export const SelectBeerModal = ({isOpen, onClose, letter, onBeerSelected, onChan
                 <BeerModalHeader
                     {...headerFooterProps}
                     letter={letter}
-                    onChangeBeerSearchQuery={onChangeBeerSearchQuery} />
+                    beerSearchQuery={beerSearchQuery}
+                    onChangeBeerSearchQuery={onChangeBeerSearchQueryInner} />
                 <ModalCloseButton />
                 <ModalBody py='0'>
                     <BeerUGCModalContent
                         isInBeerUGCMode={isInBeerUGCMode}
-                        onUGCBeerCreated={onBeerSelected} />
+                        onUGCBeerCreated={onBeerSelectedInner} />
                     <BeerPickerModalContent
                         isInBeerUGCMode={isInBeerUGCMode}
                         letter={letter}
                         useHorizontalLayout={useHorizontalLayout}
-                        onBeerSelected={onBeerSelected}
-                        onChangeBeerSearchQuery={onChangeBeerSearchQuery}
+                        onBeerSelected={onBeerSelectedInner}
                         beerSearchResults={beerSearchResults} />
+                    <NoSearchResults
+                        isInBeerUGCMode={isInBeerUGCMode}
+                        beerSearchResults={beerSearchResults}
+                        setIsInBeerUGCMode={setIsInBeerUGCMode}
+                        onChangeBeerSearchQuery={onChangeBeerSearchQueryInner} />
                 </ModalBody>
                 <BeerModalFooter {...headerFooterProps} onClose={onCloseInner} onAddYourOwn={() => setIsInBeerUGCMode(true)}/>
             </ModalContent>
@@ -55,9 +73,7 @@ export const SelectBeerModal = ({isOpen, onClose, letter, onBeerSelected, onChan
     )
 }
 
-const BeerModalHeader = ({onChangeBeerSearchQuery, letter, py}) => {
-    const [beerSearchQuery, setBeerSearchQuery] = useState('');
-
+const BeerModalHeader = ({onChangeBeerSearchQuery, beerSearchQuery, letter, py}) => {
     return (
         <ModalHeader py={py}>
             <Center>
@@ -66,7 +82,6 @@ const BeerModalHeader = ({onChangeBeerSearchQuery, letter, py}) => {
                     value={beerSearchQuery}
                     width='90%'
                     onChange={e => {
-                        setBeerSearchQuery(e.target.value);
                         onChangeBeerSearchQuery(e.target.value);
                     }}
                 />
@@ -117,6 +132,32 @@ const BeerPickerModalContent = ({isInBeerUGCMode, letter, useHorizontalLayout, o
                 {beerSearchResultsAsLetters}
             </Flex>
         </>
+    )
+}
+
+const NoSearchResults = ({isInBeerUGCMode, beerSearchResults, setIsInBeerUGCMode, onChangeBeerSearchQuery}) => {
+    if (isInBeerUGCMode || (beerSearchResults && Object.keys(beerSearchResults).length > 0)) {
+        return (<></>)
+    }
+
+    return (
+        <Flex flexDirection='column' textAlign='center' my='15' gap='2'>
+            <Box>
+                <Text>
+                    Uh oh, no beers found for your search!
+                </Text>
+            </Box>
+            <Box>
+                <Text as='span' _after={{content: '" "'}}>
+                    Try searching for a different beer,
+                </Text>
+                <Button onClick={() => onChangeBeerSearchQuery('')}variant='link' colorScheme='teal'>view our suggestions</Button>
+                <Text as='span' _before={{content: '" "'}} _after={{content: '" "'}}>
+                    or
+                </Text>
+                <Button onClick={() => setIsInBeerUGCMode(true)} variant='link' colorScheme='teal'>upload your own</Button>
+            </Box>
+        </Flex>
     )
 }
 

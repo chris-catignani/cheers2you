@@ -328,6 +328,8 @@ const BeerModal = () => {
     const beerSearchResults = useSelector(selectBeerSearchResults);
     const beerDefaultsPerLetter = useSelector(selectBeerDefaultsPerLetter);
 
+    const letter = openBeerIdx !== -1 ? beerLetters[openBeerIdx]['letter'].toLowerCase() : ''
+
     const clearDataOnClose = () => {
         dispatch(setOpenBeerIdx(-1));
         dispatch(setBeerSearchResults([]))
@@ -344,18 +346,20 @@ const BeerModal = () => {
     }
 
     const onChangeBeerSearchQuery = (beerSearchQuery) => {
-        dispatch(searchForBeer({
-            query: beerSearchQuery,
-            venueName
-        }))
+        if (!beerSearchQuery) {
+            dispatch(setBeerSearchResults(beerDefaultsPerLetter[letter].map(beer => { return {beer} } )))
+        } else {
+            dispatch(searchForBeer({
+                query: beerSearchQuery,
+                venueName
+            }))
+        }
     }
-
-    const letter = openBeerIdx !== -1 ? beerLetters[openBeerIdx]['letter'] : ''
 
     // Open the Modal if we have an openBeerIndex
     useEffect(() => {
         if (openBeerIdx !== -1) {
-            dispatch(setBeerSearchResults(beerDefaultsPerLetter[letter.toLowerCase()].map(beer => { return {beer} } )))
+            dispatch(setBeerSearchResults(beerDefaultsPerLetter[letter].map(beer => { return {beer} } )))
             onOpen()
         }
     }, [openBeerIdx, onOpen, letter, beerDefaultsPerLetter, dispatch])
