@@ -28,7 +28,7 @@ export const Beers = ({personsName, venueName}) => {
         if (storedPersonsName !== personsName) {
             dispatch(generateBeerBanner({personsName, venueName}))
         }
-    }, [dispatch, storedPersonsName, personsName])
+    }, [dispatch, storedPersonsName, personsName, venueName])
 
     const [{animateRunCount, maxAnimateRunCountPerIdx}, setAnimationProps] = useState({animateRunCount: -1, maxAnimateRunCountPerIdx: []})
     const [isLandscapePhone] = useMediaQuery('(max-height: 450px)')
