@@ -27,12 +27,12 @@ export const Home = ({venueName}) => {
     return (
         <Container maxW='xl'>
             <Flex flexDirection='column' gap='5'>
-                <Heading as='h2' size='3xl' textAlign='center'>
+                <Heading as='h2' size='2xl' textAlign='center'>
                     Cheers2You
                 </Heading>
                 <Box>
                     <Text>
-                        Do youzz and your friends love beer? Need a new reason to drink a few?
+                        Do you and your friends love beer? Need a new reason to drink a few?
                     </Text>
                     <Text mt='2'>
                         Celebrate a special event by drinking beers to spell a friends name. Each beer will represent a letter in the name… get creative
@@ -41,13 +41,18 @@ export const Home = ({venueName}) => {
 
                 <Box>
                     <Input
+                        borderWidth='2px'
+                        borderColor='black'
                         placeholder='Type a name'
                         value={personsName}
                         onChange={e => dispatch(setPersonsName(e.target.value))}
                     />
                     <Button
-                        mt='2'
+                        mt='4'
                         width='full'
+                        background='black'
+                        color='white'
+                        _hover={{ bg: "white", color:"black", borderWidth:"2px", borderColor:"black"}}
                         onClick={onSearchClick}
                     >
                         GIVE IT A GO
