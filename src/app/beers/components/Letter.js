@@ -1,6 +1,25 @@
-import { Box, Image } from "@chakra-ui/react"
+import { Box, Image, Spinner } from "@chakra-ui/react"
 
-export const Letter = ({beer, onClick, width='150px', displayBeerType=false, matchedFields=[]} = {}) => {    
+export const Letter = ({ beer, onClick, width = '150px', displayBeerType = false, isAnimating = false, matchedFields = [] } = {}) => {    
+    if (isAnimating) {
+        return (
+            <AnimatingLetter
+                beer={beer}
+                width={width} />
+        )
+    } else {
+        return (
+            <NonAnimatingLetter 
+                beer={beer}
+                onClick={onClick}
+                width={width}
+                displayBeerType={displayBeerType}
+                matchedFields={matchedFields} />
+        )
+    }
+}
+
+const NonAnimatingLetter = ({ beer, onClick, width, displayBeerType, matchedFields }) => {    
 
     const brewerNameProps = {}
     const beerNameProps = {}
@@ -24,6 +43,14 @@ export const Letter = ({beer, onClick, width='150px', displayBeerType=false, mat
             <Box {...brewerNameProps}>{beer?.brewer_name}</Box>
             <Box minH='5em' {...beerNameProps}>{beer?.beer_name}</Box>
             {displayBeerType && <Box {...beerTypeProps}>{beer?.beer_type}</Box>}
+        </Box>
+    )
+}
+
+const AnimatingLetter = ({ beer, width }) => {
+    return (
+        <Box textAlign='center' width={width} minWidth={width}>
+            <Image src={beer?.beer_label_file} alt={beer?.beer_name + ' ' + beer?.beer_type} boxSize={width} fit='contain' />
         </Box>
     )
 }

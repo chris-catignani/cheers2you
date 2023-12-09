@@ -9,7 +9,18 @@ import Fuse from "fuse.js";
  */
 
 const formatBeers = (beers) => {
-    const breweryWordsToTrim = new RegExp(beerRules['brewery']['wordsToTrim'].join('|'), 'gi')
+    const breweryNameRegexes = [
+        {
+            regex: new RegExp(beerRules['brewery']['wordsToTrim'].join('|'), 'gi'),
+            replacement: '',
+        },
+        ...beerRules.brewery.regexes.map(({ regex, replacement }) => {
+            return {
+                regex: new RegExp(escapeRegExp(regex)),
+                replacement,
+            }
+        })
+    ]
     const beerNameRegexes = [
         {
             regex: new RegExp(beerRules['beerName']['wordsToTrim'].join('|'), 'gi'),
@@ -17,7 +28,7 @@ const formatBeers = (beers) => {
         },
         ...beerRules.beerName.regexes.map(({regex, replacement}) => {
             return {
-                regex: new RegExp(regex),
+                regex: new RegExp(escapeRegExp(regex)),
                 replacement,
             }
         })
@@ -40,8 +51,11 @@ const formatBeers = (beers) => {
     }
 
     const formatBreweryName = (breweryName) => {
-        const trimmedString = breweryName.toString().replace(breweryWordsToTrim, '').trim().replace(multispaceRegex, ' ')
-        return toTitleCase(trimmedString)
+        let formattedBreweryName = breweryName.toString()
+        breweryNameRegexes.forEach(({ regex, replacement }) => {
+            formattedBreweryName = formattedBreweryName.replace(regex, replacement).trim().replace(multispaceRegex, ' ')
+        })
+        return toTitleCase(formattedBreweryName)
     }
 
     const formatBeerName = (beerName, breweryName) => {
