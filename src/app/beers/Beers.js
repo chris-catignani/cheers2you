@@ -183,7 +183,7 @@ const BeerLetters = ({ animateRunCount, maxAnimateRunCountPerIdx, generatedPicRe
             letters.push(
                 <Flex flexDirection='column' textAlign='center' key={`beer-letter-${idx}`}>
                     <Heading as='h5' size='sm' mb='5' textTransform='uppercase'>{letter}</Heading>
-                    <Letter beer={beerToShow} width='100px' onClick={() => beerClicked(idx)}/>
+                    <Letter beer={beerToShow} width='100px' isAnimating={isAnimating} onClick={() => beerClicked(idx)}/>
                 </Flex>
             )
             const lockButtonText = lockedBeerIdxs[idx] ? 'Unlock Beer' : 'Lock Beer'
