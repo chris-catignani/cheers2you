@@ -132,7 +132,7 @@ const BeersHeader = ({onSpinUnlockedBeersPressed, onChallengeModePressed, isLoad
                         </Text>
                         <Text as="span" whiteSpace='nowrap'>
                             <Text as="span" _after={{content: '" "'}}>
-                                Feeling Frisky? Try the
+                                Feeling frisky? Try the
                             </Text>
                             <Button onClick={onChallengeModePressed} variant='link' colorScheme='teal'>C2Y Challenge</Button>
                         </Text>
@@ -170,7 +170,7 @@ const BeerLetters = ({animateRunCount, maxAnimateRunCountPerIdx, generatedPicRef
 
         if (isSpecialCharacter) {
             letters.push(
-                <Heading as='h5' size='sm' width='20px' textAlign='center' textTransform='uppercase' key={`beer-letter-${idx}`}>{letter}</Heading>
+                <Heading as='h5' size='md' fontWeight='800' width='20px' textAlign='center' textTransform='uppercase' key={`beer-letter-${idx}`}>{letter}</Heading>
             )
             letterEdits.push(
                 <Box width='20px' key={`beer-letter-edit-${idx}`}></Box>
@@ -178,7 +178,7 @@ const BeerLetters = ({animateRunCount, maxAnimateRunCountPerIdx, generatedPicRef
         } else {
             letters.push(
                 <Flex flexDirection='column' textAlign='center' key={`beer-letter-${idx}`}>
-                    <Heading as='h5' size='sm' mb='5' textTransform='uppercase'>{letter}</Heading>
+                    <Heading as='h5' size='md' fontWeight='800' mb='5' lineHeight='5' textTransform='uppercase'>{letter}</Heading>
                     <Letter beer={beerToShow} width='100px' onClick={() => beerClicked(idx)}/>
                 </Flex>
             )
@@ -197,7 +197,7 @@ const BeerLetters = ({animateRunCount, maxAnimateRunCountPerIdx, generatedPicRef
     })
 
     return (
-        <Flex overflowX='auto' flexDirection='column' flexWrap='wrap' marginBottom='2'>
+        <Flex overflowX='auto' flexDirection='column' flexWrap='wrap' marginBottom='2' marginTop='3' boxShadow='0 0 0 1px #000, 0 0 0 2px #fff, 0 0 0 3px #000'>
             {/* marginTop defined below so screen looks nice */}
             <Box marginTop='5' ref={generatedPicRef}>
                 <Flex justifyContent='safe center' gap='10'>
