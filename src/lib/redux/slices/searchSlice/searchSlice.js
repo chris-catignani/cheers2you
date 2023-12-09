@@ -1,11 +1,13 @@
 import { getFromSessionStorage, setInSessionStorage } from "@/lib/utils/sessionStorage"
 import { createSlice } from "@reduxjs/toolkit"
+import { getVenues } from "./thunks"
 
 
 const initialState = {
     eventName: getFromSessionStorage('search.eventName', ''),
     personsName: getFromSessionStorage('search.personsName', ''),
     venueName: getFromSessionStorage('search.venueName', ''),
+    venues: [],
 }
 
 export const searchSlice = createSlice({
@@ -26,7 +28,16 @@ export const searchSlice = createSlice({
                 setInSessionStorage('search.venueName', action.payload)
             }
         },
-    }
+    },
+    extraReducers: (builder) => {
+        builder.addCase(getVenues.pending, (state) => {
+            state.getVenuesStatus = 'loading';
+        })
+        .addCase(getVenues.fulfilled, (state, action) => {
+            state.getVenuesStatus = '';
+            state.venues = action.payload;
+        })
+    },
 })
 
 export const { setEventName, setPersonsName, setVenueName } = searchSlice.actions

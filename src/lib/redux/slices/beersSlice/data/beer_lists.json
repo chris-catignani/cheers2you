@@ -1,5 +1,6 @@
 [
     {
+        "_comment": "If the user does not specify a venue, this first venue will be the default",
         "venueName": "big bar",
         "urlParam": "big_bar",
         "fileNames": ["beers2.json", "beers2-manual.json", "aha_bmth.json", "fill_in_drinks.json"]
