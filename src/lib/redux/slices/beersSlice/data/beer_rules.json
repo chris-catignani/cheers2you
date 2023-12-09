@@ -80,8 +80,13 @@
     "beerType": {
         "regexes": [
             {
-                "regex": "IPA - New England / Hazy",
-                "replacement": "IPA - Hazy"
+                "regex": XXX - New England / Hazy",
+                "replacement": "XXX - Hazy"
+            },
+            {
+                "decription": "Remove everything after 1st '-'",
+                "regex": "[^-]*",
+                "replacement": ""
             }
         ]
     }
