@@ -11,6 +11,7 @@ import { Box, Button, ButtonGroup, Center, Container, Flex, Heading, IconButton,
 import { isAtoZ, getSocialMediaShareUrl, wrapIndex } from '@/lib/utils/utils';
 import html2canvas from 'html2canvas';
 import { ChallangeModeExplainerModal } from './components/ChallangeModeExplainerModal';
+import { Slots } from './components/slotMachine/SlotMachine';
 
 
 export const Beers = ({ personsName, venueName }) => {
@@ -113,7 +114,7 @@ const BeersHeader = ({ onSpinUnlockedBeersPressed, onChallengeModePressed, isLoa
                     width='full'
                     onClick={onSpinUnlockedBeersPressed}
                     isLoading={isLoading}
-                    isDisabled={maxSpinsReached}
+                    // isDisabled={maxSpinsReached}
                 >
                     {maxSpinsReached ? 'No more spins. Drink up!' : 'Spin unlocked beers'}
                 </Button>
@@ -151,6 +152,7 @@ const BeerLetters = ({ animateRunCount, maxAnimateRunCountPerIdx, generatedPicRe
     const beerLetters = useSelector(selectBeerLetters);
     const beerOptionsAtIdx = useSelector(selectBeerOptionsAtIdx);
     const lockedBeerIdxs = useSelector(selectLockedBeerLetterIdxs);
+    const beerDefaultsPerLetter = useSelector(selectBeerDefaultsPerLetter)
 
     const letters = []
     const letterEdits = []
@@ -201,20 +203,39 @@ const BeerLetters = ({ animateRunCount, maxAnimateRunCountPerIdx, generatedPicRe
         }
     })
 
+    const slotReelsOptions = beerLetters.map( ({letter, beer, userGeneratedBeer}) => {
+        return [beer || userGeneratedBeer, ...beerDefaultsPerLetter[letter.toLowerCase()] || []]
+    })
+
     return (
         <Flex overflowX='auto' flexDirection='column' flexWrap='wrap' marginBottom='2' marginTop='3'>
             {/* padding defined below so that border of the element inside it shows in the screencapture */}
-            <Box p='1' ref={generatedPicRef} >
+            <Box p='1' ref={generatedPicRef}>
                 {/* padding top here to ensure the border is not directly on top of the letters */}
-                <Flex pt='5' justifyContent='safe center' gap='10' border='3px double black'>
-                    {letters}
-                </Flex>
+                <Box pt='5' border='3px double black'>
+                    <Slots slotReelsOptions={slotReelsOptions} slotItemSize='100px'/>
+                </Box>
             </Box>
             <Flex justifyContent='safe center' gap='10'>
                 {isChallengeMode && letterEdits}
             </Flex>
         </Flex>
     )
+
+    // return (
+    //     <Flex overflowX='auto' flexDirection='column' flexWrap='wrap' marginBottom='2' marginTop='3'>
+    //         {/* padding defined below so that border of the element inside it shows in the screencapture */}
+    //         <Box p='1' ref={generatedPicRef} >
+    //             {/* padding top here to ensure the border is not directly on top of the letters */}
+    //             <Flex pt='5' justifyContent='safe center' gap='10' border='3px double black'>
+    //                 {letters}
+    //             </Flex>
+    //         </Box>
+    //         <Flex justifyContent='safe center' gap='10'>
+    //             {isChallengeMode && letterEdits}
+    //         </Flex>
+    //     </Flex>
+    // )
 }
 
 const ShareButtons = ({ generatedPicRef }) => {
