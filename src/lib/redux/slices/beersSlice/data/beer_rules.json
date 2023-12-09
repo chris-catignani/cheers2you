@@ -80,7 +80,7 @@
     "beerType": {
         "regexes": [
             {
-                "regex": XXX - New England / Hazy",
+                "regex": "XXX - New England / Hazy",
                 "replacement": "XXX - Hazy"
             },
             {
