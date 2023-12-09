@@ -85,7 +85,7 @@
             },
             {
                 "decription": "Remove everything after 1st '-'",
-                "regex": "^(.*?)\ -",
+                "regex": "^(.*?)\-",
                 "replacement": ""
             }
         ]
