@@ -1,8 +1,6 @@
 import { useRef, useState } from "react";
 import { Box, Flex, Image, Text } from "@chakra-ui/react";
 
-import './SlotMachine.css'
-
 export const Slots = ({slotReelsOptions, slotItemSize}) => {
 
     const slotRefs = []
@@ -51,20 +49,20 @@ export const Slots = ({slotReelsOptions, slotItemSize}) => {
         <>
         <Flex justifyContent='safe center' gap='10'>
             {slotReelsOptions.map((slotReelOptions, idx) => (
-                <Box>
-                    <div className="slot" key={`slot-reel-${idx}`}>
-                        <section className="slotSection">
-                            <div className="container" ref={slotRefs[idx]}>
+                <Box key={`slot-reel-${idx}`}>
+                    <Box height={slotItemSize} width={slotItemSize}>
+                        <Box position='absolute' overflow='hidden' height={slotItemSize} width={slotItemSize}>
+                            <Box position='absolute' transition='top ease-in-out 0.5s' ref={slotRefs[idx]}>
                                 {slotReelOptions.map((beer, idx) => (
-                                    <div key={`slot-reel-${idx}-option-${idx}`}>
-                                        <span>
+                                    <Box key={`slot-reel-${idx}-option-${idx}`}>
+                                        <Box>
                                             <Image src={beer.beer_label_file} alt={beer.beer_name + ' ' + beer.beer_type} boxSize={slotItemSize} fit='contain' />
-                                        </span>
-                                    </div>
+                                        </Box>
+                                    </Box>
                                 ))}
-                            </div>
-                        </section>
-                    </div>
+                            </Box>
+                        </Box>
+                    </Box>
                     <Box>{slotReelOptions?.[0]?.brewer_name}</Box>
                     <Box minH='5em'>{slotReelOptions?.[0]?.beer_name}</Box>
                 </Box>
