@@ -7,11 +7,12 @@ import { CacheProvider } from '@chakra-ui/next-js'
 
 /* Instruments */
 import { reduxStore } from '@/lib/redux'
+import { cheers2YouTheme } from '@/app/chakra/theme/theme'
 
 export const Providers = (props) => {
   return (
     <Provider store={reduxStore}>
-      <ChakraProvider>
+      <ChakraProvider theme={cheers2YouTheme}>
         <CacheProvider>
           {props.children}
         </CacheProvider>
