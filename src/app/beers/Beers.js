@@ -202,10 +202,11 @@ const BeerLetters = ({ animateRunCount, maxAnimateRunCountPerIdx, generatedPicRe
     })
 
     return (
-        <Flex overflowX='auto' flexDirection='column' flexWrap='wrap' marginBottom='2' marginTop='3' boxShadow='0 0 0 1px #000, 0 0 0 2px #fff, 0 0 0 3px #000'>
-            {/* marginTop defined below so screen looks nice */}
-            <Box marginTop='5' ref={generatedPicRef}>
-                <Flex justifyContent='safe center' gap='10'>
+        <Flex overflowX='auto' flexDirection='column' flexWrap='wrap' marginBottom='2' marginTop='3'>
+            {/* padding defined below so that border of the element inside it shows in the screencapture */}
+            <Box p='1' ref={generatedPicRef} >
+                {/* padding top here to ensure the border is not directly on top of the letters */}
+                <Flex pt='5' justifyContent='safe center' gap='10' border='3px double black'>
                     {letters}
                 </Flex>
             </Box>
