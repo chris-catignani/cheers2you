@@ -41,18 +41,21 @@ export const Home = ({venueName}) => {
 
                 <Box>
                     <Input
-                        borderWidth='2px'
+                        width='100%'
+                        borderWidth='3px'
                         borderColor='black'
                         placeholder='Type a name'
+                        textAlign='left'
+                        _focus={{color: 'black', borderColor:'black', fontSize:'18px', fontWeight:'bold'}}
                         value={personsName}
                         onChange={e => dispatch(setPersonsName(e.target.value))}
                     />
                     <Button
                         mt='4'
-                        width='full'
+                        width='100%'
                         background='black'
                         color='white'
-                        _hover={{ bg: "white", color:"black", borderWidth:"2px", borderColor:"black"}}
+                        _hover={{ bg: 'white', color:'black', borderWidth:'2px', borderColor:'black'}}
                         onClick={onSearchClick}
                     >
                         GIVE IT A GO
