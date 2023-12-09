@@ -43,8 +43,6 @@ export const Slots = ({slotReelsOptions, slotItemSize}) => {
         return slotReelsOptions[idx][randomOption];
     };
 
-    // TODO can i get rid of any of these tags?
-
     return (
         <>
         <Flex justifyContent='safe center' gap='10'>
@@ -54,11 +52,7 @@ export const Slots = ({slotReelsOptions, slotItemSize}) => {
                         <Box position='absolute' overflow='hidden' height={slotItemSize} width={slotItemSize}>
                             <Box position='absolute' transition='top ease-in-out 0.5s' ref={slotRefs[idx]}>
                                 {slotReelOptions.map((beer, idx) => (
-                                    <Box key={`slot-reel-${idx}-option-${idx}`}>
-                                        <Box>
-                                            <Image src={beer.beer_label_file} alt={beer.beer_name + ' ' + beer.beer_type} boxSize={slotItemSize} fit='contain' />
-                                        </Box>
-                                    </Box>
+                                    <Image key={`slot-reel-${idx}-option-${idx}`} src={beer.beer_label_file} alt={beer.beer_name + ' ' + beer.beer_type} boxSize={slotItemSize} fit='contain' />
                                 ))}
                             </Box>
                         </Box>
