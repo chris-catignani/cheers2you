@@ -171,16 +171,23 @@ const BeerLetters = ({ generatedPicRef, isSpinning, setSpinning }) => {
         }
     })
 
-    const onSpinningFinished = (beers) => {
-        setSpinning(false)
-        const newBeerLetters = beerLetters.map((beerLetter, idx) => {
-            return {
-                ...beerLetter,
+    const onSpinningFinished = ({allDone, beers, idx}) => {
+        if (allDone) {
+            const newBeerLetters = beerLetters.map((beerLetter, idx) => {
+                return {
+                    ...beerLetter,
+                    beer: beers[idx],
+                    userGeneratedBeer: {}, // TODO for now
+                }
+            })
+            dispatch(setBeerLetters(newBeerLetters))
+            setSpinning(false)
+        } else {
+            dispatch(setBeerLetterAtIndex({
+                idx,
                 beer: beers[idx],
-                userGeneratedBeer: {}, // TODO for now
-            }
-        })
-        dispatch(setBeerLetters(newBeerLetters))
+            }))
+        }
     }
 
     return (

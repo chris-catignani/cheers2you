@@ -1,39 +1,58 @@
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useState } from "react";
 import { Box, Flex, Image, keyframes } from "@chakra-ui/react";
 
 export const Slots = ({ slotReelsOptions, lockedSlotIndexes, spin, onSpinningFinished, onBeerClicked, letterImageSize, specialCharacterSize }) => {
-    /*
-    TODOs:
-    - reels should stop left to right
-    */
-    
+
     useEffect(() => {
         if (spin) {
             roll()
         }
     }, [spin]) // eslint-disable-line react-hooks/exhaustive-deps
 
-    const spinOutcomes = slotReelsOptions.map(({ beers }) => beers[0])
+    const [spinningReels, setSpinningReels] = useState([])
 
     const roll = () => {
-        setTimeout(() => {
-            onSpinningFinished(spinOutcomes)
-        }, 2000);
-
-        slotReelsOptions.forEach((slotReelOption, idx) => {
-            if (lockedSlotIndexes[idx] || slotReelOption.isSpecialCharacter) {
-                return
+        const spinOutcomes = slotReelsOptions.map(({ beers }) => beers[0])
+        const reelsToSpin = slotReelsOptions.reduce((reelsToSpin, { isSpecialCharacter }, idx) => {
+            if (!lockedSlotIndexes[idx] && !isSpecialCharacter) {
+                reelsToSpin.push(idx)
             }
+            return reelsToSpin
+        }, [])
+        setSpinningReels(reelsToSpin)
 
+        reelsToSpin.forEach((reelIdxToSpin) => {
             const randomOption = Math.floor(
-                Math.random() * slotReelOption.beers.length
+                Math.random() * slotReelsOptions[reelIdxToSpin].beers.length
             );
-            spinOutcomes[idx] = slotReelOption.beers[randomOption];
+            spinOutcomes[reelIdxToSpin] = slotReelsOptions[reelIdxToSpin].beers[randomOption];
         });
+
+        setTimeout(() => {
+            const intervalId = setInterval(() => {
+                const idx = reelsToSpin.shift()
+                
+                if (reelsToSpin.length > 0) {
+                    setSpinningReels(reelsToSpin)
+                    onSpinningFinished({
+                        allDone: false,
+                        beers: spinOutcomes,
+                        idx,
+                    })
+                }
+                else {
+                    clearInterval(intervalId)
+                    onSpinningFinished({
+                        allDone: true,
+                        beers: spinOutcomes,
+                    })
+                }
+            }, 500)
+        }, 1500);
     };
 
     const generateAnimationProperty = (idx) => {
-        if (!spin || lockedSlotIndexes[idx]) {
+        if (!spin || !spinningReels.includes(idx)) {
             return ''
         }
 
@@ -62,7 +81,7 @@ export const Slots = ({ slotReelsOptions, lockedSlotIndexes, spin, onSpinningFin
                                 <BeerImages beers={beers} size={size} />
                             </Box>
                         </Box>
-                        <BeerDetails beer={beers?.[0]} spin={spin}/>
+                        <BeerDetails beer={beers?.[0]} hide={spinningReels.includes(idx)}/>
                     </Flex>
                 )
             })}
@@ -81,9 +100,7 @@ const BeerImages = ({ beers, size }) => {
             fit='contain' />
     )
 
-    const beerImages = beers.map((beer, idx) => {
-        return buildImage(beer, idx)
-    })
+    const beerImages = beers.map((beer, idx) => buildImage(beer, idx))
 
     // add the first beer to the end of the list, this helps smooth out the animations
     // when it loops from the end back to the start
@@ -94,11 +111,11 @@ const BeerImages = ({ beers, size }) => {
     return beerImages
 }
 
-const BeerDetails = ({ beer, spin }) => {
+const BeerDetails = ({ beer, hide }) => {
     return (
         <Box>
-            <Box minH='3em'>{!spin && beer?.brewer_name}</Box>
-            <Box minH='5em'>{!spin && beer?.beer_name}</Box>
+            <Box minH='3em'>{!hide && beer?.brewer_name}</Box>
+            <Box minH='5em'>{!hide && beer?.beer_name}</Box>
         </Box>
     )
 }
