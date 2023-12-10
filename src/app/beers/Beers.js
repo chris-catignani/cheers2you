@@ -10,7 +10,7 @@ import { Box, Button, ButtonGroup, Center, Container, Flex, Heading, IconButton,
 import { getSocialMediaShareUrl } from '@/lib/utils/utils';
 import html2canvas from 'html2canvas';
 import { ChallangeModeExplainerModal } from './components/ChallangeModeExplainerModal';
-import { Slots } from './components/SlotMachine';
+import { BeerSlotMachine } from './components/SlotMachine';
 
 
 export const Beers = ({ personsName, venueName }) => {
@@ -160,10 +160,12 @@ const BeerLetters = ({ generatedPicRef, isSpinning, setSpinning }) => {
         return [headers, lockButtons]
     }, [[], []])
 
-    const slotReelsOptions = beerLetters.map( ({letter, beer, userGeneratedBeer, isSpecialCharacter}) => {
+    const beerOptionsPerSlotReel = beerLetters.map( ({letter, beer, userGeneratedBeer, isSpecialCharacter}) => {
         const beers = isSpecialCharacter ? [] : [
             beer || userGeneratedBeer,
-            ...(beerDefaultsPerLetter[letter.toLowerCase()] || []).filter((aBeer) => aBeer.beer_name !== beer?.beer_name && aBeer.brewer_name !== beer?.brewer_name),
+            ...(beerDefaultsPerLetter[letter.toLowerCase()] || []).filter((aBeer) => (
+                aBeer.beer_name !== beer?.beer_name && aBeer.brewer_name !== beer?.brewer_name
+            ))
         ]
         return {
             isSpecialCharacter,
@@ -200,11 +202,11 @@ const BeerLetters = ({ generatedPicRef, isSpinning, setSpinning }) => {
                         {headers}
                     </Flex>
                     <Box mt='5'>
-                        <Slots
+                        <BeerSlotMachine
                             spin={isSpinning}
                             onSpinningFinished={onSpinningFinished}
-                            slotReelsOptions={slotReelsOptions}
-                            lockedSlotIndexes={lockedBeerIdxs}
+                            beerOptionsPerReel={beerOptionsPerSlotReel}
+                            lockedReelIndexes={lockedBeerIdxs}
                             letterImageSize={letterImageSize}
                             specialCharacterSize={specialCharacterSize}
                             onBeerClicked={beerClicked} />
