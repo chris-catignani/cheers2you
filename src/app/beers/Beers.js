@@ -120,6 +120,7 @@ const BeerLetters = ({ generatedPicRef, isSpinning, setSpinning }) => {
     const dispatch = useDispatch();
 
     const isChallengeMode = useSelector(selectIsChallangeMode);
+    const challengeModeSpinCount = useSelector(selectChallengeModeSpinCount)
     const beerLetters = useSelector(selectBeerLetters);
     const lockedBeerIdxs = useSelector(selectLockedBeerLetterIdxs);
     const beerDefaultsPerLetter = useSelector(selectBeerDefaultsPerLetter)
@@ -144,6 +145,7 @@ const BeerLetters = ({ generatedPicRef, isSpinning, setSpinning }) => {
                 <Heading as='h5' size='md' fontWeight='800' width={letterImageSize} textAlign='center' textTransform='uppercase' key={`beer-letter-header-${idx}`}>{letter}</Heading>
             )
 
+            const maxSpinsReached = challengeModeSpinCount >= 3
             const lockButtonText = lockedBeerIdxs[idx] ? 'Unlock Beer' : 'Lock Beer'
             lockButtons.push(
                 <Button
@@ -151,6 +153,7 @@ const BeerLetters = ({ generatedPicRef, isSpinning, setSpinning }) => {
                     marginBottom='1'
                     key={`beer-letter-lock-${idx}`}
                     onClick={() => dispatch(toggleLockedBeerLetterIdx(idx))}
+                    isDisabled={maxSpinsReached}
                     hidden={isSpinning}
                 >
                     {lockButtonText}
