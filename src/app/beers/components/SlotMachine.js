@@ -26,7 +26,7 @@ export const Slots = ({ slotReelsOptions, slotItemSize, lockedSlotIndexes, spin,
 
         // looping through all slots to start rolling
         slotRefs.forEach((slotRef, idx) => {
-            if (lockedSlotIndexes[idx]) {
+            if (lockedSlotIndexes[idx] || slotReelsOptions[idx].isSpecialCharacter) {
                 return
             }
 

@@ -130,7 +130,7 @@ const BeerLetters = ({ generatedPicRef, isSpinning, setSpinning }) => {
         }
     }
 
-    const [headers, lockButtons] = beerLetters.reduce(([headers, lockButtons], { letter, beer, userGeneratedBeer, isSpecialCharacter }, idx) => {
+    const [headers, lockButtons] = beerLetters.reduce(([headers, lockButtons], { letter, isSpecialCharacter }, idx) => {
         if (isSpecialCharacter) {
             headers.push(
                 <Heading as='h5' size='md' fontWeight='800' width='25px' textAlign='center' textTransform='uppercase' key={`beer-letter-${idx}`}>{letter}</Heading>
@@ -158,17 +158,9 @@ const BeerLetters = ({ generatedPicRef, isSpinning, setSpinning }) => {
     }, [[], []])
 
     const slotReelsOptions = beerLetters.map( ({letter, beer, userGeneratedBeer, isSpecialCharacter}) => {
-        if (isSpecialCharacter) {
-            return {
-                isSpecialCharacter,
-                letter,
-                beers: []
-            }
-        } else {
-            return {
-                letter,
-                beers: [beer || userGeneratedBeer, ...beerDefaultsPerLetter[letter.toLowerCase()] || []]
-            }
+        return {
+            isSpecialCharacter,
+            beers: isSpecialCharacter ? [] : [beer || userGeneratedBeer, ...beerDefaultsPerLetter[letter.toLowerCase()] || []]
         }
     })
 
