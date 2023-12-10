@@ -2,7 +2,7 @@ import { debounce,sample, shuffle } from 'lodash-es';
 import { UploadManager } from '@bytescale/sdk';
 import download from 'downloadjs';
 import { createAsyncThunk } from '@reduxjs/toolkit';
-import { setBeerLetters, setBeerOptionsAtIdx, setLockedBeerLetterIdxs } from "./beersSlice";
+import { setBeerLetters, setLockedBeerLetterIdxs } from "./beersSlice";
 import { isAtoZ } from '@/lib/utils/utils';
 import { setPersonsName } from '../searchSlice';
 import { setChallengeModeSpinCount, setIsChallengeMode } from '../challengeModeSlice';
@@ -13,7 +13,6 @@ export const generateBeerBanner = createAsyncThunk(
     async ({personsName, venueName, freshBanner = true}, {dispatch, getState}) => {
 
     const beerLetters = []
-    const beerOptionsAtIdx = []
 
     let beerDefaults = getState().beers.beerDefaultsPerLetter
     if (Object.keys(beerDefaults).length === 0) {
@@ -26,13 +25,10 @@ export const generateBeerBanner = createAsyncThunk(
                 letter, 
                 isSpecialCharacter: true,
             })
-            beerOptionsAtIdx.push([])
         } else if (!freshBanner && getState().beers.lockedBeerLetterIdxs[idx]) {
             beerLetters.push(getState().beers.beerLetters[idx])
-            beerOptionsAtIdx.push(getState().beers.beerOptionsAtIdx[idx])
         } else {
             const beerOptions = shuffle(beerDefaults[letter.toLowerCase()])
-            beerOptionsAtIdx.push(beerOptions)
             beerLetters.push({
                 letter: letter.toUpperCase(),
                 userGeneratedBeer: {},
@@ -48,7 +44,6 @@ export const generateBeerBanner = createAsyncThunk(
     }
     dispatch(setPersonsName(personsName))
     dispatch(setBeerLetters(beerLetters))
-    dispatch(setBeerOptionsAtIdx(beerOptionsAtIdx))
 });
 
 export const uploadSocialMedia = createAsyncThunk(
