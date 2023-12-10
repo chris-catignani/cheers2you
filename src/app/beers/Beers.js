@@ -130,21 +130,24 @@ const BeerLetters = ({ generatedPicRef, isSpinning, setSpinning }) => {
         }
     }
 
+    const letterImageSize = '100px'
+    const specialCharacterSize = '10px'
+
     const [headers, lockButtons] = beerLetters.reduce(([headers, lockButtons], { letter, isSpecialCharacter }, idx) => {
         if (isSpecialCharacter) {
             headers.push(
-                <Heading as='h5' size='md' fontWeight='800' width='10px' textAlign='center' textTransform='uppercase' key={`beer-letter-${idx}`}>{letter}</Heading>
+                <Heading as='h5' size='md' fontWeight='800' width={specialCharacterSize} textAlign='center' textTransform='uppercase' key={`beer-letter-header-${idx}`}>{letter}</Heading>
             )
-            lockButtons.push(<Box width='10px' />)
+            lockButtons.push(<Box width={specialCharacterSize} key={`beer-letter-lock-${idx}`}  />)
         } else {
             headers.push(
-                <Heading as='h5' size='md' fontWeight='800' width='100px' textAlign='center' textTransform='uppercase' key={`beer-letter-${idx}`}>{letter}</Heading>
+                <Heading as='h5' size='md' fontWeight='800' width={letterImageSize} textAlign='center' textTransform='uppercase' key={`beer-letter-header-${idx}`}>{letter}</Heading>
             )
 
             const lockButtonText = lockedBeerIdxs[idx] ? 'Unlock Beer' : 'Lock Beer'
             lockButtons.push(
                 <Button
-                    width='100px'
+                    width={letterImageSize}
                     marginBottom='1'
                     key={`beer-letter-lock-${idx}`}
                     onClick={() => dispatch(toggleLockedBeerLetterIdx(idx))}
@@ -196,6 +199,8 @@ const BeerLetters = ({ generatedPicRef, isSpinning, setSpinning }) => {
                             onSpinningFinished={onSpinningFinished}
                             slotReelsOptions={slotReelsOptions}
                             lockedSlotIndexes={lockedBeerIdxs}
+                            letterImageSize={letterImageSize}
+                            specialCharacterSize={specialCharacterSize}
                             onBeerClicked={beerClicked} />
                     </Box>
 

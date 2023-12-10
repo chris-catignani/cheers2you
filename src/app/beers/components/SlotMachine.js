@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState } from "react";
 import { Box, Flex, Image, keyframes } from "@chakra-ui/react";
 
-export const Slots = ({ slotReelsOptions, lockedSlotIndexes, spin, onSpinningFinished, onBeerClicked }) => {
+export const Slots = ({ slotReelsOptions, lockedSlotIndexes, spin, onSpinningFinished, onBeerClicked, letterImageSize, specialCharacterSize }) => {
     const slotRefs = []
     const rollStates = []
     slotReelsOptions.forEach(({ beers }) => {
@@ -47,20 +47,20 @@ export const Slots = ({ slotReelsOptions, lockedSlotIndexes, spin, onSpinningFin
 
     const BeerDetails = ({beer}) => {
         return (
-            <>
+            <Box>
                 <Box minH='3em'>{!spin && beer?.brewer_name}</Box>
                 <Box minH='5em'>{!spin && beer?.beer_name}</Box>
-            </>
+            </Box>
         )
     }
 
-    const BeerImages = ({beers}) => {
+    const BeerImages = ({beers, size}) => {
         return beers.map((beer, idx) => (
             <Image
                 key={`slot-reel-${idx}-option-${idx}`}
                 src={beer.beer_label_file}
                 alt={beer.beer_name + ' ' + beer.beer_type}
-                boxSize='100px'
+                boxSize={size}
                 my='2px'
                 fit='contain' />
         ))
@@ -88,23 +88,16 @@ export const Slots = ({ slotReelsOptions, lockedSlotIndexes, spin, onSpinningFin
     return (
         <Flex justifyContent='safe center' gap='10' overflowX='auto'>
             {slotReelsOptions.map(({ beers, isSpecialCharacter }, idx) => {
-                const width = isSpecialCharacter ? '10px' : '100px'
-                const height = '100px'
+                const size = isSpecialCharacter ? specialCharacterSize : letterImageSize
                 return (
-                    <Box key={`slot-reel-${idx}`}>
-                        <Flex flexDirection='column' textAlign='center' key={`beer-letter-${idx}`} onClick={() => onBeerClicked(idx)}>
-                            <Box width={width}>
-                                <Box height={height} width={width} position='relative' overflow='hidden'>
-                                    <Box position='relative' overflow='hidden' height={height} width={width}>
-                                        <Box position='relative' ref={slotRefs[idx]} animation={generateAnimationProperty(idx)}>
-                                            <BeerImages beers={beers} />
-                                        </Box>
-                                    </Box>
-                                </Box>
-                                <BeerDetails beer={beers?.[0]} />
+                    <Flex key={`slot-reel-${idx}`} flexDirection='column' width={size} textAlign='center' onClick={() => onBeerClicked(idx)}>
+                        <Box height={size} overflow='hidden'>
+                            <Box ref={slotRefs[idx]} animation={generateAnimationProperty(idx)}>
+                                <BeerImages beers={beers} size={size} />
                             </Box>
-                        </Flex>
-                    </Box>
+                        </Box>
+                        <BeerDetails beer={beers?.[0]} />
+                    </Flex>
                 )
             })}
         </Flex>
