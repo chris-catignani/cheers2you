@@ -81,8 +81,8 @@ export const Slots = ({ slotReelsOptions, lockedSlotIndexes, spin, onSpinningFin
             return ''
         }
 
-        const minY = (slotReelsOptions[idx].beers.length - 1) * 102       
-        const duration = (slotReelsOptions[idx].beers.length - 1) * 0.1
+        const minY = (slotReelsOptions[idx].beers.length) * 102       
+        const duration = (slotReelsOptions[idx].beers.length) * 0.1
         
         const slotLoop = keyframes({
             '0%': {
