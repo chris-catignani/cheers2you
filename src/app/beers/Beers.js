@@ -3,12 +3,11 @@
 import { useDispatch, useSelector } from 'react-redux';
 import React, { useEffect, useRef, useState } from 'react';
 import { DownloadIcon, ExternalLinkIcon } from '@chakra-ui/icons';
-import { Letter } from './components/Letter';
 import { SocialShareModal } from './components/SocialShareModal';
 import { SelectBeerModal } from './components/SelectBeerModal';
-import { downloadImage, searchForBeer, selectBeerLetters, selectBeerOptionsAtIdx, selectBeerSearchResults, selectDownloadGeneratedImageStatus, selectLockedBeerLetterIdxs, selectOpenBeerIdx, setBeerLetterAtIndex, setBeerSearchResults, setOpenBeerIdx, toggleLockedBeerLetterIdx, generateBeerBanner, uploadSocialMedia, selectUploadSocialMediaStatus, selectUploadedSocialMediaData, setUploadedSocialMediaData, generateBeerDefaults, selectBeerDefaultsPerLetter, selectPersonsName, selectIsChallangeMode, selectIsChallengeModeExplainerDisplayed, setIsChallengeModeExplainerDisplayed, setIsChallengeMode, incrementChallengeModeSpinCount, selectChallengeModeSpinCount, selectVenueName } from '@/lib/redux';
+import { downloadImage, searchForBeer, selectBeerLetters, selectBeerSearchResults, selectDownloadGeneratedImageStatus, selectLockedBeerLetterIdxs, selectOpenBeerIdx, setBeerLetterAtIndex, setBeerSearchResults, setOpenBeerIdx, toggleLockedBeerLetterIdx, generateBeerBanner, uploadSocialMedia, selectUploadSocialMediaStatus, selectUploadedSocialMediaData, setUploadedSocialMediaData, generateBeerDefaults, selectBeerDefaultsPerLetter, selectPersonsName, selectIsChallangeMode, selectIsChallengeModeExplainerDisplayed, setIsChallengeModeExplainerDisplayed, setIsChallengeMode, incrementChallengeModeSpinCount, selectChallengeModeSpinCount, selectVenueName, setBeerLetters } from '@/lib/redux';
 import { Box, Button, ButtonGroup, Center, Container, Flex, Heading, IconButton, Text, useDisclosure, useMediaQuery } from '@chakra-ui/react';
-import { isAtoZ, getSocialMediaShareUrl, wrapIndex } from '@/lib/utils/utils';
+import { getSocialMediaShareUrl } from '@/lib/utils/utils';
 import html2canvas from 'html2canvas';
 import { ChallangeModeExplainerModal } from './components/ChallangeModeExplainerModal';
 import { Slots } from './components/slotMachine/SlotMachine';
@@ -31,42 +30,14 @@ export const Beers = ({ personsName, venueName }) => {
         }
     }, [dispatch, storedPersonsName, personsName, venueName])
 
-    const [{ animateRunCount, maxAnimateRunCountPerIdx }, setAnimationProps] = useState({ animateRunCount: -1, maxAnimateRunCountPerIdx: [] })
     const [isLandscapePhone] = useMediaQuery('(max-height: 450px)')
-    const lockedBeerIdxs = useSelector(selectLockedBeerLetterIdxs);
+    const [isSpinning, setSpinning] = useState(false);
 
     const generatedPicRef = useRef(null)
 
     const spinUnlockedBeersPressed = () => {
+        setSpinning(true)
         dispatch(incrementChallengeModeSpinCount())
-        dispatch(generateBeerBanner({ personsName, venueName, freshBanner: false }))
-
-        let maxAnimateRunCount = 8
-        let maxAnimateRunCountPerIdx = []
-        for (let i = 0; i < personsName.length; i++) {
-            if (lockedBeerIdxs[i] || !isAtoZ(personsName[i])) {
-                maxAnimateRunCountPerIdx.push(-1)
-            } else {
-                maxAnimateRunCount += 4
-                maxAnimateRunCountPerIdx.push(maxAnimateRunCount)
-            }
-        }
-
-        let animateRunCount = 0
-        setAnimationProps({ animateRunCount, maxAnimateRunCountPerIdx })
-
-        const intervalId = setInterval(() => {
-            animateRunCount += 1
-            if (animateRunCount > maxAnimateRunCount) {
-                clearInterval(intervalId)
-                setAnimationProps({
-                    animateRunCount: -1,
-                    maxAnimateRunCountPerIdx: []
-                })
-            } else {
-                setAnimationProps({ animateRunCount, maxAnimateRunCountPerIdx })
-            }
-        }, 100);
     }
 
     const onChallengeModePressed = () => {
@@ -87,10 +58,10 @@ export const Beers = ({ personsName, venueName }) => {
             <BeersHeader
                 onSpinUnlockedBeersPressed={spinUnlockedBeersPressed}
                 onChallengeModePressed={onChallengeModePressed}
-                isLoading={animateRunCount !== -1} />
+                isLoading={isSpinning} />
             <BeerLetters
-                animateRunCount={animateRunCount}
-                maxAnimateRunCountPerIdx={maxAnimateRunCountPerIdx}
+                isSpinning={isSpinning}
+                setSpinning={setSpinning}
                 generatedPicRef={generatedPicRef} />
             <ChallengeModeModal />
             <BeerModal />
@@ -145,17 +116,13 @@ const BeersHeader = ({ onSpinUnlockedBeersPressed, onChallengeModePressed, isLoa
 }
 
 // TODO refactor this. Use a helper to do the layout stuff, pass in react components
-const BeerLetters = ({ animateRunCount, maxAnimateRunCountPerIdx, generatedPicRef }) => {
+const BeerLetters = ({ generatedPicRef, isSpinning, setSpinning }) => {
     const dispatch = useDispatch();
 
     const isChallengeMode = useSelector(selectIsChallangeMode);
     const beerLetters = useSelector(selectBeerLetters);
-    const beerOptionsAtIdx = useSelector(selectBeerOptionsAtIdx);
     const lockedBeerIdxs = useSelector(selectLockedBeerLetterIdxs);
     const beerDefaultsPerLetter = useSelector(selectBeerDefaultsPerLetter)
-
-    const letters = []
-    const letterEdits = []
 
     const beerClicked = (idx) => {
         if (!isChallengeMode) {
@@ -163,49 +130,44 @@ const BeerLetters = ({ animateRunCount, maxAnimateRunCountPerIdx, generatedPicRe
         }
     }
 
-    const aLetterIsAnimating = animateRunCount !== -1 && animateRunCount < Math.max(...maxAnimateRunCountPerIdx)
+    const [headers, lockButtons] = beerLetters.reduce(([headers, lockButtons], { letter, beer, userGeneratedBeer, isSpecialCharacter }, idx) => {
+        headers.push(
+            <Heading as='h5' size='md' fontWeight='800' width='100px' textAlign='center' textTransform='uppercase' key={`beer-letter-${idx}`}>{letter}</Heading>
+        )
 
-    beerLetters.forEach(({ letter, beer, userGeneratedBeer, isSpecialCharacter }, idx) => {
-        let beerToShow = beer || userGeneratedBeer
-        let isAnimating = false
-        if (animateRunCount !== -1 && animateRunCount < maxAnimateRunCountPerIdx[idx] && !isSpecialCharacter) {
-            const animateIdx = wrapIndex(0, beerOptionsAtIdx[idx].length, animateRunCount)
-            beerToShow = beerOptionsAtIdx[idx][animateIdx]
-            isAnimating = true
-        }
-
-        if (isSpecialCharacter) {
-            letters.push(
-                <Heading as='h5' size='md' fontWeight='800' width='20px' textAlign='center' textTransform='uppercase' key={`beer-letter-${idx}`}>{letter}</Heading>
-            )
-            letterEdits.push(
-                <Box width='20px' key={`beer-letter-edit-${idx}`}></Box>
-            )
-        } else {
-            letters.push(
-                <Flex flexDirection='column' textAlign='center' key={`beer-letter-${idx}`}>
-                    <Heading as='h5' size='sm' mb='5' textTransform='uppercase'>{letter}</Heading>
-                    <Letter beer={beerToShow} width='100px' isAnimating={isAnimating} onClick={() => beerClicked(idx)}/>
-                </Flex>
-            )
-            const lockButtonText = lockedBeerIdxs[idx] ? 'Unlock Beer' : 'Lock Beer'
-            letterEdits.push(
-                <Button
-                    width='100px'
-                    marginBottom='1'
-                    key={`beer-letter-lock-${idx}`}
-                    onClick={() => dispatch(toggleLockedBeerLetterIdx(idx))}
-                    hidden={aLetterIsAnimating}
-                >
-                    {lockButtonText}
-                </Button>
-            )
-        }
-    })
+        const lockButtonText = lockedBeerIdxs[idx] ? 'Unlock Beer' : 'Lock Beer'
+        lockButtons.push(
+            <Button
+                width='100px'
+                marginBottom='1'
+                key={`beer-letter-lock-${idx}`}
+                onClick={() => dispatch(toggleLockedBeerLetterIdx(idx))}
+                hidden={isSpinning}
+            >
+                {lockButtonText}
+            </Button>
+        )
+        return [headers, lockButtons]
+    }, [[], []])
 
     const slotReelsOptions = beerLetters.map( ({letter, beer, userGeneratedBeer}) => {
-        return [beer || userGeneratedBeer, ...beerDefaultsPerLetter[letter.toLowerCase()] || []]
+        return {
+            letter,
+            beers: [beer || userGeneratedBeer, ...beerDefaultsPerLetter[letter.toLowerCase()] || []]
+        }
     })
+
+    const onSpinningFinished = (beers) => {
+        setSpinning(false)
+        const newBeerLetters = beerLetters.map( ({letter}, idx) => {
+            return {
+                letter: letter,
+                beer: beers[idx],
+                userGeneratedBeer: {}, // TODO for now
+            }
+        })
+        dispatch(setBeerLetters(newBeerLetters))
+    }
 
     return (
         <Flex overflowX='auto' flexDirection='column' flexWrap='wrap' marginBottom='2' marginTop='3'>
@@ -213,29 +175,26 @@ const BeerLetters = ({ animateRunCount, maxAnimateRunCountPerIdx, generatedPicRe
             <Box p='1' ref={generatedPicRef}>
                 {/* padding top here to ensure the border is not directly on top of the letters */}
                 <Box pt='5' border='3px double black'>
-                    <Slots slotReelsOptions={slotReelsOptions} slotItemSize='100px'/>
+                    <Flex justifyContent='safe center' gap='10'>
+                        {headers}
+                    </Flex>
+                    <Box mt='5'>
+                        <Slots
+                            spin={isSpinning}
+                            onSpinningFinished={onSpinningFinished}
+                            slotReelsOptions={slotReelsOptions}
+                            lockedSlotIndexes={lockedBeerIdxs}
+                            onBeerClicked={beerClicked}
+                            slotItemSize='100px' />
+                    </Box>
+
                 </Box>
             </Box>
             <Flex justifyContent='safe center' gap='10'>
-                {isChallengeMode && letterEdits}
+                {lockButtons}
             </Flex>
         </Flex>
     )
-
-    // return (
-    //     <Flex overflowX='auto' flexDirection='column' flexWrap='wrap' marginBottom='2' marginTop='3'>
-    //         {/* padding defined below so that border of the element inside it shows in the screencapture */}
-    //         <Box p='1' ref={generatedPicRef} >
-    //             {/* padding top here to ensure the border is not directly on top of the letters */}
-    //             <Flex pt='5' justifyContent='safe center' gap='10' border='3px double black'>
-    //                 {letters}
-    //             </Flex>
-    //         </Box>
-    //         <Flex justifyContent='safe center' gap='10'>
-    //             {isChallengeMode && letterEdits}
-    //         </Flex>
-    //     </Flex>
-    // )
 }
 
 const ShareButtons = ({ generatedPicRef }) => {
