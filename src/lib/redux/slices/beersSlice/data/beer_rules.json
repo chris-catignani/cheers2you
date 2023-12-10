@@ -74,6 +74,11 @@
                 "decription": "Remove years if in 20XX",
                 "regex": "\\s+20\\d{2,}\\s*",
                 "replacement": ""
+            },
+            {
+                "decription": "Remove anything in any type of parentheses",
+                "regex": "/\s*[\[{(].*?[)}\]]\s*/g, '",
+                "replacement": ""
             }
         ]
     },
