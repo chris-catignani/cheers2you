@@ -87,7 +87,7 @@
                 "replacement": "IPA"
             },
             {
-                "regex": "^.*?(?=\-)",
+                "regex": "^.*?(?=\\-)",
                 "replacement": ""
             }
         ]
