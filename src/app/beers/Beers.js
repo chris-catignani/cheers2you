@@ -85,7 +85,7 @@ const BeersHeader = ({ onSpinUnlockedBeersPressed, onChallengeModePressed, isLoa
                     width='full'
                     onClick={onSpinUnlockedBeersPressed}
                     isLoading={isLoading}
-                    // isDisabled={maxSpinsReached}
+                    isDisabled={maxSpinsReached}
                 >
                     {maxSpinsReached ? 'No more spins. Drink up!' : 'Spin unlocked beers'}
                 </Button>
@@ -158,9 +158,14 @@ const BeerLetters = ({ generatedPicRef, isSpinning, setSpinning }) => {
     }, [[], []])
 
     const slotReelsOptions = beerLetters.map( ({letter, beer, userGeneratedBeer, isSpecialCharacter}) => {
+        const beers = isSpecialCharacter ? [] : [
+            beer || userGeneratedBeer,
+            ...(beerDefaultsPerLetter[letter.toLowerCase()] || []).filter((aBeer) => aBeer.beer_name !== beer?.beer_name && aBeer.brewer_name !== beer?.brewer_name),
+            beer || userGeneratedBeer
+        ]
         return {
             isSpecialCharacter,
-            beers: isSpecialCharacter ? [] : [beer || userGeneratedBeer, ...beerDefaultsPerLetter[letter.toLowerCase()] || []]
+            beers: beers
         }
     })
 

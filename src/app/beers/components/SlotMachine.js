@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from "react";
-import { Box, Flex, Image } from "@chakra-ui/react";
+import { Box, Flex, Image, keyframes } from "@chakra-ui/react";
 
 export const Slots = ({ slotReelsOptions, lockedSlotIndexes, spin, onSpinningFinished, onBeerClicked }) => {
     const slotRefs = []
@@ -11,44 +11,38 @@ export const Slots = ({ slotReelsOptions, lockedSlotIndexes, spin, onSpinningFin
         rollStates.push({roll, setRoll})
     })
 
+    /*
+    TODOs:
+    - add first beer to end in this class not beers.json
+    - make sure the 2 first beers in the list dont bias the randomization
+    - reels should stop left to right
+    - Possibly can remove slotrefs array?
+    */
+
     useEffect(() => {
         if (spin) {
             roll()
         }
     }, [spin])
 
-    // to trigger roolling and maintain state
     const roll = () => {
         setTimeout(() => {
             const curBeers = rollStates.map(({roll}) => roll)
             onSpinningFinished(curBeers)
-        }, 700);
+        }, 2000);
 
-        // looping through all slots to start rolling
         slotRefs.forEach((slotRef, idx) => {
             if (lockedSlotIndexes[idx] || slotReelsOptions[idx].isSpecialCharacter) {
                 return
             }
 
-            // this will trigger rolling effect
-            const selected = triggerSlotRotation(slotRef.current, idx);
+            const randomOption = Math.floor(
+                Math.random() * slotReelsOptions[idx].beers.length
+            );
+            const selected = slotReelsOptions[idx].beers[randomOption];
             rollStates[idx].setRoll(selected)
             rollStates[idx].roll = selected
         });
-    };
-
-    // this will create a rolling effect and return random selected option
-    const triggerSlotRotation = (ref, idx) => {
-        function setTop(top) {
-            ref.style.top = `${top}px`;
-        }
-        let options = ref.children;
-        let randomOption = Math.floor(
-            Math.random() * slotReelsOptions[idx].beers.length
-        );
-        let choosenOption = options[randomOption];
-        setTop(-choosenOption.offsetTop);
-        return slotReelsOptions[idx].beers[randomOption];
     };
 
     const BeerDetails = ({beer}) => {
@@ -72,6 +66,23 @@ export const Slots = ({ slotReelsOptions, lockedSlotIndexes, spin, onSpinningFin
         ))
     }
 
+    const generateAnimationProperty = (idx) => {
+        if (!spin) {
+            return ''
+        }
+
+        const minY = (slotReelsOptions[idx].beers.length - 1) * 102        
+        const slotLoop = keyframes({
+            '0%': {
+                transform: `translateY(-${minY}px)`,
+            },
+            '100%': {
+                transform: 'translateY(0%)',
+            },
+        })
+        return `${slotLoop} 1s linear infinite`
+    }
+
     return (
         <Flex justifyContent='safe center' gap='10' overflowX='auto'>
             {slotReelsOptions.map(({ beers, isSpecialCharacter }, idx) => {
@@ -82,8 +93,8 @@ export const Slots = ({ slotReelsOptions, lockedSlotIndexes, spin, onSpinningFin
                         <Flex flexDirection='column' textAlign='center' key={`beer-letter-${idx}`} onClick={() => onBeerClicked(idx)}>
                             <Box width={width}>
                                 <Box height={height} width={width} position='relative' overflow='hidden'>
-                                    <Box position='absolute' overflow='hidden' height={height} width={width}>
-                                        <Box position='absolute' top='0px' transition='top ease-in-out 0.5s' ref={slotRefs[idx]}>
+                                    <Box position='relative' overflow='hidden' height={height} width={width}>
+                                        <Box position='relative' ref={slotRefs[idx]} animation={generateAnimationProperty(idx)}>
                                             <BeerImages beers={beers} />
                                         </Box>
                                     </Box>
