@@ -79,7 +79,7 @@
     },
     "beerType": {
         "wordsToTrim": [
-            "Non Alcoholic Beer - "
+            "Non-Alcoholic Beer - "
         ],
         "regexes": [
             {
