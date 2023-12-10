@@ -53,7 +53,7 @@ export const BeerSlotMachine = ({ beerOptionsPerReel, lockedReelIndexes, spin, o
             return ''
         }
 
-        const minY = (beerOptionsPerReel[idx].beers.length) * 104
+        const minY = (beerOptionsPerReel[idx].beers.length) * 140
         const duration = (beerOptionsPerReel[idx].beers.length) * 0.1
         
         const slotLoop = keyframes({
@@ -74,7 +74,7 @@ export const BeerSlotMachine = ({ beerOptionsPerReel, lockedReelIndexes, spin, o
                 return (
                     <Flex key={`slot-reel-${idx}`} flexDirection='column' width={size} textAlign='center' onClick={() => onBeerClicked(idx)}>
                         <Box height={size} overflow='hidden'>
-                            <Box animation={generateAnimationProperty(idx)}>
+                            <Box mt='-40px' animation={generateAnimationProperty(idx)}>
                                 <BeerImages beers={beers} size={size} />
                             </Box>
                         </Box>
@@ -93,7 +93,7 @@ const BeerImages = ({ beers, size }) => {
             src={beer.beer_label_file}
             alt={beer.beer_name + ' ' + beer.beer_type}
             boxSize={size}
-            my='2px'
+            my='40px'
             fit='contain' />
     )
 
