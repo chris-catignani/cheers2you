@@ -13,15 +13,14 @@ export const Slots = ({ slotReelsOptions, lockedSlotIndexes, spin, onSpinningFin
 
     const roll = () => {
         const spinOutcomes = slotReelsOptions.map(({ beers }) => beers[0])
-        const reelsToSpin = slotReelsOptions.reduce((reelsToSpin, { isSpecialCharacter }, idx) => {
+        setSpinningReels(slotReelsOptions.reduce((reelsToSpin, { isSpecialCharacter }, idx) => {
             if (!lockedSlotIndexes[idx] && !isSpecialCharacter) {
                 reelsToSpin.push(idx)
             }
             return reelsToSpin
-        }, [])
-        setSpinningReels(reelsToSpin)
+        }, []))
 
-        reelsToSpin.forEach((reelIdxToSpin) => {
+        spinningReels.forEach((reelIdxToSpin) => {
             const randomOption = Math.floor(
                 Math.random() * slotReelsOptions[reelIdxToSpin].beers.length
             );
@@ -30,10 +29,10 @@ export const Slots = ({ slotReelsOptions, lockedSlotIndexes, spin, onSpinningFin
 
         setTimeout(() => {
             const intervalId = setInterval(() => {
-                const idx = reelsToSpin.shift()
+                const idx = spinningReels.shift()
+                setSpinningReels(spinningReels)
                 
-                if (reelsToSpin.length > 0) {
-                    setSpinningReels(reelsToSpin)
+                if (spinningReels.length > 0) {
                     onSpinningFinished({
                         allDone: false,
                         beers: spinOutcomes,
