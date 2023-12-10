@@ -16,7 +16,7 @@ const formatBeers = (beers) => {
         },
         ...beerRules.brewery.regexes.map(({ regex, replacement }) => {
             return {
-                regex: new RegExp(escapeRegExp(regex)),
+                regex: new RegExp(regex),
                 replacement,
             }
         })
@@ -28,14 +28,14 @@ const formatBeers = (beers) => {
         },
         ...beerRules.beerName.regexes.map(({regex, replacement}) => {
             return {
-                regex: new RegExp(escapeRegExp(regex)),
+                regex: new RegExp(regex),
                 replacement,
             }
         })
     ]
     const beerTypeRegexes = beerRules.beerType.regexes.map(({regex, replacement}) => {
         return {
-            regex: new RegExp(escapeRegExp(regex)),
+            regex: new RegExp(regex),
             replacement,
         }
     })
