@@ -164,7 +164,6 @@ const BeerLetters = ({ generatedPicRef, isSpinning, setSpinning }) => {
         const beers = isSpecialCharacter ? [] : [
             beer || userGeneratedBeer,
             ...(beerDefaultsPerLetter[letter.toLowerCase()] || []).filter((aBeer) => aBeer.beer_name !== beer?.beer_name && aBeer.brewer_name !== beer?.brewer_name),
-            beer || userGeneratedBeer
         ]
         return {
             isSpecialCharacter,

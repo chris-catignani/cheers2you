@@ -13,8 +13,6 @@ export const Slots = ({ slotReelsOptions, lockedSlotIndexes, spin, onSpinningFin
 
     /*
     TODOs:
-    - add first beer to end in this class not beers.json
-    - make sure the 2 first beers in the list dont bias the randomization
     - reels should stop left to right
     - Possibly can remove slotrefs array?
     */
@@ -55,7 +53,7 @@ export const Slots = ({ slotReelsOptions, lockedSlotIndexes, spin, onSpinningFin
     }
 
     const BeerImages = ({beers, size}) => {
-        return beers.map((beer, idx) => (
+        const buildImage = (beer, idx) => (
             <Image
                 key={`slot-reel-${idx}-option-${idx}`}
                 src={beer.beer_label_file}
@@ -63,7 +61,19 @@ export const Slots = ({ slotReelsOptions, lockedSlotIndexes, spin, onSpinningFin
                 boxSize={size}
                 my='2px'
                 fit='contain' />
-        ))
+        )
+
+        const beerImages = beers.map((beer, idx) => {
+            return buildImage(beer, idx)
+        })
+
+        // add the first beer to the end of the list, this helps smooth out the animations
+        // when it loops from the end back to the start
+        if (beers.length > 1) {
+            beerImages.push(buildImage(beers[0], beers.length))
+        }
+
+        return beerImages
     }
 
     const generateAnimationProperty = (idx) => {
