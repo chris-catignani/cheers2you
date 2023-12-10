@@ -77,7 +77,7 @@
             },
             {
                 "decription": "Remove anything in any type of parentheses",
-                "regex": "/\s*[\[{(].*?[)}\]]\s*/g, '",
+                "regex": "/\\s*[\\[{(].*?[)}\\]]\\s*/g, ''",
                 "replacement": ""
             }
         ]
