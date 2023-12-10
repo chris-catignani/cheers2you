@@ -10,7 +10,7 @@ import { Box, Button, ButtonGroup, Center, Container, Flex, Heading, IconButton,
 import { getSocialMediaShareUrl } from '@/lib/utils/utils';
 import html2canvas from 'html2canvas';
 import { ChallangeModeExplainerModal } from './components/ChallangeModeExplainerModal';
-import { Slots } from './components/slotMachine/SlotMachine';
+import { Slots } from './components/SlotMachine';
 
 
 export const Beers = ({ personsName, venueName }) => {
@@ -131,37 +131,52 @@ const BeerLetters = ({ generatedPicRef, isSpinning, setSpinning }) => {
     }
 
     const [headers, lockButtons] = beerLetters.reduce(([headers, lockButtons], { letter, beer, userGeneratedBeer, isSpecialCharacter }, idx) => {
-        headers.push(
-            <Heading as='h5' size='md' fontWeight='800' width='100px' textAlign='center' textTransform='uppercase' key={`beer-letter-${idx}`}>{letter}</Heading>
-        )
+        if (isSpecialCharacter) {
+            headers.push(
+                <Heading as='h5' size='md' fontWeight='800' width='25px' textAlign='center' textTransform='uppercase' key={`beer-letter-${idx}`}>{letter}</Heading>
+            )
+            lockButtons.push(<Box width='25px' />)
+        } else {
+            headers.push(
+                <Heading as='h5' size='md' fontWeight='800' width='100px' textAlign='center' textTransform='uppercase' key={`beer-letter-${idx}`}>{letter}</Heading>
+            )
 
-        const lockButtonText = lockedBeerIdxs[idx] ? 'Unlock Beer' : 'Lock Beer'
-        lockButtons.push(
-            <Button
-                width='100px'
-                marginBottom='1'
-                key={`beer-letter-lock-${idx}`}
-                onClick={() => dispatch(toggleLockedBeerLetterIdx(idx))}
-                hidden={isSpinning}
-            >
-                {lockButtonText}
-            </Button>
-        )
+            const lockButtonText = lockedBeerIdxs[idx] ? 'Unlock Beer' : 'Lock Beer'
+            lockButtons.push(
+                <Button
+                    width='100px'
+                    marginBottom='1'
+                    key={`beer-letter-lock-${idx}`}
+                    onClick={() => dispatch(toggleLockedBeerLetterIdx(idx))}
+                    hidden={isSpinning}
+                >
+                    {lockButtonText}
+                </Button>
+            )
+        }
         return [headers, lockButtons]
     }, [[], []])
 
-    const slotReelsOptions = beerLetters.map( ({letter, beer, userGeneratedBeer}) => {
-        return {
-            letter,
-            beers: [beer || userGeneratedBeer, ...beerDefaultsPerLetter[letter.toLowerCase()] || []]
+    const slotReelsOptions = beerLetters.map( ({letter, beer, userGeneratedBeer, isSpecialCharacter}) => {
+        if (isSpecialCharacter) {
+            return {
+                isSpecialCharacter,
+                letter,
+                beers: []
+            }
+        } else {
+            return {
+                letter,
+                beers: [beer || userGeneratedBeer, ...beerDefaultsPerLetter[letter.toLowerCase()] || []]
+            }
         }
     })
 
     const onSpinningFinished = (beers) => {
         setSpinning(false)
-        const newBeerLetters = beerLetters.map( ({letter}, idx) => {
+        const newBeerLetters = beerLetters.map((beerLetter, idx) => {
             return {
-                letter: letter,
+                ...beerLetter,
                 beer: beers[idx],
                 userGeneratedBeer: {}, // TODO for now
             }

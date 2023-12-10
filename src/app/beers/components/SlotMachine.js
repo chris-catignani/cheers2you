@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from "react";
-import { Box, Button, Flex, Heading, Image, Text } from "@chakra-ui/react";
+import { Box, Flex, Image } from "@chakra-ui/react";
 
 export const Slots = ({ slotReelsOptions, slotItemSize, lockedSlotIndexes, spin, onSpinningFinished, onBeerClicked }) => {
     const slotRefs = []
@@ -60,26 +60,33 @@ export const Slots = ({ slotReelsOptions, slotItemSize, lockedSlotIndexes, spin,
         )
     }
 
+    const BeerImages = ({beers}) => {
+        return beers.map((beer, idx) => (
+            <Image key={`slot-reel-${idx}-option-${idx}`} src={beer.beer_label_file} alt={beer.beer_name + ' ' + beer.beer_type} boxSize={slotItemSize} fit='contain' />
+        ))
+    }
+
     return (
-        <Flex justifyContent='safe center' gap='10'>
-            {slotReelsOptions.map(({ beers, letter }, idx) => (
-                <Box key={`slot-reel-${idx}`}>
-                    <Flex flexDirection='column' textAlign='center' key={`beer-letter-${idx}`} onClick={() => onBeerClicked(idx)}>
-                        <Box width={slotItemSize}>
-                            <Box height={slotItemSize} width={slotItemSize}>
-                                <Box position='absolute' overflow='hidden' height={slotItemSize} width={slotItemSize}>
-                                    <Box position='absolute' transition='top ease-in-out 0.5s' ref={slotRefs[idx]}>
-                                        {beers.map((beer, idx) => (
-                                            <Image key={`slot-reel-${idx}-option-${idx}`} src={beer.beer_label_file} alt={beer.beer_name + ' ' + beer.beer_type} boxSize={slotItemSize} fit='contain' />
-                                        ))}
+        <Flex justifyContent='safe center' gap='10' overflowX='auto'>
+            {slotReelsOptions.map(({ beers, isSpecialCharacter }, idx) => {
+                const width = isSpecialCharacter ? '25px' : slotItemSize
+                return (
+                    <Box key={`slot-reel-${idx}`}>
+                        <Flex flexDirection='column' textAlign='center' key={`beer-letter-${idx}`} onClick={() => onBeerClicked(idx)}>
+                            <Box width={width}>
+                                <Box height={slotItemSize} width={width} position='relative' overflow='hidden'>
+                                    <Box position='absolute' overflow='hidden' height={slotItemSize} width={width}>
+                                        <Box position='absolute' transition='top ease-in-out 0.5s' ref={slotRefs[idx]}>
+                                            <BeerImages beers={beers} />
+                                        </Box>
                                     </Box>
                                 </Box>
+                                <BeerDetails beer={beers?.[0]} />
                             </Box>
-                            <BeerDetails beer={beers?.[0]}/>
-                        </Box>
-                    </Flex>
-                </Box>
-            ))}
+                        </Flex>
+                    </Box>
+                )
+            })}
         </Flex>
     );
 }
