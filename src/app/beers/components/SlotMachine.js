@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState } from "react";
 import { Box, Flex, Image } from "@chakra-ui/react";
 
-export const Slots = ({ slotReelsOptions, slotItemSize, lockedSlotIndexes, spin, onSpinningFinished, onBeerClicked }) => {
+export const Slots = ({ slotReelsOptions, lockedSlotIndexes, spin, onSpinningFinished, onBeerClicked }) => {
     const slotRefs = []
     const rollStates = []
     slotReelsOptions.forEach(({ beers }) => {
@@ -47,7 +47,7 @@ export const Slots = ({ slotReelsOptions, slotItemSize, lockedSlotIndexes, spin,
             Math.random() * slotReelsOptions[idx].beers.length
         );
         let choosenOption = options[randomOption];
-        setTop(-choosenOption.offsetTop + 2);
+        setTop(-choosenOption.offsetTop);
         return slotReelsOptions[idx].beers[randomOption];
     };
 
@@ -62,20 +62,27 @@ export const Slots = ({ slotReelsOptions, slotItemSize, lockedSlotIndexes, spin,
 
     const BeerImages = ({beers}) => {
         return beers.map((beer, idx) => (
-            <Image key={`slot-reel-${idx}-option-${idx}`} src={beer.beer_label_file} alt={beer.beer_name + ' ' + beer.beer_type} boxSize={slotItemSize} fit='contain' />
+            <Image
+                key={`slot-reel-${idx}-option-${idx}`}
+                src={beer.beer_label_file}
+                alt={beer.beer_name + ' ' + beer.beer_type}
+                boxSize='100px'
+                my='2px'
+                fit='contain' />
         ))
     }
 
     return (
         <Flex justifyContent='safe center' gap='10' overflowX='auto'>
             {slotReelsOptions.map(({ beers, isSpecialCharacter }, idx) => {
-                const width = isSpecialCharacter ? '25px' : slotItemSize
+                const width = isSpecialCharacter ? '25px' : '100px'
+                const height = '100px'
                 return (
                     <Box key={`slot-reel-${idx}`}>
                         <Flex flexDirection='column' textAlign='center' key={`beer-letter-${idx}`} onClick={() => onBeerClicked(idx)}>
                             <Box width={width}>
-                                <Box height={slotItemSize} width={width} position='relative' overflow='hidden'>
-                                    <Box position='absolute' overflow='hidden' height={slotItemSize} width={width}>
+                                <Box height={height} width={width} position='relative' overflow='hidden'>
+                                    <Box position='absolute' overflow='hidden' height={height} width={width}>
                                         <Box position='absolute' transition='top ease-in-out 0.5s' ref={slotRefs[idx]}>
                                             <BeerImages beers={beers} />
                                         </Box>

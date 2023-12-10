@@ -191,8 +191,7 @@ const BeerLetters = ({ generatedPicRef, isSpinning, setSpinning }) => {
                             onSpinningFinished={onSpinningFinished}
                             slotReelsOptions={slotReelsOptions}
                             lockedSlotIndexes={lockedBeerIdxs}
-                            onBeerClicked={beerClicked}
-                            slotItemSize='100px' />
+                            onBeerClicked={beerClicked} />
                     </Box>
 
                 </Box>
