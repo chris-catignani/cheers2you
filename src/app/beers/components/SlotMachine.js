@@ -67,7 +67,7 @@ export const Slots = ({ slotReelsOptions, lockedSlotIndexes, spin, onSpinningFin
     }
 
     const generateAnimationProperty = (idx) => {
-        if (!spin) {
+        if (!spin || lockedSlotIndexes[idx]) {
             return ''
         }
 
