@@ -71,7 +71,9 @@ export const Slots = ({ slotReelsOptions, lockedSlotIndexes, spin, onSpinningFin
             return ''
         }
 
-        const minY = (slotReelsOptions[idx].beers.length - 1) * 102        
+        const minY = (slotReelsOptions[idx].beers.length - 1) * 102       
+        const duration = (slotReelsOptions[idx].beers.length - 1) * 0.1
+        
         const slotLoop = keyframes({
             '0%': {
                 transform: `translateY(-${minY}px)`,
@@ -80,7 +82,7 @@ export const Slots = ({ slotReelsOptions, lockedSlotIndexes, spin, onSpinningFin
                 transform: 'translateY(0%)',
             },
         })
-        return `${slotLoop} 1s linear infinite`
+        return `${slotLoop} ${duration}s linear infinite`
     }
 
     return (
