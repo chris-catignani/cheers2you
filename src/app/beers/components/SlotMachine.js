@@ -83,7 +83,7 @@ export const Slots = ({ slotReelsOptions, lockedSlotIndexes, spin, onSpinningFin
                             <Box width={width}>
                                 <Box height={height} width={width} position='relative' overflow='hidden'>
                                     <Box position='absolute' overflow='hidden' height={height} width={width}>
-                                        <Box position='absolute' transition='top ease-in-out 0.5s' ref={slotRefs[idx]}>
+                                        <Box position='absolute' top='0px' transition='top ease-in-out 0.5s' ref={slotRefs[idx]}>
                                             <BeerImages beers={beers} />
                                         </Box>
                                     </Box>
