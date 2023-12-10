@@ -78,6 +78,9 @@
         ]
     },
     "beerType": {
+        "wordsToTrim": [
+            "Non Alcoholic Beer - "
+        ],
         "regexes": [
             {
                 "regex": "IPA - American",
