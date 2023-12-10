@@ -5,9 +5,9 @@ export const Slots = ({ slotReelsOptions, lockedSlotIndexes, spin, onSpinningFin
     const slotRefs = []
     const rollStates = []
     slotReelsOptions.forEach(({ beers }) => {
-        slotRefs.push(useRef(null))
+        slotRefs.push(useRef(null)) // eslint-disable-line
 
-        const [roll, setRoll] = useState(beers[0]);
+        const [roll, setRoll] = useState(beers[0]); // eslint-disable-line
         rollStates.push({roll, setRoll})
     })
 
@@ -18,12 +18,12 @@ export const Slots = ({ slotReelsOptions, lockedSlotIndexes, spin, onSpinningFin
     - reels should stop left to right
     - Possibly can remove slotrefs array?
     */
-
+    
     useEffect(() => {
         if (spin) {
             roll()
         }
-    }, [spin])
+    }, [spin]) // eslint-disable-line react-hooks/exhaustive-deps
 
     const roll = () => {
         setTimeout(() => {
