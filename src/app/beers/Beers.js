@@ -202,7 +202,7 @@ const BeerLetters = ({ generatedPicRef, isSpinning, setSpinning }) => {
                 </Box>
             </Box>
             <Flex justifyContent='safe center' gap='10'>
-                {lockButtons}
+                {isChallengeMode && lockButtons}
             </Flex>
         </Flex>
     )
