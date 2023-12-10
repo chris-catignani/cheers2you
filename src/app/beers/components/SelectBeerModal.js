@@ -114,7 +114,6 @@ const BeerPickerModalContent = ({isInBeerUGCMode, letter, useHorizontalLayout, o
                 beer={beer}
                 matchedFields={matchedFields}
                 width='100px'
-                displayBeerType={true}
                 onClick={() => onBeerSelected({beer})}
                 key={`beer-picker-${idx}}`}>
             </Letter>
