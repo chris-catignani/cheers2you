@@ -1,4 +1,4 @@
-import { Box, Button, Center, Flex, Input, Modal, ModalBody, ModalCloseButton, ModalContent, ModalFooter, ModalHeader, ModalOverlay, Text, useBreakpointValue, useMediaQuery } from "@chakra-ui/react";
+import { Box, Button, Center, Flex, Image, Input, Modal, ModalBody, ModalCloseButton, ModalContent, ModalFooter, ModalHeader, ModalOverlay, Text, useBreakpointValue, useMediaQuery } from "@chakra-ui/react";
 import { useState } from "react";
 import { BeerUGCInput } from "./BeerUGCInput";
 import { AddYourOwn } from "./AddYourOwn";
@@ -110,13 +110,18 @@ const BeerPickerModalContent = ({isInBeerUGCMode, letter, useHorizontalLayout, o
 
     const beerSearchResultsAsLetters = beerSearchResults.map( ({beer, matchedFields}, idx) => {
         return (
-            <Letter
-                beer={beer}
-                matchedFields={matchedFields}
-                width='100px'
-                onClick={() => onBeerSelected({beer})}
-                key={`beer-picker-${idx}}`}>
-            </Letter>
+            <Box key={`beer-picker-${idx}}`} width='100px'>
+                <Image
+                    src={beer?.beer_label_file}
+                    alt={beer?.beer_name + ' ' + beer?.beer_type}
+                    boxSize='100px'
+                    fit='contain'
+                    onClick={() => onBeerSelected({ beer })}/>
+                <Letter
+                    beer={beer}
+                    matchedFields={matchedFields}
+                    onClick={() => onBeerSelected({ beer })} />
+            </Box>
         )
     })
 

@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { Box, Flex, Image, keyframes } from "@chakra-ui/react";
+import { Letter } from "./Letter";
 
 export const BeerSlotMachine = ({ beerOptionsPerReel, lockedReelIndexes, spin, onSpinningFinished, onBeerClicked, letterImageSize, specialCharacterSize }) => {
 
@@ -78,7 +79,7 @@ export const BeerSlotMachine = ({ beerOptionsPerReel, lockedReelIndexes, spin, o
                                 <BeerImages beers={beers} size={size} />
                             </Box>
                         </Box>
-                        <BeerDetails beer={beers?.[0]} hide={spinningReels.includes(idx)}/>
+                        <Letter beer={!spinningReels.includes(idx) && beers?.[0]} />
                     </Flex>
                 )
             })}
@@ -106,13 +107,4 @@ const BeerImages = ({ beers, size }) => {
     }
 
     return beerImages
-}
-
-const BeerDetails = ({ beer, hide }) => {
-    return (
-        <Box>
-            <Box minH='3em'>{!hide && beer?.brewer_name}</Box>
-            <Box minH='5em'>{!hide && beer?.beer_name}</Box>
-        </Box>
-    )
 }
