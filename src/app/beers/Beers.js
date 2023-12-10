@@ -89,9 +89,6 @@ const BeersHeader = ({ onSpinUnlockedBeersPressed, onChallengeModePressed, isLoa
                 >
                     {maxSpinsReached ? 'No more spins. Drink up!' : 'Spin unlocked beers'}
                 </Button>
-                <Center>
-                    <Text>Spins remaining: {3 - challengeModeSpinCount}</Text>
-                </Center>
             </Container>
         )
     } else {
@@ -150,7 +147,7 @@ const BeerLetters = ({ generatedPicRef, isSpinning, setSpinning }) => {
             lockButtons.push(
                 <Button
                     width={letterImageSize}
-                    marginBottom='1'
+                    size='sm'
                     key={`beer-letter-lock-${idx}`}
                     onClick={() => dispatch(toggleLockedBeerLetterIdx(idx))}
                     isDisabled={maxSpinsReached}
@@ -196,9 +193,13 @@ const BeerLetters = ({ generatedPicRef, isSpinning, setSpinning }) => {
     }
 
     return (
-        <Flex overflowX='auto' flexDirection='column' flexWrap='wrap' marginBottom='2' marginTop='3'>
+        <Flex overflowX='auto' flexDirection='column' flexWrap='wrap' marginBottom='2' marginTop='2'>
+            <Flex justifyContent='safe center' gap='10'>
+                {isChallengeMode && lockButtons}
+            </Flex>
+            
             {/* padding defined below so that border of the element inside it shows in the screencapture */}
-            <Box p='1' ref={generatedPicRef}>
+            <Box mt='1' p='1' ref={generatedPicRef}>
                 {/* padding top here to ensure the border is not directly on top of the letters */}
                 <Box pt='5' border='3px double black'>
                     <Flex justifyContent='safe center' gap='10'>
@@ -217,9 +218,6 @@ const BeerLetters = ({ generatedPicRef, isSpinning, setSpinning }) => {
 
                 </Box>
             </Box>
-            <Flex justifyContent='safe center' gap='10'>
-                {isChallengeMode && lockButtons}
-            </Flex>
         </Flex>
     )
 }
