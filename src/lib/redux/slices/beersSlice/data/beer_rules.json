@@ -85,6 +85,10 @@
             {
                 "regex": "IPA - American",
                 "replacement": "IPA"
+            },
+            {
+                "regex": "^.*?(?=\-)",
+                "replacement": ""
             }
         ]
     }
