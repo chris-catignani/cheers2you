@@ -75,7 +75,7 @@ export const Slots = ({ slotReelsOptions, lockedSlotIndexes, spin, onSpinningFin
     return (
         <Flex justifyContent='safe center' gap='10' overflowX='auto'>
             {slotReelsOptions.map(({ beers, isSpecialCharacter }, idx) => {
-                const width = isSpecialCharacter ? '25px' : '100px'
+                const width = isSpecialCharacter ? '10px' : '100px'
                 const height = '100px'
                 return (
                     <Box key={`slot-reel-${idx}`}>

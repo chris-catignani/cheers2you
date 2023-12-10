@@ -133,9 +133,9 @@ const BeerLetters = ({ generatedPicRef, isSpinning, setSpinning }) => {
     const [headers, lockButtons] = beerLetters.reduce(([headers, lockButtons], { letter, isSpecialCharacter }, idx) => {
         if (isSpecialCharacter) {
             headers.push(
-                <Heading as='h5' size='md' fontWeight='800' width='25px' textAlign='center' textTransform='uppercase' key={`beer-letter-${idx}`}>{letter}</Heading>
+                <Heading as='h5' size='md' fontWeight='800' width='10px' textAlign='center' textTransform='uppercase' key={`beer-letter-${idx}`}>{letter}</Heading>
             )
-            lockButtons.push(<Box width='25px' />)
+            lockButtons.push(<Box width='10px' />)
         } else {
             headers.push(
                 <Heading as='h5' size='md' fontWeight='800' width='100px' textAlign='center' textTransform='uppercase' key={`beer-letter-${idx}`}>{letter}</Heading>
