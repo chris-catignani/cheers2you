@@ -9,42 +9,25 @@ import Fuse from "fuse.js";
  */
 
 const formatBeers = (beers) => {
-    const breweryNameRegexes = [
-        {
-            regex: new RegExp(beerRules['brewery']['wordsToTrim'].join('|'), 'gi'),
-            replacement: '',
-        },
-        ...beerRules.brewery.regexes.map(({ regex, replacement }) => {
-            return {
-                regex: new RegExp(regex),
-                replacement,
-            }
-        })
-    ]
-    const beerNameRegexes = [
-        {
-            regex: new RegExp(beerRules['beerName']['wordsToTrim'].join('|'), 'gi'),
-            replacement: '',
-        },
-        ...beerRules.beerName.regexes.map(({regex, replacement}) => {
-            return {
-                regex: new RegExp(regex),
-                replacement,
-            }
-        })
-    ]
-    const beerTypeRegexes = [
-        {
-            regex: new RegExp(beerRules['beerType']['wordsToTrim'].join('|'), 'gi'),
-            replacement: '',
-        },
-        ...beerRules.beerType.regexes.map(({ regex, replacement }) => {
-            return {
-                regex: new RegExp(regex),
-                replacement,
-            }
-        })
-    ]
+    const getRegexes = (fieldType) => {
+        return [
+            {
+                regex: new RegExp(beerRules[fieldType].wordsToTrim.join('|'), 'gi'),
+                replacement: '',
+            },
+            ...beerRules[fieldType].regexes.map(({ regex, replacement }) => {
+                return {
+                    regex: new RegExp(regex),
+                    replacement,
+                }
+            })
+        ]
+    }
+
+    const breweryNameRegexes = getRegexes('brewery')
+    const beerNameRegexes = getRegexes('beerName')
+    const beerTypeRegexes = getRegexes('beerType')
+
     const multispaceRegex = new RegExp(' {2,}', 'g')
     const wordsToKeepCapitalized = '\\b' + beerRules?.beerName?.wordsToKeepCapitalized.join('\\b|\\b') + '\\b'
     const beerNameCapitalLettersRegex = new RegExp(`(?!${wordsToKeepCapitalized})\\b(\\S+)\\b`, 'g')
