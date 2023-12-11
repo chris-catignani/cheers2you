@@ -110,7 +110,7 @@ const BeerPickerModalContent = ({isInBeerUGCMode, letter, useHorizontalLayout, o
 
     const beerSearchResultsAsLetters = beerSearchResults.map( ({beer, matchedFields}, idx) => {
         return (
-            <Box key={`beer-picker-${idx}}`} width='100px'>
+            <Box key={`beer-picker-${idx}}`} width='100px' minW='100px'>
                 <Image
                     src={beer?.beer_label_file}
                     alt={beer?.beer_name + ' ' + beer?.beer_type}
