@@ -69,7 +69,7 @@ export default async function Page({params: {fileId}}) {
 
   return (
     <main>
-      <Box m='5'>
+      <Box m='3'>
         <Shared socialMediaInfo={socialMediaInfo}/>
       </Box>
     </main>

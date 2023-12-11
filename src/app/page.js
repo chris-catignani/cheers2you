@@ -35,7 +35,7 @@ export default function Page() {
   }
 
   return (
-    <Box m='5'>
+    <Box m='3'>
       <Home venueName={venueName} />
     </Box>
   )
