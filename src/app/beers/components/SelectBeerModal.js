@@ -1,5 +1,5 @@
 import { Box, Button, Center, Flex, Image, Input, Modal, ModalBody, ModalCloseButton, ModalContent, ModalFooter, ModalHeader, ModalOverlay, Text, useBreakpointValue, useMediaQuery } from "@chakra-ui/react";
-import { useState } from "react";
+import { useRef, useState } from "react";
 import { BeerUGCInput } from "./BeerUGCInput";
 import { AddYourOwn } from "./AddYourOwn";
 import { Letter } from "./Letter";
@@ -21,6 +21,7 @@ export const SelectBeerModal = ({isOpen, onClose, letter, onBeerSelected, onChan
         py: useHorizontalLayout ? '2' : '4'
     }
 
+    const initialFocusRef = useRef(null)
     const [isInBeerUGCMode, setIsInBeerUGCMode] = useState(false);
     const [beerSearchQuery, setBeerSearchQuery] = useState('');
 
@@ -42,7 +43,7 @@ export const SelectBeerModal = ({isOpen, onClose, letter, onBeerSelected, onChan
     }
 
     return (
-        <Modal isOpen={isOpen} onClose={onCloseInner} scrollBehavior='inside' size={modalSize}>
+        <Modal initialFocusRef={initialFocusRef} isOpen={isOpen} onClose={onCloseInner} scrollBehavior='inside' size={modalSize}>
             <ModalOverlay />
             <ModalContent margin='auto'>
                 <BeerModalHeader
@@ -67,7 +68,11 @@ export const SelectBeerModal = ({isOpen, onClose, letter, onBeerSelected, onChan
                         setIsInBeerUGCMode={setIsInBeerUGCMode}
                         onChangeBeerSearchQuery={onChangeBeerSearchQueryInner} />
                 </ModalBody>
-                <BeerModalFooter {...headerFooterProps} onClose={onCloseInner} onAddYourOwn={() => setIsInBeerUGCMode(true)}/>
+                <BeerModalFooter
+                    initialFocusRef={initialFocusRef}
+                    {...headerFooterProps}
+                    onClose={onCloseInner}
+                    onAddYourOwn={() => setIsInBeerUGCMode(true)} />
             </ModalContent>
         </Modal>
     )
@@ -75,7 +80,7 @@ export const SelectBeerModal = ({isOpen, onClose, letter, onBeerSelected, onChan
 
 const BeerModalHeader = ({onChangeBeerSearchQuery, beerSearchQuery, letter, py}) => {
     return (
-        <ModalHeader tabIndex={+1} py={py}>
+        <ModalHeader py={py}>
             <Center>
                 <Input
                     placeholder={`Search for "${letter}" beers`}
@@ -165,7 +170,7 @@ const NoSearchResults = ({isInBeerUGCMode, beerSearchResults, setIsInBeerUGCMode
     )
 }
 
-const BeerModalFooter = ({onClose, onAddYourOwn, py}) => {
+const BeerModalFooter = ({initialFocusRef, onClose, onAddYourOwn, py}) => {
     return (
         <ModalFooter display='block' py={py}>
             <Divider text="Can't find what you want?" />
@@ -173,7 +178,7 @@ const BeerModalFooter = ({onClose, onAddYourOwn, py}) => {
                 <AddYourOwn 
                     onClick={onAddYourOwn}
                 />
-                <Button onClick={onClose}>
+                <Button onClick={onClose} ref={initialFocusRef} >
                     Cancel
                 </Button>
             </Flex>
