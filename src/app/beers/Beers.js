@@ -99,7 +99,7 @@ const BeersHeader = ({ onSpinUnlockedBeersPressed, onChallengeModePressed, isLoa
                         <Text as="span" whiteSpace='nowrap'>
                             Tap the suggested beers to choose your own.
                         </Text>
-                        <Text as="span" whiteSpace='nowrap'>
+                        <Text as="span" mt='1' whiteSpace='nowrap'>
                             <Text as="span" _after={{content: '" "'}}>
                                 Feeling frisky? Try the
                             </Text>
