@@ -268,10 +268,7 @@ const ShareButtons = ({ generatedPicRef }) => {
 
     return (
         <ButtonGroup>
-            <IconButton
-                isLoading={uploadSocialMediaStatus === 'uploading'}
-                onClick={() => uploadOutput()}
-                icon={<ExternalLinkIcon />} />
+            <Button isLoading={uploadSocialMediaStatus === 'uploading'} onClick={() => uploadOutput()}>Share</Button>
             <IconButton
                 isLoading={downloadGeneratedImageStatus === 'downloading'}
                 onClick={() => donwloadOutput()}
