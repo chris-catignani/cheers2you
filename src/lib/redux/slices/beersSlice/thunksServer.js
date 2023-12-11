@@ -33,12 +33,18 @@ const formatBeers = (beers) => {
             }
         })
     ]
-    const beerTypeRegexes = beerRules.beerType.regexes.map(({regex, replacement}) => {
-        return {
-            regex: new RegExp(regex),
-            replacement,
-        }
-    })
+    const beerTypeRegexes = [
+        {
+            regex: new RegExp(beerRules['beerType']['wordsToTrim'].join('|'), 'gi'),
+            replacement: '',
+        },
+        ...beerRules.beerType.regexes.map(({ regex, replacement }) => {
+            return {
+                regex: new RegExp(regex),
+                replacement,
+            }
+        })
+    ]
     const multispaceRegex = new RegExp(' {2,}', 'g')
     const wordsToKeepCapitalized = '\\b' + beerRules?.beerName?.wordsToKeepCapitalized.join('\\b|\\b') + '\\b'
     const beerNameCapitalLettersRegex = new RegExp(`(?!${wordsToKeepCapitalized})\\b(\\S+)\\b`, 'g')
