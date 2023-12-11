@@ -75,7 +75,7 @@ export const SelectBeerModal = ({isOpen, onClose, letter, onBeerSelected, onChan
 
 const BeerModalHeader = ({onChangeBeerSearchQuery, beerSearchQuery, letter, py}) => {
     return (
-        <ModalHeader py={py}>
+        <ModalHeader tabIndex={+1} py={py}>
             <Center>
                 <Input
                     placeholder={`Search for an "${letter}" beer`}

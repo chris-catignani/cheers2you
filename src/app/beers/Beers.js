@@ -80,7 +80,7 @@ const BeersHeader = ({ onSpinUnlockedBeersPressed, onChallengeModePressed, isLoa
     if (isChallengeMode) {
         const maxSpinsReached = challengeModeSpinCount >= 3
         return (
-            <Container maxW='md' padding={0}>
+            <Container maxW='sm' padding={0}>
                 <Button
                     width='full'
                     onClick={onSpinUnlockedBeersPressed}
@@ -268,10 +268,7 @@ const ShareButtons = ({ generatedPicRef }) => {
 
     return (
         <ButtonGroup>
-            <IconButton
-                isLoading={uploadSocialMediaStatus === 'uploading'}
-                onClick={() => uploadOutput()}
-                icon={<ExternalLinkIcon />} />
+            <Button isLoading={uploadSocialMediaStatus === 'uploading'} onClick={() => uploadOutput()}>Share</Button>
             <IconButton
                 isLoading={downloadGeneratedImageStatus === 'downloading'}
                 onClick={() => donwloadOutput()}

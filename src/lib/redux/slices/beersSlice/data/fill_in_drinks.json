@@ -6,6 +6,27 @@
     "brewer_name": "Kent Brewery",
     "brewer_logo_file_big": "https://assets.untappd.com/site/brewery_logos/brewery-8870_5f198.jpeg"
   },
+    "G1": {
+    "beer_name": "Gin",
+    "beer_type": "",
+    "beer_label_file_big": "https://pothecarygin.co.uk/wp-content/uploads/2020/04/pothecary_gin_bottle.png",
+    "brewer_name": "Pothecary",
+    "brewer_logo_file_big": "https://pothecarygin.co.uk/wp-content/uploads/2020/04/pothecary_gin_bottle.png"
+  },
+    "G2": {
+    "beer_name": "Gin",
+    "beer_type": "",
+    "beer_label_file_big": "https://isleofwightdistillery.com/cdn/shop/products/Mermaid-Gin-Bottle_Seal_PF_crop_1200x.png",
+    "brewer_name": "Mermaid",
+    "brewer_logo_file_big": "https://isleofwightdistillery.com/cdn/shop/products/Mermaid-Gin-Bottle_Seal_PF_crop_1200x.png"
+  },  
+    "J1": {
+    "beer_name": "Orange",
+    "beer_type": "Juice",
+    "beer_label_file_big": "https://cdn.accentuate.io/6128703242393/1618586766263/Frobishers_Juice_Orange-(1).png",
+    "brewer_name": "Frobishers",
+    "brewer_logo_file_big": "https://cdn.accentuate.io/6128703242393/1618586766263/Frobishers_Juice_Orange-(1).png"
+  },
     "513891": {
     "beer_name": "Xingu Black Beer",
     "beer_type": "Lager - Dark",
