@@ -78,7 +78,7 @@ const BeerModalHeader = ({onChangeBeerSearchQuery, beerSearchQuery, letter, py})
         <ModalHeader tabIndex={+1} py={py}>
             <Center>
                 <Input
-                    placeholder={`Search for an "${letter}" beer`}
+                    placeholder={`Search for "${letter}" beers`}
                     value={beerSearchQuery}
                     width='90%'
                     onChange={e => {
