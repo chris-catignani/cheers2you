@@ -45,20 +45,16 @@ export const Beers = ({ personsName, venueName }) => {
         dispatch(setIsChallengeModeExplainerDisplayed(true))
     }
 
-    let landscapePhoneShareButtonProps = {}
-    if (isLandscapePhone) {
-        landscapePhoneShareButtonProps = {
-            position: 'absolute',
-            right: '10px',
-            top: '-20px',
-        }
-    }
+    const shareButtons = (
+        <ShareButtons generatedPicRef={generatedPicRef} />
+    )
 
     return (
         <Container maxW='4xl' padding={0}>
             <BeersHeader
                 onSpinUnlockedBeersPressed={spinUnlockedBeersPressed}
                 onChallengeModePressed={onChallengeModePressed}
+                shareButtons={isLandscapePhone && shareButtons}
                 isLoading={isSpinning} />
             <BeerLetters
                 isSpinning={isSpinning}
@@ -67,11 +63,11 @@ export const Beers = ({ personsName, venueName }) => {
             <ChallengeModeModal />
             <BeerModal />
             <ShareModal />
-            <Box marginTop='5' float='right' {...landscapePhoneShareButtonProps}>
-                <ShareButtons generatedPicRef={generatedPicRef} />
+            <Box float='right'>
+                {!isLandscapePhone && shareButtons}
             </Box>
             <Show below='sm'>
-                <Flex width='100%' mt='5' justifyContent='center'>
+                <Flex width='100%' justifyContent='center'>
                     <PhoneRotationSuggestion text={'Try rotating your phone'} />
                 </Flex>
             </Show>
@@ -79,43 +75,52 @@ export const Beers = ({ personsName, venueName }) => {
     )
 }
 
-const BeersHeader = ({ onSpinUnlockedBeersPressed, onChallengeModePressed, isLoading }) => {
+const BeersHeader = ({ onSpinUnlockedBeersPressed, onChallengeModePressed, shareButtons, isLoading }) => {
     const isChallengeMode = useSelector(selectIsChallangeMode);
     const challengeModeSpinCount = useSelector(selectChallengeModeSpinCount)
 
+    let headerContent = null;
+
     if (isChallengeMode) {
         const maxSpinsReached = challengeModeSpinCount >= 3
-        return (
-            <Container maxW='sm' padding={0}>
-                <Button
-                    width='full'
-                    onClick={onSpinUnlockedBeersPressed}
-                    isLoading={isLoading}
-                    isDisabled={maxSpinsReached}
-                >
-                    {maxSpinsReached ? 'No more spins. Drink up!' : 'Spin unlocked beers'}
-                </Button>
-            </Container>
+        headerContent = (
+            <Button
+                width='sm'
+                onClick={onSpinUnlockedBeersPressed}
+                isLoading={isLoading}
+                isDisabled={maxSpinsReached}
+            >
+                {maxSpinsReached ? 'No more spins. Drink up!' : 'Spin unlocked beers'}
+            </Button>
         )
     } else {
-        return (
-            <Container maxW='xl'>
-                <Heading as='h5' size='sm'>
-                    <Flex flexWrap='wrap' justifyContent='center'>
-                        <Text as="span" whiteSpace='nowrap'>
-                            Tap the suggested beers to choose your own.
+        headerContent = (
+            <Heading as='h5' size='sm' textAlign='center'>
+                <Flex justifyContent='center' flexDirection='column'>
+                    <Text as="span" whiteSpace='nowrap'>
+                        Tap the suggested beers to choose your own.
+                    </Text>
+                    <Text as="span" mt='1' whiteSpace='nowrap'>
+                        <Text as="span" _after={{content: '" "'}}>
+                            Feeling frisky? Try the
                         </Text>
-                        <Text as="span" mt='1' whiteSpace='nowrap'>
-                            <Text as="span" _after={{content: '" "'}}>
-                                Feeling frisky? Try the
-                            </Text>
-                            <Button onClick={onChallengeModePressed} variant='link' colorScheme='orange' >C2Y Challenge</Button>
-                        </Text>
-                    </Flex>
-                </Heading>
-            </Container>
+                        <Button onClick={onChallengeModePressed} variant='link' colorScheme='orange' >C2Y Challenge</Button>
+                    </Text>
+                </Flex>
+            </Heading>
         )
     }
+
+    return (
+        // flex layout with 3 items. (1) full width empty spacer div (2) header content (3) full width div containing share buttons, right justified
+        <Flex>
+            <Box flex={1} />
+            {headerContent}
+            <Flex flex={1} justifyContent='right'>
+                {shareButtons}
+            </Flex>
+        </Flex>
+    )
 }
 
 // TODO refactor this. Use a helper to do the layout stuff, pass in react components
