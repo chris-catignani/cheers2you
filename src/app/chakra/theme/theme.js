@@ -9,6 +9,6 @@ export const cheers2YouTheme = extendTheme({
     },
     fonts: {
         heading: `'Familjen Grotesk Variable', sans-serif`,
-        body: `'Inter Variable', sans-serif;`
+        body: `'Inter Variable', sans-serif`
     }
 })
