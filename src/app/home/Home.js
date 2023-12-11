@@ -38,7 +38,13 @@ export const Home = ({venueName}) => {
                         Celebrate a special event by drinking beers to spell a friends name. Each beer will represent a letter in the name… get creative
                     </Text>
                 </Box>
-
+                <Box border='2px' borderColor='gray.600'>
+                    <Image
+                        src='/david_logo_example.png'
+                        alt='David beer banner example'
+                        htmlWidth={800}
+                        htmlHeight={500}/>
+                </Box>
                 <Box>
                     <Input
                         width='100%'
@@ -64,13 +70,6 @@ export const Home = ({venueName}) => {
                     <Text mt='2'>
                         Share the C2U badge on your socials and use it to create a memorable gift, card, plaque, poster, t-shirt, anything!
                     </Text>
-                </Box>
-                <Box border='2px' borderColor='gray.600'>
-                    <Image
-                        src='/david_logo_example.png'
-                        alt='David beer banner example'
-                        htmlWidth={800}
-                        htmlHeight={500}/>
                 </Box>
                 <Box border='2px' borderColor='gray.600'>
                     <Image
