@@ -131,16 +131,27 @@ const BeerLetters = ({ generatedPicRef, isSpinning, setSpinning }) => {
     const letterImageSize = '100px'
     const specialCharacterSize = '10px'
 
+    const buildHeader = (letter, width, idx) => (
+        <Heading
+            as='h5'
+            size='md'
+            mx='5'
+            width={width}
+            fontWeight='800'
+            textAlign='center'
+            textTransform='uppercase'
+            key={`beer-letter-header-${idx}`}
+        >
+            {letter}
+        </Heading>
+    )
+
     const [headers, lockButtons] = beerLetters.reduce(([headers, lockButtons], { letter, isSpecialCharacter }, idx) => {
         if (isSpecialCharacter) {
-            headers.push(
-                <Heading as='h5' size='md' fontWeight='800' width={specialCharacterSize} textAlign='center' textTransform='uppercase' key={`beer-letter-header-${idx}`}>{letter}</Heading>
-            )
-            lockButtons.push(<Box width={specialCharacterSize} key={`beer-letter-lock-${idx}`}  />)
+            headers.push(buildHeader(letter, specialCharacterSize, idx))
+            lockButtons.push(<Box width={specialCharacterSize} mx='5' key={`beer-letter-lock-${idx}`}  />)
         } else {
-            headers.push(
-                <Heading as='h5' size='md' fontWeight='800' width={letterImageSize} textAlign='center' textTransform='uppercase' key={`beer-letter-header-${idx}`}>{letter}</Heading>
-            )
+            headers.push(buildHeader(letter, letterImageSize, idx))
 
             const maxSpinsReached = challengeModeSpinCount >= 3
             const lockButtonText = lockedBeerIdxs[idx] ? 'Unlock Beer' : 'Lock Beer'
@@ -148,6 +159,7 @@ const BeerLetters = ({ generatedPicRef, isSpinning, setSpinning }) => {
                 <Button
                     width={letterImageSize}
                     size='sm'
+                    mx='5'
                     key={`beer-letter-lock-${idx}`}
                     onClick={() => dispatch(toggleLockedBeerLetterIdx(idx))}
                     isDisabled={maxSpinsReached}
@@ -194,7 +206,7 @@ const BeerLetters = ({ generatedPicRef, isSpinning, setSpinning }) => {
 
     return (
         <Flex overflowX='auto' flexDirection='column' flexWrap='wrap' marginBottom='2' marginTop='2'>
-            <Flex justifyContent='safe center' gap='10'>
+            <Flex justifyContent='safe center'>
                 {isChallengeMode && lockButtons}
             </Flex>
             
@@ -202,7 +214,7 @@ const BeerLetters = ({ generatedPicRef, isSpinning, setSpinning }) => {
             <Box mt='1' p='1' ref={generatedPicRef}>
                 {/* padding top here to ensure the border is not directly on top of the letters */}
                 <Box pt='5' border='3px double black'>
-                    <Flex justifyContent='safe center' gap='10'>
+                    <Flex justifyContent='safe center'>
                         {headers}
                     </Flex>
                     <Box mt='5'>
