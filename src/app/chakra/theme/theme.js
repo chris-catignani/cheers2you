@@ -7,4 +7,8 @@ export const cheers2YouTheme = extendTheme({
         Button: ThemedButton,
         Input: ThemedInput,
     },
+    fonts: {
+        heading: `'Familjen Grotesk Variable', sans-serif`,
+        body: `'Inter Variable', sans-serif;`
+    }
 })
