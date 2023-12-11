@@ -103,7 +103,7 @@ const BeersHeader = ({ onSpinUnlockedBeersPressed, onChallengeModePressed, isLoa
                             <Text as="span" _after={{content: '" "'}}>
                                 Feeling frisky? Try the
                             </Text>
-                            <Button onClick={onChallengeModePressed} variant='link' colorScheme='teal'>C2Y Challenge</Button>
+                            <Button onClick={onChallengeModePressed} variant='link' colorScheme='orange' >C2Y Challenge</Button>
                         </Text>
                     </Flex>
                 </Heading>
@@ -134,10 +134,11 @@ const BeerLetters = ({ generatedPicRef, isSpinning, setSpinning }) => {
     const buildHeader = (letter, width, idx) => (
         <Heading
             as='h5'
-            size='md'
+            size='xl'
             mx='5'
+            color='black'
             width={width}
-            fontWeight='800'
+            fontWeight='700'
             textAlign='center'
             textTransform='uppercase'
             key={`beer-letter-header-${idx}`}
