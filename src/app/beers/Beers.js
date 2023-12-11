@@ -162,8 +162,7 @@ const BeerLetters = ({ generatedPicRef, isSpinning, setSpinning }) => {
                     mx='5'
                     key={`beer-letter-lock-${idx}`}
                     onClick={() => dispatch(toggleLockedBeerLetterIdx(idx))}
-                    isDisabled={maxSpinsReached}
-                    hidden={isSpinning}
+                    isDisabled={maxSpinsReached || isSpinning}
                 >
                     {lockButtonText}
                 </Button>
