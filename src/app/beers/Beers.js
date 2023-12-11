@@ -213,7 +213,7 @@ const BeerLetters = ({ generatedPicRef, isSpinning, setSpinning }) => {
             {/* padding defined below so that border of the element inside it shows in the screencapture */}
             <Box mt='1' p='1' ref={generatedPicRef}>
                 {/* padding top here to ensure the border is not directly on top of the letters */}
-                <Box pt='5' border='3px double black'>
+                <Box pt='3' border='3px double black'>
                     <Flex justifyContent='safe center'>
                         {headers}
                     </Flex>
