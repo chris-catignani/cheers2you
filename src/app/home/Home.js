@@ -30,6 +30,9 @@ export const Home = ({venueName}) => {
                 <Heading as='h2' size='2xl' textAlign='center'>
                     Cheers2You
                 </Heading>
+                <Text as='h3' fontSize='1.2em' fontWeight='700' textAlign='center'>
+                    The spell a name with beers app
+                </Text>
                 <Box>
                     <Text>
                         Do you and your friends love beer? Need a new reason to drink a few?
