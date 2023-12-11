@@ -80,7 +80,7 @@ const BeersHeader = ({ onSpinUnlockedBeersPressed, onChallengeModePressed, isLoa
     if (isChallengeMode) {
         const maxSpinsReached = challengeModeSpinCount >= 3
         return (
-            <Container maxW='md' padding={0}>
+            <Container maxW='sm' padding={0}>
                 <Button
                     width='full'
                     onClick={onSpinUnlockedBeersPressed}
