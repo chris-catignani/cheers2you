@@ -2,15 +2,16 @@
 
 import { useDispatch, useSelector } from 'react-redux';
 import React, { useEffect, useRef, useState } from 'react';
-import { DownloadIcon, ExternalLinkIcon } from '@chakra-ui/icons';
+import { DownloadIcon } from '@chakra-ui/icons';
 import { SocialShareModal } from './components/SocialShareModal';
 import { SelectBeerModal } from './components/SelectBeerModal';
 import { downloadImage, searchForBeer, selectBeerLetters, selectBeerSearchResults, selectDownloadGeneratedImageStatus, selectLockedBeerLetterIdxs, selectOpenBeerIdx, setBeerLetterAtIndex, setBeerSearchResults, setOpenBeerIdx, toggleLockedBeerLetterIdx, generateBeerBanner, uploadSocialMedia, selectUploadSocialMediaStatus, selectUploadedSocialMediaData, setUploadedSocialMediaData, generateBeerDefaults, selectBeerDefaultsPerLetter, selectPersonsName, selectIsChallangeMode, selectIsChallengeModeExplainerDisplayed, setIsChallengeModeExplainerDisplayed, setIsChallengeMode, incrementChallengeModeSpinCount, selectChallengeModeSpinCount, selectVenueName, setBeerLetters } from '@/lib/redux';
-import { Box, Button, ButtonGroup, Center, Container, Flex, Heading, IconButton, Text, useDisclosure, useMediaQuery } from '@chakra-ui/react';
+import { Box, Button, ButtonGroup, Container, Flex, Heading, IconButton, Show, Text, useDisclosure, useMediaQuery } from '@chakra-ui/react';
 import { getSocialMediaShareUrl } from '@/lib/utils/utils';
 import html2canvas from 'html2canvas';
 import { ChallangeModeExplainerModal } from './components/ChallangeModeExplainerModal';
 import { BeerSlotMachine } from './components/SlotMachine';
+import { PhoneRotationSuggestion } from './components/PhoneRotationSuggestion';
 
 
 export const Beers = ({ personsName, venueName }) => {
@@ -69,6 +70,11 @@ export const Beers = ({ personsName, venueName }) => {
             <Box marginTop='5' float='right' {...landscapePhoneShareButtonProps}>
                 <ShareButtons generatedPicRef={generatedPicRef} />
             </Box>
+            <Show below='sm'>
+                <Flex width='100%' mt='5' justifyContent='center'>
+                    <PhoneRotationSuggestion text={'Try rotating your phone'} />
+                </Flex>
+            </Show>
         </Container>
     )
 }
