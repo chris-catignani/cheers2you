@@ -72,14 +72,14 @@
     },
     "beerName": {
         "wordsToTrim": [
-            " Barrel Aged Nitro",
-            " Lager",
-            " Session IPA",
-            " IPA",
-            " Pale Ale",
-            " Pale",
-            " Porter",
-            " Stout"
+            "Barrel Aged Nitro",
+            "Lager",
+            "Session IPA",
+            "IPA",
+            "Pale Ale",
+            "Pale",
+            "Porter",
+            "Stout"
         ],
         "wordsToKeepCapitalized": [
             "IPA",
