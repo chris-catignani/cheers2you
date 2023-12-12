@@ -34,6 +34,13 @@ export const Beers = ({ personsName, venueName }) => {
     const [isLandscapePhone] = useMediaQuery('(max-height: 450px)')
     const [isSpinning, setSpinning] = useState(false);
 
+    // CHRIS: Possibly should add an ignore flag in useEffects above too?
+    useEffect(() => {
+        let ignore = false;
+        if (!ignore) { console.log('spin'); setSpinning(true) }
+        return () => ignore = true
+    },[setSpinning]);
+
     const generatedPicRef = useRef(null)
 
     const spinUnlockedBeers = () => {
@@ -84,7 +91,7 @@ const BeersHeader = ({ onSpinUnlockedBeersPressed, onChallengeModePressed, share
     let headerContent = null;
 
     if (isChallengeMode) {
-        const maxSpinsReached = challengeModeSpinCount >= 3
+        const maxSpinsReached = challengeModeSpinCount >= 4
         headerContent = (
             <Button
                 width='sm'
@@ -167,7 +174,7 @@ const BeerLetters = ({ generatedPicRef, isSpinning, setSpinning }) => {
         } else {
             headers.push(buildHeader(letter, letterImageSize, idx))
 
-            const maxSpinsReached = challengeModeSpinCount >= 3
+            const maxSpinsReached = challengeModeSpinCount >= 4
             const lockButtonText = lockedBeerIdxs[idx] ? 'Unlock Beer' : 'Lock Beer'
             lockButtons.push(
                 <Button
