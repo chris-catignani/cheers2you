@@ -39,7 +39,7 @@ export const Home = ({venueName}) => {
                         Looking for a new way to celebrate a special occasion? Do you and your friends love beer? 
                     </Text>                 
                     <Text mt='3' mb='3'>
-                        Here's how it works:
+                        {"Here's how it works:"} 
                     </Text>
                     <UnorderedList spacing={1}>
                         <ListItem>Drink a beer for each letter in a friends name</ListItem>
