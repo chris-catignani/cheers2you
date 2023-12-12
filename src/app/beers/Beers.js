@@ -37,7 +37,7 @@ export const Beers = ({ personsName, venueName }) => {
     // CHRIS: Possibly should add an ignore flag in useEffects above too?
     useEffect(() => {
         let ignore = false;
-        if (!ignore) { console.log('spin'); setSpinning(true) }
+        if (!ignore) setSpinning(true)
         return () => ignore = true
     },[setSpinning]);
 
