@@ -1,22 +1,51 @@
 {
     "brewery": {
         "wordsToTrim": [
+            "Ales Ltd."
+            "Ales Ltd",
+            "Community Brewery",
+            "Brewing and Blending",
+            "Brewing Company Limited",
+            "Brewing Company Ltd",
             "Brewing Company",
+            "Brewing Ltd.",
+            "Brewing Ltd",
             "Brewing Co.",
+            "Brewing Co",
+            "Brewing",
+            "Craft Brewing Co Ltd",
             "Craft Brew Co.",
             "Craft Brew Co",
-            "Brewing Co",
-            "Beer Co.",
-            "Beer Co",
             "Brew Co.",
             "Brew Co",
-            "Breweries",
-            "Brewery Co",
-            "Brewery",
-            "Brewing",
+            "Brew Farm",
+            "Craft Brewery",
+            "Craft Brewing",
             "Craft Brews",
             "Craft Brew",
+            "Craft Ltd",
             "Brews",
+            "Beer Co Ltd",
+            "Beer Co. Ltd.",
+            "Beer Co.",
+            "Beer Co",
+            "Beer Ltd",
+            "Breweries",
+            "Brewery & Tap bar",
+            "Brewery & Tap Bar",
+            "Brewery & Taproom",
+            "Brewery Company",
+            "Brewery Co.",
+            "Brewery Co",
+            "Brewery Ltd.",
+            "Brewery Ltd",
+            "Microbrewery",
+            "Pub Brewery",
+            "Brewery",
+            "Brewed Ales",
+            "Brewhouse",
+            "Brew House",
+            "Brewpub", 
             "Brauerei",
             "-Brauerei",
             "Weissbräu",
@@ -29,7 +58,9 @@
             "Bierbrouwerij",
             "B.V.",
             "& Sohn",
-            "Bryggeri"
+            "Bryggeri",
+            "Limited",
+            "Ltd"
         ],
         "regexes": [
             {
@@ -41,7 +72,14 @@
     },
     "beerName": {
         "wordsToTrim": [
-            "Barrel Aged Nitro"
+            " Barrel Aged Nitro"
+            " Lager",
+            " Session IPA",
+            " IPA",
+            " Pale Ale",
+            " Pale",
+            " Porter",
+            " Stout"
         ],
         "wordsToKeepCapitalized": [
             "IPA",
@@ -57,6 +95,8 @@
             "BPA",
             "PA",
             "XPA",
+            "USA"
+            "US",
             "NZ"
         ],
         "regexes": [
