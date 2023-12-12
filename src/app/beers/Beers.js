@@ -36,7 +36,7 @@ export const Beers = ({ personsName, venueName }) => {
 
     const generatedPicRef = useRef(null)
 
-    const spinUnlockedBeersPressed = () => {
+    const spinUnlockedBeers = () => {
         setSpinning(true)
         dispatch(incrementChallengeModeSpinCount())
     }
@@ -53,7 +53,7 @@ export const Beers = ({ personsName, venueName }) => {
        // RHYS: I set font weight (500) here for the body text like BrewDog - probably easier way of doing it globally?
         <Container maxW='4xl' padding={0} fontWeight={500}>
             <BeersHeader
-                onSpinUnlockedBeersPressed={spinUnlockedBeersPressed}
+                onSpinUnlockedBeersPressed={spinUnlockedBeers}
                 onChallengeModePressed={onChallengeModePressed}
                 shareButtons={isLandscapePhone && shareButtons}
                 isLoading={isSpinning} />
@@ -61,7 +61,8 @@ export const Beers = ({ personsName, venueName }) => {
                 isSpinning={isSpinning}
                 setSpinning={setSpinning}
                 generatedPicRef={generatedPicRef} />
-            <ChallengeModeModal />
+            <ChallengeModeModal
+                onOptIntoChallengeMode={spinUnlockedBeers} />
             <BeerModal />
             <ShareModal />
             <Box float='right'>
@@ -290,7 +291,7 @@ const ShareButtons = ({ generatedPicRef }) => {
     )
 }
 
-const ChallengeModeModal = () => {
+const ChallengeModeModal = ({onOptIntoChallengeMode}) => {
     const dispatch = useDispatch();
     const { isOpen, onOpen, onClose } = useDisclosure()
 
@@ -310,6 +311,7 @@ const ChallengeModeModal = () => {
     const onOptIn = () => {
         dispatch(setIsChallengeMode(true))
         onCloseModal()
+        onOptIntoChallengeMode()
     }
 
     return (
