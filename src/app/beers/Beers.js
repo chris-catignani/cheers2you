@@ -68,7 +68,7 @@ export const Beers = ({ personsName, venueName }) => {
             </Box>
             <Show below='sm'>
                 <Flex width='100%' justifyContent='center'>
-                    <PhoneRotationSuggestion text={'Try rotating your phone'} />
+                    <PhoneRotationSuggestion text={'Rotate phone for easier use'} />
                 </Flex>
             </Show>
         </Container>
