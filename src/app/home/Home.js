@@ -3,7 +3,7 @@
 import { generateBeerBanner, generateBeerDefaults, setPersonsName, selectPersonsName } from "@/lib/redux"
 import { useEffect } from "react"
 import { useDispatch, useSelector } from "react-redux"
-import { Box, Button, Container, Flex, Heading, Image, Input, Text } from "@chakra-ui/react"
+import { Box, Button, Container, Flex, Heading, Image, Input, Text, List, UnorderedList, OrderedList, ListItem, ListIcon } from "@chakra-ui/react"
 import { useRouter, useSearchParams } from 'next/navigation'
 
 export const Home = ({venueName}) => {
@@ -25,21 +25,27 @@ export const Home = ({venueName}) => {
     }
 
     return (
-        <Container maxW='xl'>
+        // RHYS: I set font weight (500) here for the body text like BrewDog - probably easier way of doing it globally?
+        <Container maxW='xl' fontWeight={500}> 
             <Flex flexDirection='column' gap='5'>
                 <Heading as='h2' size='2xl' textAlign='center'>
                     Cheers2You
                 </Heading>
-                <Text as='h3' fontSize='1.2em' fontWeight='700' textAlign='center'>
+                <Text as='h3' fontSize='1.2em' fontWeight='600' textAlign='center'>
                     The spell a name with beers app
                 </Text>
                 <Box>
                     <Text>
-                        Do you and your friends love beer? Need a new reason to drink a few?
+                        Looking for a new way to celebrate a special occasion? Do you and your friends love beer? 
+                    </Text>                 
+                    <Text mt='3' mb='3'>
+                        Here's how it works:
                     </Text>
-                    <Text mt='2'>
-                        Celebrate a special event by drinking beers to spell a friends name. Each beer will represent a letter in the name… get creative
-                    </Text>
+                    <UnorderedList spacing={1}>
+                        <ListItem>Drink a beer for each letter in a friends name</ListItem>
+                        <ListItem>Each letter is represented by a brewer or beer name</ListItem>
+                        <ListItem>The app generates a memento to share or download</ListItem>
+                    </UnorderedList>
                 </Box>
                 <Box border='2px' borderColor='gray.600'>
                     <Image

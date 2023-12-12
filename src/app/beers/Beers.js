@@ -50,7 +50,8 @@ export const Beers = ({ personsName, venueName }) => {
     )
 
     return (
-        <Container maxW='4xl' padding={0}>
+       // RHYS: I set font weight (500) here for the body text like BrewDog - probably easier way of doing it globally?
+        <Container maxW='4xl' padding={0} fontWeight={500}>
             <BeersHeader
                 onSpinUnlockedBeersPressed={spinUnlockedBeersPressed}
                 onChallengeModePressed={onChallengeModePressed}
