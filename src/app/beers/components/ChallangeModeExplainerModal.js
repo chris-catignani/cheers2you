@@ -1,4 +1,4 @@
-import { Button, ButtonGroup, Center, Modal, ModalBody, ModalCloseButton, ModalContent, ModalFooter, ModalHeader, ModalOverlay, Text } from "@chakra-ui/react"
+import { Button, ButtonGroup, Center, Modal, ModalBody, ModalCloseButton, ModalContent, ModalFooter, ModalHeader, ModalOverlay, Text, List, UnorderedList, OrderedList, ListItem, ListIcon} from "@chakra-ui/react"
 
 
 export const ChallangeModeExplainerModal = ({isOpen, onClose, onOptIn}) => {
@@ -8,20 +8,20 @@ export const ChallangeModeExplainerModal = ({isOpen, onClose, onOptIn}) => {
             <ModalContent margin='auto'>
             <ModalHeader margin='auto'>The Cheers2You Challenge</ModalHeader>
             <ModalCloseButton />
-            <ModalBody>
-                <Text>
-                    It works a little like an old school slot or fruit machine.
-                    You spin the beers for the name and you get to hold the ones you like and spin the others.
-                    You only have a maximum of 3 spins then you have to drink the beers!
-                </Text>
+            <ModalBody fontWeight={500}>
+                <UnorderedList spacing={1}>
+                    <ListItem>It works like an old school slot or fruit machine.</ListItem>
+                    <ListItem>Lock the beers you like and spin the rest.</ListItem>
+                    <ListItem>You only get 3 spins then you have to drink!</ListItem>
+                </UnorderedList>
             </ModalBody>
             <ModalFooter margin='auto'>
                 <ButtonGroup spacing='20'>
                     <Button onClick={onOptIn}>
-                        {"I'm in"}
+                        {"I'm in!"}
                     </Button>
                     <Button onClick={onClose}>
-                        {"I'm out"}
+                        {"I'll choose my own"}
                     </Button>
                 </ButtonGroup>
             </ModalFooter>
