@@ -1,7 +1,7 @@
 {
     "brewery": {
         "wordsToTrim": [
-            "Ales Ltd."
+            "Ales Ltd.",
             "Ales Ltd",
             "Community Brewery",
             "Brewing and Blending",
@@ -72,7 +72,7 @@
     },
     "beerName": {
         "wordsToTrim": [
-            " Barrel Aged Nitro"
+            " Barrel Aged Nitro",
             " Lager",
             " Session IPA",
             " IPA",
