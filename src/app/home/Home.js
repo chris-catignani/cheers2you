@@ -49,7 +49,7 @@ export const Home = ({venueName}) => {
                 </Box>
                 <Box border='2px' borderColor='lightgray'>
                     <Image
-                        src='/david-plaque-3.png'
+                        src='/david-plaque3.png'
                         alt='David beer banner example'
                         htmlWidth={800}
                         htmlHeight={500}/>
