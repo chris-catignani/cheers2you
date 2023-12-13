@@ -49,7 +49,7 @@ export const Home = ({venueName}) => {
                 </Box>
                 <Box border='2px' borderColor='lightgray'>
                     <Image
-                        src='/janet-plaque3png'
+                        src='/janet-plaque3.png'
                         alt='Janet beer banner example'
                         htmlWidth={800}
                         htmlHeight={500}/>
