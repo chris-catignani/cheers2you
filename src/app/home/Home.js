@@ -89,8 +89,15 @@ export const Home = ({venueName}) => {
                 </Box>
                 <Box border='1px' borderColor='lightgray'>
                     <Image
-                        src='/david-card2.png'
-                        alt='David Card example'
+                        src='/janet-box.png'
+                        alt='Janet Box example'
+                        htmlWidth={800}
+                        htmlHeight={30}/>
+                </Box>
+                <Box border='1px' borderColor='lightgray'>
+                    <Image
+                        src='/david-mug.png'
+                        alt='David Mug example'
                         htmlWidth={800}
                         htmlHeight={30}/>
                 </Box>
