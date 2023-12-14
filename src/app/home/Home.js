@@ -49,7 +49,7 @@ export const Home = ({venueName}) => {
                 </Box>
                 <Box border='2px' borderColor='lightgray'>
                     <Image
-                        src='/janet-plaque-ani1.gif'
+                        src='/janet-plaque-short-ani1.gif'
                         alt='Janet beer banner example'
                         htmlWidth={800}
                         htmlHeight={500}/>
@@ -85,21 +85,24 @@ export const Home = ({venueName}) => {
                         src='/david-t-shirt2.png'
                         alt='David T-Shirt example'
                         htmlWidth={800}
-                        htmlHeight={30}/>
+                        htmlHeight={30}
+                        loading="lazy"/>
                 </Box>
                 <Box border='1px' borderColor='lightgray'>
                     <Image
                         src='/janet-box.png'
                         alt='Janet Box example'
                         htmlWidth={800}
-                        htmlHeight={30}/>
+                        htmlHeight={30}
+                        loading="lazy"/>
                 </Box>
                 <Box border='1px' borderColor='lightgray'>
                     <Image
                         src='/david-mug.png'
                         alt='David Mug example'
                         htmlWidth={800}
-                        htmlHeight={30}/>
+                        htmlHeight={30}
+                        loading="lazy"/>
                 </Box>
             </Flex>
         </Container>
