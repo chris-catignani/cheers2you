@@ -91,7 +91,7 @@ const BeersHeader = ({ onSpinUnlockedBeersPressed, onChallengeModePressed, share
     let headerContent = null;
 
     if (isChallengeMode) {
-        const maxSpinsReached = challengeModeSpinCount >= 4
+        const maxSpinsReached = challengeModeSpinCount >= 3
         headerContent = (
             <Button
                 width='sm'
