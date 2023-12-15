@@ -44,7 +44,7 @@ export const Home = ({venueName}) => {
                     <UnorderedList spacing={1}>
                         <ListItem>Drink a beer for each letter in a name</ListItem>
                         <ListItem>Each beer represent a letter</ListItem>
-                        <ListItem>Download and share our cool beer label based memento</ListItem>
+                        <ListItem>Download and share our cool beer label memento</ListItem>
                     </UnorderedList>
                 </Box>
                 <Box border='2px' borderColor='lightgray'>
