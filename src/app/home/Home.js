@@ -42,15 +42,15 @@ export const Home = ({venueName}) => {
                         {"Here's how it works:"} 
                     </Text>
                     <UnorderedList spacing={1}>
-                        <ListItem>Drink a beer for each letter in a friends name</ListItem>
-                        <ListItem>Each letter is represented by a brewer or beer name</ListItem>
-                        <ListItem>The app generates a memento to share or download</ListItem>
+                        <ListItem>Drink a beer for each letter in a name</ListItem>
+                        <ListItem>Each beer represent a letter</ListItem>
+                        <ListItem>Download and share our cool beer label memento</ListItem>
                     </UnorderedList>
                 </Box>
-                <Box border='2px' borderColor='gray.600'>
+                <Box border='2px' borderColor='lightgray'>
                     <Image
-                        src='/david_logo_example.png'
-                        alt='David beer banner example'
+                        src='/janet-plaque-short-ani1.gif'
+                        alt='Janet beer banner example'
                         htmlWidth={800}
                         htmlHeight={500}/>
                 </Box>
@@ -74,18 +74,43 @@ export const Home = ({venueName}) => {
                 </Box>
                 <Box>
                     <Text>
-                        Commemorate birthdays, graduations, engagements, marriages etc..
+                        Celebrate birthdays, graduations, engagements, births, marriages etc.
                     </Text>
                     <Text mt='2'>
-                        Share the C2U badge on your socials and use it to create a memorable gift, card, plaque, poster, t-shirt, anything!
+                        Share the badge on your socials or use it to create a memorable gift, card, plaque, poster, t-shirt, anything!
                     </Text>
                 </Box>
-                <Box border='2px' borderColor='gray.600'>
+                <Box border='1px' borderColor='lightgray'>
                     <Image
-                        src='/sarah_logo_example.png'
-                        alt='Sarah beer banner example'
+                        src='/david-t-shirt2.png'
+                        alt='David T-Shirt example'
                         htmlWidth={800}
-                        htmlHeight={500}/>
+                        htmlHeight={30}
+                        loading="lazy"/>
+                </Box>
+                <Box border='1px' borderColor='lightgray'>
+                    <Image
+                        src='/janet-box.png'
+                        alt='Janet Box example'
+                        htmlWidth={800}
+                        htmlHeight={30}
+                        loading="lazy"/>
+                </Box>
+                <Box border='1px' borderColor='lightgray'>
+                    <Image
+                        src='/david-plaque-wall.png'
+                        alt='David Wall example'
+                        htmlWidth={800}
+                        htmlHeight={30}
+                        loading="lazy"/>
+                </Box>
+                <Box border='1px' borderColor='lightgray'>
+                    <Image
+                        src='/david-mug.png'
+                        alt='David Mug example'
+                        htmlWidth={800}
+                        htmlHeight={30}
+                        loading="lazy"/>
                 </Box>
             </Flex>
         </Container>

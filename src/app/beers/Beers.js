@@ -91,10 +91,12 @@ const BeersHeader = ({ onSpinUnlockedBeersPressed, onChallengeModePressed, share
     let headerContent = null;
 
     if (isChallengeMode) {
-        const maxSpinsReached = challengeModeSpinCount >= 4
+        const maxSpinsReached = challengeModeSpinCount >= 3
         headerContent = (
             <Button
                 width='sm'
+                background='black'
+                color='white'
                 onClick={onSpinUnlockedBeersPressed}
                 isLoading={isLoading}
                 isDisabled={maxSpinsReached}
@@ -113,7 +115,7 @@ const BeersHeader = ({ onSpinUnlockedBeersPressed, onChallengeModePressed, share
                         <Text as="span" _after={{content: '" "'}}>
                             Feeling frisky? Try the
                         </Text>
-                        <Button onClick={onChallengeModePressed} variant='link' colorScheme='orange' >C2Y Challenge</Button>
+                        <Button onClick={onChallengeModePressed} variant='link' color='orangered' >Beer Spin Challenge</Button>
                     </Text>
                 </Flex>
             </Heading>
@@ -175,12 +177,14 @@ const BeerLetters = ({ generatedPicRef, isSpinning, setSpinning }) => {
             headers.push(buildHeader(letter, letterImageSize, idx))
 
             const maxSpinsReached = challengeModeSpinCount >= 4
-            const lockButtonText = lockedBeerIdxs[idx] ? 'Unlock Beer' : 'Lock Beer'
+            const lockButtonText = lockedBeerIdxs[idx] ? 'Unlock' : 'Lock Beer'
             lockButtons.push(
                 <Button
                     width={letterImageSize}
                     size='sm'
                     mx='5'
+                    background='orangered'
+                    color='white'
                     key={`beer-letter-lock-${idx}`}
                     onClick={() => dispatch(toggleLockedBeerLetterIdx(idx))}
                     isDisabled={maxSpinsReached || isSpinning}

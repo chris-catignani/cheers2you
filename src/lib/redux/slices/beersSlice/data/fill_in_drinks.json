@@ -33,5 +33,142 @@
     "beer_label_file_big": "https://assets.untappd.com/site/beer_logos_hd/beer-829_fca37_hd.jpeg",
     "brewer_name": "Cervejas Premium do Brasil",
     "brewer_logo_file_big": "https://assets.untappd.com/site/assets/images/temp/badge-brewery-default.png"
+  },
+      "4010": {
+    "beer_name": "Stella Artois",
+    "beer_type": "Pilsner - Other",
+    "beer_label_file_small": "https://assets.untappd.com/site/beer_logos/beer-4010_5da67_sm.jpeg",
+    "beer_label_file_big": "https://assets.untappd.com/site/beer_logos_hd/beer-4010_be448_hd.jpeg",
+    "beer_untappd_url": "https://untappd.com/b/stella-artois-stella-artois/4010",
+    "brewer_id": 265,
+    "brewer_name": "Stella Artois",
+    "berwer_logo_file_small": "https://assets.untappd.com/site/brewery_logos/brewery-265_7be0f.jpeg",
+    "brewer_logo_file_big": "https://assets.untappd.com/site/brewery_logos/brewery-265_7be0f.jpeg",
+    "brewer_untappd_url": null
+  },
+  "4473": {
+    "beer_name": "Guinness Draught",
+    "beer_type": "Stout - Irish Dry",
+    "beer_label_file_small": "https://assets.untappd.com/site/beer_logos/beer-4473_1cbe8_sm.jpeg",
+    "beer_label_file_big": "https://assets.untappd.com/site/beer_logos_hd/beer-4473_95398_hd.jpeg",
+    "beer_untappd_url": "https://untappd.com/b/guinness-guinness-draught/4473",
+    "brewer_id": 49,
+    "brewer_name": "Guinness",
+    "berwer_logo_file_small": "https://assets.untappd.com/site/brewery_logos/brewery-49_49cf6.jpeg",
+    "brewer_logo_file_big": "https://assets.untappd.com/site/brewery_logos_hd/brewery-49_a79e8_hd.jpeg",
+    "brewer_untappd_url": null
+  },
+  "5151": {
+    "beer_name": "Estrella Damm",
+    "beer_type": "Lager - Pale",
+    "beer_label_file_small": "https://assets.untappd.com/site/beer_logos/beer-5151_14f53_sm.jpeg",
+    "beer_label_file_big": "https://assets.untappd.com/site/beer_logos_hd/beer-5151_fb4df_hd.jpeg",
+    "beer_untappd_url": "https://untappd.com/b/damm-estrella-damm/5151",
+    "brewer_id": 1087,
+    "brewer_name": "Damm",
+    "berwer_logo_file_small": "https://assets.untappd.com/site/brewery_logos/brewery-1087_40fbb.jpeg",
+    "brewer_logo_file_big": "https://assets.untappd.com/site/brewery_logos_hd/brewery-1087_1393c_hd.jpeg",
+    "brewer_untappd_url": null
+  },
+  "5940": {
+    "beer_name": "Leffe Blonde / Blond",
+    "beer_type": "Belgian Blonde",
+    "beer_label_file_small": "https://assets.untappd.com/site/beer_logos/beer-5940_9118b_sm.jpeg",
+    "beer_label_file_big": "https://assets.untappd.com/site/beer_logos_hd/beer-5940_f8eae_hd.jpeg",
+    "beer_untappd_url": "https://untappd.com/b/abbaye-de-leffe-leffe-blonde-blond/5940",
+    "brewer_id": 5,
+    "brewer_name": "Abbaye de Leffe",
+    "berwer_logo_file_small": "https://assets.untappd.com/site/brewery_logos/brewery-5_60e12.jpeg",
+    "brewer_logo_file_big": "https://assets.untappd.com/site/brewery_logos_hd/brewery-5_be355_hd.jpeg",
+    "brewer_untappd_url": null
+  },
+  "5941": {
+    "beer_name": "Leffe Brune / Bruin",
+    "beer_type": "Brown Ale - Belgian",
+    "beer_label_file_small": "https://assets.untappd.com/site/beer_logos/beer-5941_20719_sm.jpeg",
+    "beer_label_file_big": "https://assets.untappd.com/site/beer_logos_hd/beer-5941_57cdd_hd.jpeg",
+    "beer_untappd_url": "https://untappd.com/b/abbaye-de-leffe-leffe-brune-bruin/5941",
+    "brewer_id": 5,
+    "brewer_name": "Abbaye de Leffe",
+    "berwer_logo_file_small": "https://assets.untappd.com/site/brewery_logos/brewery-5_60e12.jpeg",
+    "brewer_logo_file_big": "https://assets.untappd.com/site/brewery_logos_hd/brewery-5_be355_hd.jpeg",
+    "brewer_untappd_url": null
+  },
+  "6347": {
+    "beer_name": "Birra Moretti L'Autentica / Ricetta Originale",
+    "beer_type": "Lager - Pale",
+    "beer_label_file_small": "https://assets.untappd.com/site/beer_logos/beer-6347_a13ce_sm.jpeg",
+    "beer_label_file_big": "https://assets.untappd.com/site/beer_logos_hd/beer-6347_acdb1_hd.jpeg",
+    "beer_untappd_url": "https://untappd.com/b/birra-moretti-birra-moretti-l-autentica-ricetta-originale/6347",
+    "brewer_id": 127,
+    "brewer_name": "Birra Moretti",
+    "berwer_logo_file_small": "https://assets.untappd.com/site/brewery_logos/brewery-127_d06a8.jpeg",
+    "brewer_logo_file_big": "https://assets.untappd.com/site/brewery_logos_hd/brewery-127_699a5_hd.jpeg",
+    "brewer_untappd_url": null
+  },
+  "7427": {
+    "beer_name": "Nastro Azzurro",
+    "beer_type": "Lager - Pale",
+    "beer_label_file_small": "https://assets.untappd.com/site/beer_logos/beer-7427_57d7c_sm.jpeg",
+    "beer_label_file_big": "https://assets.untappd.com/site/beer_logos_hd/beer-7427_b5354_hd.jpeg",
+    "beer_untappd_url": "https://untappd.com/b/birra-peroni-nastro-azzurro/7427",
+    "brewer_id": 1921,
+    "brewer_name": "Birra Peroni",
+    "berwer_logo_file_small": "https://assets.untappd.com/site/brewery_logos/brewery-BirraPeroniSpA_1921.jpeg",
+    "brewer_logo_file_big": "https://assets.untappd.com/site/brewery_logos/brewery-BirraPeroniSpA_1921.jpeg",
+    "brewer_untappd_url": null
+  },
+  "45159": {
+    "beer_name": "Cidre",
+    "beer_type": "Cider - Traditional / Apfelwein",
+    "beer_label_file_small": "https://assets.untappd.com/site/beer_logos/beer-45159_a3849_sm.jpeg",
+    "beer_label_file_big": "https://assets.untappd.com/site/beer_logos_hd/beer-45159_994ea_hd.jpeg",
+    "beer_untappd_url": "https://untappd.com/b/stella-artois-cidre/45159",
+    "brewer_id": 265,
+    "brewer_name": "Stella Artois",
+    "berwer_logo_file_small": "https://assets.untappd.com/site/brewery_logos/brewery-265_7be0f.jpeg",
+    "brewer_logo_file_big": "https://assets.untappd.com/site/brewery_logos/brewery-265_7be0f.jpeg",
+    "brewer_untappd_url": null
+  },
+  "55151": {
+    "beer_name": "Peroni Original",
+    "beer_type": "Lager - Pale",
+    "beer_label_file_small": "https://assets.untappd.com/site/beer_logos/beer-_55151_c9cbad39d46c17353631a3f211cd.jpeg",
+    "beer_label_file_big": "https://assets.untappd.com/site/beer_logos/beer-_55151_c9cbad39d46c17353631a3f211cd.jpeg",
+    "beer_untappd_url": "https://untappd.com/b/birra-peroni-peroni-original/55151",
+    "brewer_id": 1921,
+    "brewer_name": "Birra Peroni",
+    "berwer_logo_file_small": "https://assets.untappd.com/site/brewery_logos/brewery-BirraPeroniSpA_1921.jpeg",
+    "brewer_logo_file_big": "https://assets.untappd.com/site/brewery_logos/brewery-BirraPeroniSpA_1921.jpeg",
+    "brewer_untappd_url": null
+  },
+    "R1": {
+    "beer_name": "Black Spiced",
+    "beer_type": "Rum",
+    "beer_label_file_big": "https://www.masterofmalt.com/rum/kraken/the-kraken-black-spiced-rum.jpg",
+    "brewer_name": "Kraken",
+    "brewer_logo_file_big": "https://www.krakenrum.com/wp-content/uploads/2021/09/Kraken-Spiced-Rum-Logo-1.png"
+  },
+    "AM1": {
+      "beer_name": "Disarrono",
+      "beer_type": "Amarretto",
+      "beer_label_file_big": "https://www.masterofmalt.com/liqueurs/disaronno-liqueur-70cl.jpg",
+      "brewer_name": "Illva Sarrono",
+      "brewer_logo_file_big": "https://www.masterofmalt.com/liqueurs/disaronno-liqueur-70cl.jpg"
+  },
+    "CL1": {
+      "beer_name": "Merlyn",
+      "beer_type": "Cream Liqueur",
+      "beer_label_file_big": "https://www.masterofmalt.com/liqueurs/merlyn-welsh-cream-liqueur.jpg",
+      "brewer_name": "Penderyn",
+      "brewer_logo_file_big": "https://foodinnovation.wales/wp-content/uploads/2022/09/NEW-LOGO.png"
+  },
+    "W1": {
+      "beer_name": "Sheep Dog",
+      "beer_type": "Whiskey",
+      "beer_label_file_big": "https://www.masterofmalt.com/liqueurs/sheep-dog/sheep-dog-peanut-butter-liqueur.jpg",
+      "brewer_name": "",
+      "brewer_logo_file_big": "https://www.masterofmalt.com/liqueurs/sheep-dog/sheep-dog-peanut-butter-liqueur.jpg"
   }
 }
+

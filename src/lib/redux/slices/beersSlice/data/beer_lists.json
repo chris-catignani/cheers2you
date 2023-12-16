@@ -3,7 +3,7 @@
         "_comment": "If the user does not specify a venue, this first venue will be the default",
         "venueName": "big bar",
         "urlParam": "big_bar",
-        "fileNames": ["beers2.json", "beers2-manual.json", "aha_bmth.json", "fill_in_drinks.json"]
+        "fileNames": ["saxon_xrch.json", "fill_in_drinks.json"]
     },
     {
         "venueName": "sputnic_lisbon",
@@ -14,6 +14,16 @@
         "venueName": "small bar",
         "urlParam": "small_bar",
         "fileNames": ["beers.json"]
+    },
+    {
+        "venueName": "saxon bar",
+        "urlParam": "saxon_xrch",
+        "fileNames": ["saxon_xrch.json", "fill_in_drinks.json"]
+    },
+    {
+        "venueName": "drunk monk",
+        "urlParam": "drunkmonk_wxm",
+        "fileNames": ["drunkmonk_wxm.json", "fill_in_drinks.json"]
     },
     {
         "venueName": "All Hail Ale, Bournemouth",

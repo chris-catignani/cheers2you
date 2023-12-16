@@ -60,7 +60,11 @@
             "& Sohn",
             "Bryggeri",
             "Limited",
-            "Ltd"
+            "Ltd",
+            "The",
+            "Cidery",
+            "Cider Co.",
+            "Cider Co"
         ],
         "regexes": [
             {
