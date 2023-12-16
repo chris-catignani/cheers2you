@@ -113,7 +113,7 @@ const BeersHeader = ({ onSpinUnlockedBeersPressed, onChallengeModePressed, share
                         <Text as="span" _after={{content: '" "'}}>
                             Feeling frisky? Try the
                         </Text>
-                        <Button onClick={onChallengeModePressed} variant='link' colorScheme='orange' >C2Y Challenge</Button>
+                        <Button onClick={onChallengeModePressed} variant='link' colorScheme='orange' >Beer Spin Challenge</Button>
                     </Text>
                 </Flex>
             </Heading>

@@ -6,7 +6,7 @@ export const ChallangeModeExplainerModal = ({isOpen, onClose, onOptIn}) => {
         <Modal isOpen={isOpen} onClose={onClose} size='xl'>
             <ModalOverlay />
             <ModalContent margin='auto'>
-            <ModalHeader margin='auto'>The Cheers2You Challenge</ModalHeader>
+            <ModalHeader margin='auto'>The Beer Spin Challenge</ModalHeader>
             <ModalCloseButton />
             <ModalBody fontWeight={500}>
                 <UnorderedList spacing={1}>
