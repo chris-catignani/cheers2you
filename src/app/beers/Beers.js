@@ -240,6 +240,7 @@ const BeerLetters = ({ generatedPicRef, isSpinning, setSpinning }) => {
                     <Box mt='5'>
                         <BeerSlotMachine
                             spin={isSpinning}
+                            spinMode={isChallengeMode ? 'individual' : 'all'}
                             onSpinningFinished={onSpinningFinished}
                             beerOptionsPerReel={beerOptionsPerSlotReel}
                             lockedReelIndexes={lockedBeerIdxs}
