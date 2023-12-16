@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { Box, Flex, Image, keyframes } from "@chakra-ui/react";
 import { Letter } from "./Letter";
 
-export const BeerSlotMachine = ({ beerOptionsPerReel, lockedReelIndexes, spin, onSpinningFinished, onBeerClicked, letterImageSize, specialCharacterSize }) => {
+export const BeerSlotMachine = ({ beerOptionsPerReel, lockedReelIndexes, spin, spinMode, onSpinningFinished, onBeerClicked, letterImageSize, specialCharacterSize }) => {
 
     useEffect(() => {
         if (spin) {
@@ -27,6 +27,15 @@ export const BeerSlotMachine = ({ beerOptionsPerReel, lockedReelIndexes, spin, o
         setSpinningReels(newSpinningReels)
 
         setTimeout(() => {
+            if (spinMode === 'all') {
+                setSpinningReels([])
+                onSpinningFinished({
+                    allDone: true,
+                    beers: rollResults,
+                })
+                return
+            }
+
             const intervalId = setInterval(() => {
                 const idx = newSpinningReels.shift()
                 setSpinningReels(newSpinningReels)
