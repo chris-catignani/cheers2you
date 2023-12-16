@@ -21,6 +21,11 @@
         "fileNames": ["saxon_xrch.json", "fill_in_drinks.json"]
     },
     {
+        "venueName": "drunk monk",
+        "urlParam": "drunkmonk_wxm",
+        "fileNames": ["drunkmonk_wxm.json", "fill_in_drinks.json"]
+    },
+    {
         "venueName": "All Hail Ale, Bournemouth",
         "urlParam": "aha_bmth",
         "fileNames": ["aha_bmth.json", "fill_in_drinks.json"]
