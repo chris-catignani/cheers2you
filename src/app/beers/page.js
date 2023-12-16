@@ -6,7 +6,7 @@ import { Beers } from "./Beers";
 import { useSearchParams } from "next/navigation";
 import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { selectVenueName, setVenueName } from '@/lib/redux';
+import { selectPersonsName, selectVenueName, setPersonsName, setVenueName } from '@/lib/redux';
 
 export default function Page() {
   const dispatch = useDispatch()
@@ -23,14 +23,21 @@ export default function Page() {
     }
   }, [dispatch, venueName, storedVenueName])
 
-  if (!personsName || !venueName) {
+  const storedPersonsName = useSelector(selectPersonsName)
+  useEffect(() => {
+    if (personsName !== storedPersonsName) {
+      dispatch(setPersonsName(personsName))
+    }
+  }, [dispatch, personsName, storedPersonsName])
+
+  if (!personsName || !venueName || personsName !== storedPersonsName) {
     router.push('/?' + searchParams)
     return (<></>)
   }
 
   return (
     <Box m='3'>
-      <Beers personsName={personsName} venueName={venueName}/>
+      <Beers venueName={venueName}/>
     </Box>
   )
 }
