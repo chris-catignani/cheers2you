@@ -21,16 +21,15 @@ export const generateBeerBanner = createAsyncThunk(
 
 export const uploadSocialMedia = createAsyncThunk(
     'beers/uploadSocialMedia',
-    async ({canvasPromise, personsName, eventName, imageHeight, imageWidth}) => {
+    async ({ blobPromise, personsName, eventName, imageHeight, imageWidth}) => {
 
         const uploadManager = new UploadManager({
             apiKey: "free", // Get API key: https://www.bytescale.com/get-started
         });
 
-        const canvas = await canvasPromise
-        const image = await new Promise(resolve => canvas.toBlob(resolve, 'image/jpeg'));
+        const data = await blobPromise
         const { fileUrl } = await uploadManager.upload({
-            data: image,
+            data,
             mime: 'image/jpeg',
         });
 

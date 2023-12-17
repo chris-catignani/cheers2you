@@ -117,9 +117,8 @@ const BeerImages = ({ beers, size }) => {
     const buildImage = ({beer}, idx) => (
         <Image
             key={`slot-reel-${idx}-option-${idx}`}
-            src={beer?.beer_label_file}
-            fallbackSrc={getFallbackImageUrl()}
-            alt={beer ? `${beer.beer_name} ${beer.beer_type}` : 'choose your beer'}
+            src={beer.beer_label_file}
+            alt={beer.beer_name + ' ' + beer.beer_type}
             boxSize={size}
             my='40px'
             fit='contain' />

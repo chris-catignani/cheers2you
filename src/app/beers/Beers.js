@@ -7,10 +7,10 @@ import { SelectBeerModal } from './components/SelectBeerModal';
 import { searchForBeer, selectBeerLetters, selectBeerSearchResults, selectLockedBeerLetterIdxs, selectOpenBeerIdx, setBeerLetterAtIndex, setBeerSearchResults, setOpenBeerIdx, toggleLockedBeerLetterIdx, uploadSocialMedia, selectUploadSocialMediaStatus, selectUploadedSocialMediaData, setUploadedSocialMediaData, generateBeerDefaults, selectBeerDefaultsPerLetter, selectPersonsName, selectIsChallangeMode, selectIsChallengeModeExplainerDisplayed, setIsChallengeModeExplainerDisplayed, setIsChallengeMode, incrementChallengeModeSpinCount, selectChallengeModeSpinCount, selectVenueName, setBeerLetters, selectAreBeersSpinning, setBeersSpinning } from '@/lib/redux';
 import { Box, Button, ButtonGroup, Container, Flex, Heading, IconButton, Show, Text, useDisclosure, useMediaQuery } from '@chakra-ui/react';
 import { getSocialMediaShareUrl } from '@/lib/utils/utils';
-import html2canvas from 'html2canvas';
 import { ChallangeModeExplainerModal } from './components/ChallangeModeExplainerModal';
 import { BeerSlotMachine } from './components/SlotMachine';
 import { PhoneRotationSuggestion } from './components/PhoneRotationSuggestion';
+import { toBlob, toJpeg } from 'html-to-image';
 
 
 const MAX_CHALLANEGE_MODE_SPINS = 3
@@ -278,14 +278,15 @@ const ShareButtons = ({ generatedPicRef }) => {
 
     const uploadOutput = async () => {
         const node = generatedPicRef.current;
-        const canvasPromise = html2canvas(node, {
+        const blobPromise = toBlob(node, {
             backgroundColor: 'white',
             width: node.scrollWidth,
             height: node.scrollHeight,
-            proxy: '/beers/api/imageProxy',
+            includeQueryParams: true,
+            quality: 0.95,
         })
         dispatch(uploadSocialMedia({
-            canvasPromise,
+            blobPromise,
             personsName,
             imageHeight: node.scrollHeight,
             imageWidth: node.scrollWidth,
