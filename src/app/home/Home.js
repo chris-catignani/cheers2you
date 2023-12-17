@@ -36,15 +36,15 @@ export const Home = ({venueName}) => {
                 </Text>
                 <Box>
                     <Text>
-                        Looking for a new way to celebrate a special occasion? Do you and your friends love beer? 
+                        Looking for a new way to celebrate a special occasion? 
                     </Text>                 
                     <Text mt='3' mb='3'>
                         {"Here's how it works:"} 
                     </Text>
                     <UnorderedList spacing={1}>
-                        <ListItem>Drink a beer for each letter in a name</ListItem>
-                        <ListItem>Each beer represent a letter</ListItem>
-                        <ListItem>Download and share our cool beer label memento</ListItem>
+                        <ListItem>Visit a pub with your friends</ListItem>
+                        <ListItem>To celebrate, each drink a different beer for every letter in a name</ListItem>
+                        <ListItem>Then download our cool beer label design as a reminder</ListItem>
                     </UnorderedList>
                 </Box>
                 <Box border='2px' borderColor='lightgray'>
