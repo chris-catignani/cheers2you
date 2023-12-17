@@ -14,6 +14,9 @@ import { BeerSlotMachine } from './components/SlotMachine';
 import { PhoneRotationSuggestion } from './components/PhoneRotationSuggestion';
 
 
+const MAX_CHALLANEGE_MODE_SPINS = 3
+
+
 export const Beers = ({ venueName }) => {
     const dispatch = useDispatch();
 
@@ -84,7 +87,7 @@ const BeersHeader = ({ onSpinUnlockedBeersPressed, onChallengeModePressed, share
     let headerContent = null;
 
     if (isChallengeMode) {
-        const maxSpinsReached = challengeModeSpinCount >= 3
+        const maxSpinsReached = challengeModeSpinCount >= MAX_CHALLANEGE_MODE_SPINS
         headerContent = (
             <Button
                 width='sm'
@@ -168,7 +171,7 @@ const BeerLetters = ({ generatedPicRef, isSpinning, setSpinning }) => {
         } else {
             headers.push(buildHeader(letter, letterImageSize, idx))
 
-            const maxSpinsReached = challengeModeSpinCount >= 4
+            const maxSpinsReached = challengeModeSpinCount >= MAX_CHALLANEGE_MODE_SPINS
             const lockButtonText = lockedBeerIdxs[idx] ? 'Unlock' : 'Lock Beer'
             lockButtons.push(
                 <Button
