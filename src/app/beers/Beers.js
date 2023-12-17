@@ -88,8 +88,7 @@ const BeersHeader = ({ onSpinUnlockedBeersPressed, onChallengeModePressed, share
         headerContent = (
             <Button
                 width='sm'
-                background='black'
-                color='white'
+                variant='dark'
                 onClick={onSpinUnlockedBeersPressed}
                 isLoading={isLoading}
                 isDisabled={maxSpinsReached}
