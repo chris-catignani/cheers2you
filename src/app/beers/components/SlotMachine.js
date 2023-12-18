@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { Box, Flex, Image, keyframes } from "@chakra-ui/react";
 import { Letter } from "./Letter";
+import { getFallbackImageUrl } from "@/lib/utils/ui";
 
 export const BeerSlotMachine = ({ beerOptionsPerReel, lockedReelIndexes, spin, spinMode, onSpinningFinished, onBeerClicked, letterImageSize, specialCharacterSize }) => {
 
@@ -101,6 +102,7 @@ const BeerImages = ({ beers, size }) => {
         <Image
             key={`slot-reel-${idx}-option-${idx}`}
             src={beer?.beer_label_file}
+            fallbackSrc={getFallbackImageUrl()}
             alt={beer?.beer_name + ' ' + beer?.beer_type}
             boxSize={size}
             my='40px'

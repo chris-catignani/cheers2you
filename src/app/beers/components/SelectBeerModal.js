@@ -3,6 +3,7 @@ import { useRef, useState } from "react";
 import { BeerUGCInput } from "./BeerUGCInput";
 import { AddYourOwn } from "./AddYourOwn";
 import { Letter } from "./Letter";
+import { getFallbackImageUrl } from "@/lib/utils/ui";
 
 export const SelectBeerModal = ({isOpen, onClose, letter, onBeerSelected, onChangeBeerSearchQuery, beerSearchResults}) => {
     const [useHorizontalLayout] = useMediaQuery('(max-height: 450px)')
@@ -109,7 +110,6 @@ const BeerUGCModalContent = ({isInBeerUGCMode, onUGCBeerCreated}) => {
     return (<></>)
 }
 
-
 const BeerPickerModalContent = ({isInBeerUGCMode, letter, useHorizontalLayout, onBeerSelected, beerSearchResults}) => {
     if (isInBeerUGCMode) {
         return (<></>)
@@ -120,6 +120,7 @@ const BeerPickerModalContent = ({isInBeerUGCMode, letter, useHorizontalLayout, o
             <Box key={`beer-picker-${idx}}`} width='100px' minW='100px'>
                 <Image
                     src={beer?.beer?.beer_label_file}
+                    fallbackSrc={getFallbackImageUrl()}
                     alt={beer?.beer?.beer_name + ' ' + beer?.beer?.beer_type}
                     boxSize='100px'
                     fit='contain'
