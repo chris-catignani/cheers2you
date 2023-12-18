@@ -10,28 +10,31 @@ export const BeerUGCInput = ({onClick}) => {
 
     return (
         <>
-            <Camera
-                onPictureTaken={(image) => setUgcBeerPic(image)}
-                currentPicture={ugcBeerPic}
-            />
             <Input
-                placeholder='Brewer'
-                marginTop='3px'
+                placeholder='add Brewer name'
+                _placeholder={{ color: 'orangered', fontWeight: '300' }}
                 marginBottom='3px'
                 value={brewery}
                 onChange={e => setBrewery(e.target.value)}
             />
             <Input
-                placeholder='Beer name'
+                placeholder='add Beer name'
+                _placeholder={{ color: 'orangered', fontWeight: '300' }}
                 value={beerName}
                 marginBottom='3px'
                 onChange={e => setBeerName(e.target.value)}
             />
             <Input
-                placeholder='Beer type'
+                placeholder='add Beer type'
+                _placeholder={{ color: 'orangered', fontWeight: '300' }}
                 value={beerType}
                 marginBottom='3px'
                 onChange={e => setBeerType(e.target.value)}
+            />
+            <Camera
+                onPictureTaken={(image) => setUgcBeerPic(image)}
+                currentPicture={ugcBeerPic}
+                marginBottom='3px'
             />
             <Button onClick={() => onClick({
                 'beer_label_file': ugcBeerPic,
