@@ -34,7 +34,7 @@ export const Letter = ({ beer: {beer, matchedFields}, onClick } = {}) => {
         }
 
         return (
-            <Text maxHeight='2.3em' overflow='hidden' lineHeight='1.1em' height='2.3em' noOfLines='2' mt={mt}>
+            <Text maxHeight='2.3em' lineHeight='1.1em' height='2.3em' noOfLines='2' mt={mt}>
                 {textContent}
             </Text>
         )
