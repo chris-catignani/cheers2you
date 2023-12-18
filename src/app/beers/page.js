@@ -1,9 +1,8 @@
 'use client'
 
-import { useRouter } from 'next/navigation';
+import { useRouter, useSearchParams } from 'next/navigation';
 import { Box } from "@chakra-ui/react";
 import { Beers } from "./Beers";
-import { useSearchParams } from "next/navigation";
 import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { selectPersonsName, selectVenueName, setPersonsName, setVenueName } from '@/lib/redux';

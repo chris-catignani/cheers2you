@@ -2,11 +2,10 @@
 
 import { Box } from "@chakra-ui/react";
 import { Home } from "./home/Home";
-import { useSearchParams } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 import { useDispatch, useSelector } from "react-redux";
 import { getVenues, selectVenues, setVenueName } from "@/lib/redux";
 import { useEffect } from "react";
-import { useRouter } from "next/navigation";
 
 export default function Page() {
   const dispatch = useDispatch();

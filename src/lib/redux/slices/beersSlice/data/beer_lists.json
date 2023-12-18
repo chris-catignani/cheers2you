@@ -6,6 +6,11 @@
         "fileNames": ["saxon_xrch.json", "aha_bmth.json", "sputnic_lisbon.json", "fill_in_beers.json"]
     },
     {
+        "venueName": "small bar",
+        "urlParam": "small_bar",
+        "fileNames": ["beers.json"]
+    },
+    {
         "venueName": "sputnic_lisbon",
         "urlParam": "sputnic_lisbon",
         "fileNames": ["sputnic_lisbon.json", "fill_in_beers.json"]
