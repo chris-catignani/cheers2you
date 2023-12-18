@@ -6,27 +6,6 @@
     "brewer_name": "Kent Brewery",
     "brewer_logo_file_big": "https://assets.untappd.com/site/brewery_logos/brewery-8870_5f198.jpeg"
   },
-    "G1": {
-    "beer_name": "Gin",
-    "beer_type": "",
-    "beer_label_file_big": "https://pothecarygin.co.uk/wp-content/uploads/2020/04/pothecary_gin_bottle.png",
-    "brewer_name": "Pothecary",
-    "brewer_logo_file_big": "https://pothecarygin.co.uk/wp-content/uploads/2020/04/pothecary_gin_bottle.png"
-  },
-    "G2": {
-    "beer_name": "Gin",
-    "beer_type": "",
-    "beer_label_file_big": "https://isleofwightdistillery.com/cdn/shop/products/Mermaid-Gin-Bottle_Seal_PF_crop_1200x.png",
-    "brewer_name": "Mermaid",
-    "brewer_logo_file_big": "https://isleofwightdistillery.com/cdn/shop/products/Mermaid-Gin-Bottle_Seal_PF_crop_1200x.png"
-  },  
-    "J1": {
-    "beer_name": "Orange",
-    "beer_type": "Juice",
-    "beer_label_file_big": "https://cdn.accentuate.io/6128703242393/1618586766263/Frobishers_Juice_Orange-(1).png",
-    "brewer_name": "Frobishers",
-    "brewer_logo_file_big": "https://cdn.accentuate.io/6128703242393/1618586766263/Frobishers_Juice_Orange-(1).png"
-  },
     "513891": {
     "beer_name": "Xingu Black Beer",
     "beer_type": "Lager - Dark",
@@ -98,20 +77,8 @@
     "brewer_logo_file_big": "https://assets.untappd.com/site/brewery_logos_hd/brewery-5_be355_hd.jpeg",
     "brewer_untappd_url": null
   },
-  "5941": {
-    "beer_name": "Leffe Brune / Bruin",
-    "beer_type": "Brown Ale - Belgian",
-    "beer_label_file_small": "https://assets.untappd.com/site/beer_logos/beer-5941_20719_sm.jpeg",
-    "beer_label_file_big": "https://assets.untappd.com/site/beer_logos_hd/beer-5941_57cdd_hd.jpeg",
-    "beer_untappd_url": "https://untappd.com/b/abbaye-de-leffe-leffe-brune-bruin/5941",
-    "brewer_id": 5,
-    "brewer_name": "Abbaye de Leffe",
-    "berwer_logo_file_small": "https://assets.untappd.com/site/brewery_logos/brewery-5_60e12.jpeg",
-    "brewer_logo_file_big": "https://assets.untappd.com/site/brewery_logos_hd/brewery-5_be355_hd.jpeg",
-    "brewer_untappd_url": null
-  },
   "6347": {
-    "beer_name": "Birra Moretti L'Autentica / Ricetta Originale",
+    "beer_name": "L'Autentica / Ricetta Originale",
     "beer_type": "Lager - Pale",
     "beer_label_file_small": "https://assets.untappd.com/site/beer_logos/beer-6347_a13ce_sm.jpeg",
     "beer_label_file_big": "https://assets.untappd.com/site/beer_logos_hd/beer-6347_acdb1_hd.jpeg",
@@ -158,40 +125,19 @@
     "brewer_logo_file_big": "https://assets.untappd.com/site/brewery_logos/brewery-BirraPeroniSpA_1921.jpeg",
     "brewer_untappd_url": null
   },
-    "R1": {
-    "beer_name": "Black Spiced",
-    "beer_type": "Rum",
-    "beer_label_file_big": "https://www.masterofmalt.com/rum/kraken/the-kraken-black-spiced-rum.jpg",
-    "brewer_name": "Kraken",
-    "brewer_logo_file_big": "https://www.krakenrum.com/wp-content/uploads/2021/09/Kraken-Spiced-Rum-Logo-1.png"
-  },
-    "AM1": {
-      "beer_name": "Disarrono",
-      "beer_type": "Amarretto",
-      "beer_label_file_big": "https://www.masterofmalt.com/liqueurs/disaronno-liqueur-70cl.jpg",
-      "brewer_name": "Illva Sarrono",
-      "brewer_logo_file_big": "https://www.masterofmalt.com/liqueurs/disaronno-liqueur-70cl.jpg"
-  },
-    "CL1": {
-      "beer_name": "Merlyn",
-      "beer_type": "Cream Liqueur",
-      "beer_label_file_big": "https://www.masterofmalt.com/liqueurs/merlyn-welsh-cream-liqueur.jpg",
-      "brewer_name": "Penderyn",
-      "brewer_logo_file_big": "https://foodinnovation.wales/wp-content/uploads/2022/09/NEW-LOGO.png"
-  },
+  "1": {
+    "beer_name": "ASPALL DRAUGHT CYDER",
+    "beer_type": "Cider - Dry",
+    "beer_label_file_big": "https://assets.untappd.com/site/beer_logos_hd/beer-2118515_2d032_hd.jpeg",
+    "brewer_name": "Aspall",
+    "brewer_logo_file_big": "https://assets.untappd.com/site/brewery_logos_hd/brewery-3468_4ee08_hd.jpeg"
+},
    "X1": {
     "beer_name": "choose",
     "beer_type": "a beer",
     "beer_label_file_big": "/c2y_orange_mug_logo.png",
     "brewer_name": "Tap to",
     "brewer_logo_file_big": "/c2y_orange_mug_logo.png"
-  },
-    "W1": {
-      "beer_name": "Sheep Dog",
-      "beer_type": "Whiskey",
-      "beer_label_file_big": "https://www.masterofmalt.com/liqueurs/sheep-dog/sheep-dog-peanut-butter-liqueur.jpg",
-      "brewer_name": "",
-      "brewer_logo_file_big": "https://www.masterofmalt.com/liqueurs/sheep-dog/sheep-dog-peanut-butter-liqueur.jpg"
   }
 }
 

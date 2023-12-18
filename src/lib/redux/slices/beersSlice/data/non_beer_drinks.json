@@ -1,0 +1,52 @@
+{
+    "G1": {
+    "beer_name": "Gin",
+    "beer_type": "",
+    "beer_label_file_big": "https://pothecarygin.co.uk/wp-content/uploads/2020/04/pothecary_gin_bottle.png",
+    "brewer_name": "Pothecary",
+    "brewer_logo_file_big": "https://pothecarygin.co.uk/wp-content/uploads/2020/04/pothecary_gin_bottle.png"
+  },
+    "G2": {
+    "beer_name": "Gin",
+    "beer_type": "",
+    "beer_label_file_big": "https://isleofwightdistillery.com/cdn/shop/products/Mermaid-Gin-Bottle_Seal_PF_crop_1200x.png",
+    "brewer_name": "Mermaid",
+    "brewer_logo_file_big": "https://isleofwightdistillery.com/cdn/shop/products/Mermaid-Gin-Bottle_Seal_PF_crop_1200x.png"
+  },  
+    "J1": {
+    "beer_name": "Orange",
+    "beer_type": "Juice",
+    "beer_label_file_big": "https://cdn.accentuate.io/6128703242393/1618586766263/Frobishers_Juice_Orange-(1).png",
+    "brewer_name": "Frobishers",
+    "brewer_logo_file_big": "https://cdn.accentuate.io/6128703242393/1618586766263/Frobishers_Juice_Orange-(1).png"
+  },
+    "R1": {
+    "beer_name": "Black Spiced",
+    "beer_type": "Rum",
+    "beer_label_file_big": "https://www.masterofmalt.com/rum/kraken/the-kraken-black-spiced-rum.jpg",
+    "brewer_name": "Kraken",
+    "brewer_logo_file_big": "https://www.krakenrum.com/wp-content/uploads/2021/09/Kraken-Spiced-Rum-Logo-1.png"
+  },
+    "AM1": {
+      "beer_name": "Disarrono",
+      "beer_type": "Amarretto",
+      "beer_label_file_big": "https://www.masterofmalt.com/liqueurs/disaronno-liqueur-70cl.jpg",
+      "brewer_name": "Illva Sarrono",
+      "brewer_logo_file_big": "https://www.masterofmalt.com/liqueurs/disaronno-liqueur-70cl.jpg"
+  },
+    "CL1": {
+      "beer_name": "Merlyn",
+      "beer_type": "Cream Liqueur",
+      "beer_label_file_big": "https://www.masterofmalt.com/liqueurs/merlyn-welsh-cream-liqueur.jpg",
+      "brewer_name": "Penderyn",
+      "brewer_logo_file_big": "https://foodinnovation.wales/wp-content/uploads/2022/09/NEW-LOGO.png"
+  },
+    "W1": {
+      "beer_name": "Sheep Dog",
+      "beer_type": "Whiskey",
+      "beer_label_file_big": "https://www.masterofmalt.com/liqueurs/sheep-dog/sheep-dog-peanut-butter-liqueur.jpg",
+      "brewer_name": "",
+      "brewer_logo_file_big": "https://www.masterofmalt.com/liqueurs/sheep-dog/sheep-dog-peanut-butter-liqueur.jpg"
+  }
+}
+

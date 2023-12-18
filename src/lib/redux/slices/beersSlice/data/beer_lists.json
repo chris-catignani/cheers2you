@@ -3,31 +3,26 @@
         "_comment": "If the user does not specify a venue, this first venue will be the default",
         "venueName": "big bar",
         "urlParam": "big_bar",
-        "fileNames": ["saxon_xrch.json", "fill_in_drinks.json"]
+        "fileNames": ["saxon_xrch.json", "aha_bmth.json", "sputnic_lisbon.json", "fill_in_beers.json"]
     },
     {
         "venueName": "sputnic_lisbon",
         "urlParam": "sputnic_lisbon",
-        "fileNames": ["beers2.json", "beers2-manual.json", "fill_in_drinks.json"]
-    },
-    {
-        "venueName": "small bar",
-        "urlParam": "small_bar",
-        "fileNames": ["beers.json"]
+        "fileNames": ["sputnic_lisbon.json", "fill_in_beers.json"]
     },
     {
         "venueName": "saxon bar",
         "urlParam": "saxon_xrch",
-        "fileNames": ["saxon_xrch.json", "fill_in_drinks.json"]
+        "fileNames": ["saxon_xrch.json", "fill_in_beers.json"]
     },
     {
         "venueName": "drunk monk",
         "urlParam": "drunkmonk_wxm",
-        "fileNames": ["drunkmonk_wxm.json", "fill_in_drinks.json"]
+        "fileNames": ["drunkmonk_wxm.json", "fill_in_beers.json"]
     },
     {
         "venueName": "All Hail Ale, Bournemouth",
         "urlParam": "aha_bmth",
-        "fileNames": ["aha_bmth.json", "fill_in_drinks.json"]
+        "fileNames": ["aha_bmth.json", "fill_in_beers.json"]
     }
 ]
