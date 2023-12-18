@@ -6,7 +6,12 @@ export const ThemedInput = defineStyleConfig({
             field: {
                 borderWidth: '3px',
                 borderColor: 'black',
-                _focus: { color: 'black', borderColor: 'black', fontSize: '18px', fontWeight: 'bold' },
+                _focus: {
+                    color: 'black',
+                    borderColor: 'black',
+                    fontSize: '18px',
+                    fontWeight: 'bold',
+                },
             },
         },
     },

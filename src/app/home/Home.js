@@ -5,7 +5,6 @@ import { useEffect } from "react"
 import { useDispatch, useSelector } from "react-redux"
 import { Box, Button, Container, Flex, Heading, Image, Input, Text, List, UnorderedList, OrderedList, ListItem, ListIcon } from "@chakra-ui/react"
 import { useRouter, useSearchParams } from 'next/navigation'
-import { upperCase } from "lodash-es"
 
 export const Home = ({venueName}) => {
     const dispatch = useDispatch();
@@ -70,8 +69,7 @@ export const Home = ({venueName}) => {
                     <Button
                         mt='4'
                         width='100%'
-                        variant='dark'
-                        background='orangered'
+                        variant='primary'
                         onClick={onSearchClick}
                     >
                         GIVE IT A GO
