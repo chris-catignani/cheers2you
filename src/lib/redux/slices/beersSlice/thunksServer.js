@@ -125,6 +125,25 @@ const getBeerDefaultsPerLetter = (beers) => {
             }
         }
     }
+
+    const assignBucket = (beerField, beerFieldName, wordIdx, assignedLetters, listToAddTo, beer, ignoreArticles) => {
+        const beerWordMatch = getAlphaWord(beerField, wordIdx, ignoreArticles)
+        if (beerWordMatch) {
+            const letter = beerWordMatch.word.charAt(0)
+            if (assignedLetters[beerFieldName].has(letter)) {
+                return
+            }
+
+            assignedLetters[beerFieldName].add(letter)
+            beerSortOrderLists[letter][listToAddTo].push({
+                beer,
+                matchedFields: [{
+                    field: beerFieldName,
+                    index: beerWordMatch.index
+                }]
+            })
+        }
+    }
     
     // 1. initialize empty sort buckets for each letter
     const beerSortOrderLists = {}
@@ -137,32 +156,29 @@ const getBeerDefaultsPerLetter = (beers) => {
         })
     }
 
-    const assignBucket = (beerField, beerFieldName, wordIdx, listToAddTo, beer, ignoreArticles) => {
-        const beerWordMatch = getAlphaWord(beerField, wordIdx, ignoreArticles)
-        if (beerWordMatch) {
-            beerSortOrderLists[beerWordMatch.word.charAt(0)][listToAddTo].push({
-                beer,
-                matchedFields: [{
-                    field: beerFieldName,
-                    index: beerWordMatch.index
-                }]
-            })
-        }
-    }
-
     // 2. populate sort buckets for each letter
     beers.forEach(beer => {
+
+        // keep track of which field types we already have this beer in
+        // this prevents a beer from being added twice for the same field
+        // e.g. Brewdogs Quench Quake was being added as options for beer name for "Quench" and "Quake"
+        const assignedLetters = {
+            beer_name: new Set(),
+            brewer_name: new Set(),
+            beer_type: new Set(),
+        }
+
         const beerName = beer.beer_name.toLowerCase()
         const brewerName = beer.brewer_name.toLowerCase()
         const beerType = beer.beer_type.toLowerCase()
 
-        assignBucket(beerName, 'beer_name', 0, 'beerNameFirstLetterMatches', beer, false)
-        assignBucket(brewerName, 'brewer_name', 0, 'brewerFirstLetterMatches', beer, false)
-        assignBucket(beerType, 'beer_type', 0, 'beerTypeFirstLetterMatches', beer, false)
-        assignBucket(brewerName, 'brewer_name', 1, 'brewerNameSecondWordMatches', beer, true)
-        assignBucket(beerName, 'beer_name', 1, 'beerNameSecondWordMatches', beer, true)
-        assignBucket(beerName, 'beer_name', 2, 'beerNameThirdWordMatches', beer, true)
-        assignBucket(beerName, 'beer_name', 3, 'beerNameFourthWordMatches', beer, true)
+        assignBucket(beerName, 'beer_name', 0, assignedLetters, 'beerNameFirstLetterMatches', beer, false)
+        assignBucket(brewerName, 'brewer_name', 0, assignedLetters, 'brewerFirstLetterMatches', beer, false)
+        assignBucket(beerType, 'beer_type', 0, assignedLetters, 'beerTypeFirstLetterMatches', beer, false)
+        assignBucket(brewerName, 'brewer_name', 1, assignedLetters, 'brewerNameSecondWordMatches', beer, true)
+        assignBucket(beerName, 'beer_name', 1, assignedLetters, 'beerNameSecondWordMatches', beer, true)
+        assignBucket(beerName, 'beer_name', 2, assignedLetters, 'beerNameThirdWordMatches', beer, true)
+        assignBucket(beerName, 'beer_name', 3, assignedLetters, 'beerNameFourthWordMatches', beer, true)
     })
 
     // 3. combine the sort buckets into a single list of beers
