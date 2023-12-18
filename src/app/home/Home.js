@@ -28,7 +28,7 @@ export const Home = ({venueName}) => {
         // RHYS: I set font weight (500) here for the body text like BrewDog - probably easier way of doing it globally?
         <Container maxW='xl' fontWeight={500}> 
             <Flex flexDirection='column' gap='5'>
-                <Heading as='h2' size='2xl' textAlign='center'>
+                <Heading color='orangered' as='h2' size='2xl' textAlign='center'>
                     Cheers2You
                 </Heading>
                 <Text as='h3' fontSize='1.2em' fontWeight='600' textAlign='center'>
@@ -67,6 +67,7 @@ export const Home = ({venueName}) => {
                         mt='4'
                         width='100%'
                         variant='dark'
+                        background='orangered'
                         onClick={onSearchClick}
                     >
                         GIVE IT A GO
