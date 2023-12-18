@@ -308,9 +308,7 @@ const searchBeers = (query, venueName) => {
     const extendedQuery = {
         $or: [
             // search for the entire query
-            {
-                $or: orFields(query),
-            },
+            ...orFields(query),
             // tokenize and search for each word across the various fields
             {
                 $and: tokenizedQuery.map((searchToken) => {
