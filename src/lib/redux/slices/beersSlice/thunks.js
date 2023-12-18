@@ -10,7 +10,7 @@ import { pretendServerBeerSearch, pretendServerGetDefaultBeers } from './thunksS
 
 export const generateBeerBanner = createAsyncThunk(
     'beers/generateBeerBanner',
-    async ({personsName, venueName, freshBanner = true}, {dispatch, getState}) => {
+    async ({personsName, venueName}, {dispatch, getState}) => {
 
     const beerLetters = []
 
@@ -25,8 +25,6 @@ export const generateBeerBanner = createAsyncThunk(
                 letter, 
                 isSpecialCharacter: true,
             })
-        } else if (!freshBanner && getState().beers.lockedBeerLetterIdxs[idx]) {
-            beerLetters.push(getState().beers.beerLetters[idx])
         } else {
             const beerOptions = beerDefaults[letter.toLowerCase()]
             beerLetters.push({
