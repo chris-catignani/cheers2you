@@ -220,7 +220,6 @@ const init = () => {
                 keys: ['beer_name', 'brewer_name', 'beer_type'],
                 includeScore: true,
                 includeMatches: true,
-                ignoreLocation: true,
                 useExtendedSearch: true,
                 threshold: 0.3,
             })
