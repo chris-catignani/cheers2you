@@ -100,8 +100,8 @@ const BeerImages = ({ beers, size }) => {
     const buildImage = ({beer}, idx) => (
         <Image
             key={`slot-reel-${idx}-option-${idx}`}
-            src={beer.beer_label_file}
-            alt={beer.beer_name + ' ' + beer.beer_type}
+            src={beer?.beer_label_file}
+            alt={beer?.beer_name + ' ' + beer?.beer_type}
             boxSize={size}
             my='40px'
             fit='contain' />
