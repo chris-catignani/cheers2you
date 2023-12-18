@@ -1,4 +1,4 @@
-import { debounce,sample, shuffle } from 'lodash-es';
+import { debounce, sample } from 'lodash-es';
 import { UploadManager } from '@bytescale/sdk';
 import download from 'downloadjs';
 import { createAsyncThunk } from '@reduxjs/toolkit';
@@ -28,7 +28,7 @@ export const generateBeerBanner = createAsyncThunk(
         } else if (!freshBanner && getState().beers.lockedBeerLetterIdxs[idx]) {
             beerLetters.push(getState().beers.beerLetters[idx])
         } else {
-            const beerOptions = shuffle(beerDefaults[letter.toLowerCase()])
+            const beerOptions = beerDefaults[letter.toLowerCase()]
             beerLetters.push({
                 letter: letter.toUpperCase(),
                 userGeneratedBeer: {},

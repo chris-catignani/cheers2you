@@ -1,7 +1,9 @@
 import beerRules from './data/beer_rules.json';
 import beerLists from './data/beer_lists.json';
-import { escapeRegExp, shuffle } from 'lodash-es';
+import { escapeRegExp } from 'lodash-es';
 import Fuse from "fuse.js";
+
+const NUM_BEER_DEFAULTS_PER_LETTER = 10
 
 /**
  * This file has beer search functionality like it would be on a server.
@@ -87,33 +89,115 @@ const formatBeers = (beers) => {
     })
 }
 
-const fuses = (() => {
+/**
+ * Get json object of beer defaults per letter
+ * 
+ * implementation:
+ * 1. initialize empty sort buckets for each letter
+ * 2. populate sort buckets for each letter
+ * 3. combine the sort buckets into a single list of beers
+ */
+const getBeerDefaultsPerLetter = (beers) => {
+    const sortProps = ['beerNameFirstLetterMatches', 'brewerFirstLetterMatches', 'beerTypeFirstLetterMatches', 'brewerNameSecondWordMatches', 'beerNameSecondWordMatches', 'beerNameThirdWordMatches', 'beerNameFourthWordMatches']
+    const ariclesToIgnore = new Set(['a', 'it', 'an', 'the', 'of', 'to', 'in', 'on', 'for', 'or', 'to', 'no', 'at', 'are'])
+    const alphaRegex = new RegExp(/\b([a-z]\w*)/, 'g')
+
+    const getAlphaWord = (string, wordIdx, ignoreArticles) => {
+        const wordMatches = [...string.matchAll(alphaRegex)]
+        if (wordIdx >= wordMatches.length) {
+            return undefined
+        }
+
+        if (!ignoreArticles) {
+            return wordMatches[wordIdx][0]
+        } else {
+            const wordMatchesNoArticles = wordMatches.filter(wordMatch => !ariclesToIgnore.has(wordMatch[0]))
+            return wordIdx < wordMatchesNoArticles.length ? wordMatchesNoArticles[wordIdx][0] : undefined
+        }
+    }
+    
+    // 1. initialize empty sort buckets for each letter
+    const beerSortOrderLists = {}
+    for (let i = 97; i <= 122; i++) {  // Using for loop for (a-z):
+        const letter = String.fromCharCode(i)
+
+        beerSortOrderLists[letter] = {}
+        sortProps.forEach(sortProp => {
+            beerSortOrderLists[letter][sortProp] = []
+        })
+    }
+
+    const assignBucket = (beerField, wordIdx, listToAddTo, beer, ignoreArticles) => {
+        const beerWordMatch = getAlphaWord(beerField, wordIdx, ignoreArticles)
+        if (beerWordMatch) beerSortOrderLists[beerWordMatch.charAt(0)][listToAddTo].push(beer)
+    }
+
+    // 2. populate sort buckets for each letter
+    beers.forEach(beer => {
+        const beerName = beer.beer_name.toLowerCase()
+        const brewerName = beer.brewer_name.toLowerCase()
+        const beerType = beer.beer_type.toLowerCase()
+
+        assignBucket(beerName, 0, 'beerNameFirstLetterMatches', beer, false)
+        assignBucket(brewerName, 0, 'brewerFirstLetterMatches', beer, false)
+        assignBucket(beerType, 0, 'beerTypeFirstLetterMatches', beer, false)
+        assignBucket(brewerName, 1, 'brewerNameSecondWordMatches', beer, true)
+        assignBucket(beerName, 1, 'beerNameSecondWordMatches', beer, true)
+        assignBucket(beerName, 2, 'beerNameThirdWordMatches', beer, true)
+        assignBucket(beerName, 3, 'beerNameFourthWordMatches', beer, true)
+    })
+
+    // 3. combine the sort buckets into a single list of beers
+    const beerDefaultsPerLetter = {}
+    for (let i = 97; i <= 122; i++) {  // Using for loop for (a-z):
+        const letter = String.fromCharCode(i)
+        beerDefaultsPerLetter[letter] = sortProps.reduce((beerDefaults, sortProp) => {
+            if (beerDefaults.length >= NUM_BEER_DEFAULTS_PER_LETTER) {
+                return beerDefaults
+            }
+            return beerDefaults.concat(
+                beerSortOrderLists[letter][sortProp].slice(0, NUM_BEER_DEFAULTS_PER_LETTER - beerDefaults.length)
+            )
+        }, [])
+    }
+
+    return beerDefaultsPerLetter
+}
+
+/**
+ * init a bunch of startup items into memory.
+ * The implementation can be optomized to not loop as much, or dynamically generate data instead of creating at startup
+ */
+const fusesByVenue = {}
+const beerDefaultsByVenue = {}
+
+const init = () => {
     const start = performance.now()
-    const results = beerLists.reduce( (results, beerList) => {
+
+    beerLists.forEach(beerList => {
         const beers = beerList.fileNames.reduce((beers, beerfileName) => {
             return beers.concat(formatBeers(require(`./data/${beerfileName}`)))
         }, [])
 
-        const fuseOptions = {
-            keys: ['beer_name', 'brewer_name', 'beer_type'],
-            includeScore: true,
-            includeMatches: true,
-            ignoreLocation: true,
-            useExtendedSearch: true,
-            threshold: 0.3,
-        }
-        
-        results[beerList.urlParam] = {
+        fusesByVenue[beerList.urlParam] = {
             'urlParam': beerList.urlParam,
             'venueName': beerList.venueName,
-            'fuse': new Fuse(beers, fuseOptions)
+            'fuse': new Fuse(beers, {
+                keys: ['beer_name', 'brewer_name', 'beer_type'],
+                includeScore: true,
+                includeMatches: true,
+                ignoreLocation: true,
+                useExtendedSearch: true,
+                threshold: 0.3,
+            })
         }
-        return results
-    }, {})
+
+        beerDefaultsByVenue[beerList.urlParam] = getBeerDefaultsPerLetter(beers)
+    })
     const end = performance.now()
-    console.log(`fuse.js spin up time: ${end - start}ms`)
-    return results
-})()
+    console.log(`init time: ${end - start}ms`)
+}
+init()
 
 const fuseSearch = (query, venueName, {limit = 10} = {}) => {
     if (!query) {
@@ -144,7 +228,7 @@ const fuseSearch = (query, venueName, {limit = 10} = {}) => {
         return [ biggestMatch['match']['key'] ]
     }
 
-    const fuse = fuses[venueName]?.fuse || fuses[beerLists[0].urlParam].fuse
+    const fuse = fusesByVenue[venueName]?.fuse || fusesByVenue[beerLists[0].urlParam].fuse
     const fuseResults = fuse.search(query, {limit})
     return fuseResults.map((result) => {
         return {
@@ -196,34 +280,8 @@ const searchBeers = (query, venueName) => {
     return fuseSearch(extendedQuery, venueName)
 }
 
-const getDefaultBeersForLetter = (letter, venueName) => {
-    const beers = []
-
-    const defaultBeerLetterSearch = (fieldRegex) => {
-        if (beers.length < 10) {
-            const results = fuseSearch(fieldRegex, venueName)
-            beers.push(...results.map(result => result.beer))
-        }
-    }
-
-    defaultBeerLetterSearch({beer_name: `^${letter}`}) // beer name starts with letter
-    defaultBeerLetterSearch({brewer_name: `^${letter}`}) // brewer starts with letter
-    defaultBeerLetterSearch({beer_name: `" ${letter}"`}) // beer name has other words starting with letter
-    defaultBeerLetterSearch({brewer_name: `" ${letter}"`}) // brewer has other words starting with letter
-
-    return shuffle(beers)
-}
-
 const getDefaultBeers = (venueName) => {
-    const beerDefaultsPerLetter = {}
-
-    // Using for loop for (a-z):
-    for (let i = 97; i <= 122; i++) {
-        const letter = String.fromCharCode(i)
-        beerDefaultsPerLetter[letter] = getDefaultBeersForLetter(letter, venueName)
-    }
-
-    return beerDefaultsPerLetter
+    return beerDefaultsByVenue[venueName]
 }
 
 const stall = async (stallTime = 100) => {
