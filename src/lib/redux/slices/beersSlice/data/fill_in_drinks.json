@@ -163,6 +163,13 @@
       "brewer_name": "Penderyn",
       "brewer_logo_file_big": "https://foodinnovation.wales/wp-content/uploads/2022/09/NEW-LOGO.png"
   },
+   "X1": {
+    "beer_name": "choose",
+    "beer_type": "a beer",
+    "beer_label_file_big": "/c2y_orange_mug_logo.png",
+    "brewer_name": "Tap to",
+    "brewer_logo_file_big": "/c2y_orange_mug_logo.png"
+  },
     "W1": {
       "beer_name": "Sheep Dog",
       "beer_type": "Whiskey",

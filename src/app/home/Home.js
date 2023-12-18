@@ -44,7 +44,7 @@ export const Home = ({venueName}) => {
                     <UnorderedList spacing={1}>
                         <ListItem>Visit a pub with your friends</ListItem>
                         <ListItem>To celebrate, each drink a different beer for every letter in a name</ListItem>
-                        <ListItem>Then download our cool beer label design as a reminder</ListItem>
+                        <ListItem>Then download and share our cool beer label trophy</ListItem>
                     </UnorderedList>
                 </Box>
                 <Box border='2px' borderColor='lightgray'>
@@ -82,8 +82,8 @@ export const Home = ({venueName}) => {
                 </Box>
                 <Box border='1px' borderColor='lightgray'>
                     <Image
-                        src='/david-t-shirt2.png'
-                        alt='David T-Shirt example'
+                        src='/david-mug.png'
+                        alt='David Mug example'
                         htmlWidth={800}
                         htmlHeight={30}
                         loading="lazy"/>
@@ -96,18 +96,18 @@ export const Home = ({venueName}) => {
                         htmlHeight={30}
                         loading="lazy"/>
                 </Box>
-                <Box border='1px' borderColor='lightgray'>
-                    <Image
-                        src='/david-plaque-wall.png'
-                        alt='David Wall example'
+                <Box border='1px' borderColor='lightgray'>             
+                <Image
+                        src='/david-t-shirt2.png'
+                        alt='David T-Shirt example'
                         htmlWidth={800}
                         htmlHeight={30}
                         loading="lazy"/>
                 </Box>
                 <Box border='1px' borderColor='lightgray'>
                     <Image
-                        src='/david-mug.png'
-                        alt='David Mug example'
+                        src='/david-plaque-wall.png'
+                        alt='David Wall example'
                         htmlWidth={800}
                         htmlHeight={30}
                         loading="lazy"/>
