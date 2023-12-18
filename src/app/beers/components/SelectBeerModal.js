@@ -161,11 +161,11 @@ const NoSearchResults = ({isInBeerUGCMode, beerSearchResults, setIsInBeerUGCMode
                 <Text as='span' _after={{content: '" "'}}>
                     Try searching for a different beer,
                 </Text>
-                <Button onClick={() => onChangeBeerSearchQuery('')}variant='link' color='orangered'>view our suggestions</Button>
+                <Button onClick={() => onChangeBeerSearchQuery('')} variant='link'>view our suggestions</Button>
                 <Text as='span' _before={{content: '" "'}} _after={{content: '" "'}}>
                     or
                 </Text>
-                <Button onClick={() => setIsInBeerUGCMode(true)} variant='link' color='orangered'>upload your own</Button>
+                <Button onClick={() => setIsInBeerUGCMode(true)} variant='link'>upload your own</Button>
             </Box>
         </Flex>
     )

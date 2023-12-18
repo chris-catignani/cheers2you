@@ -12,5 +12,8 @@ export const ThemedButton = defineStyleConfig({
                 borderColor: 'black',
             },
         },
+        link: {
+            color: 'orangered',
+        }
     },
 })
