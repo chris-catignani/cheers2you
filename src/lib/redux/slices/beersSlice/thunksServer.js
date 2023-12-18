@@ -258,10 +258,19 @@ const fuseSearch = (query, venueName, {limit = 10} = {}) => {
             matchLength: 0,
         })
 
+        // get the biggest matched index range to use as the match index
+        const index = biggestMatch['match']['indices'].reduce((a, b) => {
+            if(a[1] >= (b[1] - b[0])) {
+                return a 
+            } else {
+                return [b[0], b[1] - b[0]]
+            }
+        }, [0, 0])
+
         // currently only returning one field
         return [{
             field: biggestMatch['match']['key'],
-            index: biggestMatch['match']['indices'][0][0],
+            index: index[0],
         }]
     }
 
