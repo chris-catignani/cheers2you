@@ -14,6 +14,9 @@ import { BeerSlotMachine } from './components/SlotMachine';
 import { PhoneRotationSuggestion } from './components/PhoneRotationSuggestion';
 
 
+const MAX_CHALLANEGE_MODE_SPINS = 3
+
+
 export const Beers = ({ venueName }) => {
     const dispatch = useDispatch();
 
@@ -84,7 +87,7 @@ const BeersHeader = ({ onSpinUnlockedBeersPressed, onChallengeModePressed, share
     let headerContent = null;
 
     if (isChallengeMode) {
-        const maxSpinsReached = challengeModeSpinCount >= 3
+        const maxSpinsReached = challengeModeSpinCount >= MAX_CHALLANEGE_MODE_SPINS
         headerContent = (
             <Button
                 width='sm'
@@ -168,7 +171,7 @@ const BeerLetters = ({ generatedPicRef, isSpinning, setSpinning }) => {
         } else {
             headers.push(buildHeader(letter, letterImageSize, idx))
 
-            const maxSpinsReached = challengeModeSpinCount >= 4
+            const maxSpinsReached = challengeModeSpinCount >= MAX_CHALLANEGE_MODE_SPINS
             const lockButtonText = lockedBeerIdxs[idx] ? 'Unlock' : 'Lock Beer'
             lockButtons.push(
                 <Button
@@ -191,8 +194,8 @@ const BeerLetters = ({ generatedPicRef, isSpinning, setSpinning }) => {
     const beerOptionsPerSlotReel = beerLetters.map( ({letter, beer, userGeneratedBeer, isSpecialCharacter}) => {
         const beers = isSpecialCharacter ? [] : [
             beer || userGeneratedBeer,
-            ...(beerDefaultsPerLetter[letter.toLowerCase()] || []).filter((aBeer) => (
-                aBeer.beer_name !== beer?.beer_name && aBeer.brewer_name !== beer?.brewer_name
+            ...(beerDefaultsPerLetter[letter.toLowerCase()] || []).filter((beerDefault) => (
+                beerDefault.beer.beer_name !== beer?.beer_name && beerDefault.beer.brewer_name !== beer?.brewer_name
             ))
         ]
         return {
@@ -385,7 +388,7 @@ const BeerModal = () => {
 
     const onChangeBeerSearchQuery = (beerSearchQuery) => {
         if (!beerSearchQuery) {
-            dispatch(setBeerSearchResults(beerDefaultsPerLetter[letter].map(beer => { return { beer } })))
+            dispatch(setBeerSearchResults(beerDefaultsPerLetter[letter]))
         } else {
             dispatch(searchForBeer({
                 query: beerSearchQuery,
@@ -397,7 +400,7 @@ const BeerModal = () => {
     // Open the Modal if we have an openBeerIndex
     useEffect(() => {
         if (openBeerIdx !== -1) {
-            dispatch(setBeerSearchResults(beerDefaultsPerLetter[letter].map(beer => { return { beer } })))
+            dispatch(setBeerSearchResults(beerDefaultsPerLetter[letter]))
             onOpen()
         }
     }, [openBeerIdx, onOpen, letter, beerDefaultsPerLetter, dispatch])

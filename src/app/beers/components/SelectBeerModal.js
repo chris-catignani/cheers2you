@@ -99,7 +99,9 @@ const BeerUGCModalContent = ({isInBeerUGCMode, onUGCBeerCreated}) => {
     if (isInBeerUGCMode) {
         return (
             <BeerUGCInput 
-                onClick={(userGeneratedBeer) => {onUGCBeerCreated({userGeneratedBeer})}}
+                onClick={(userGeneratedBeer) => {
+                    onUGCBeerCreated({userGeneratedBeer: {beer: userGeneratedBeer}})
+                }}
             />
         )
     }
@@ -113,18 +115,17 @@ const BeerPickerModalContent = ({isInBeerUGCMode, letter, useHorizontalLayout, o
         return (<></>)
     }
 
-    const beerSearchResultsAsLetters = beerSearchResults.map( ({beer, matchedFields}, idx) => {
+    const beerSearchResultsAsLetters = beerSearchResults.map( (beer, idx) => {
         return (
             <Box key={`beer-picker-${idx}}`} width='100px' minW='100px'>
                 <Image
-                    src={beer?.beer_label_file}
-                    alt={beer?.beer_name + ' ' + beer?.beer_type}
+                    src={beer?.beer?.beer_label_file}
+                    alt={beer?.beer?.beer_name + ' ' + beer?.beer?.beer_type}
                     boxSize='100px'
                     fit='contain'
                     onClick={() => onBeerSelected({ beer })}/>
                 <Letter
                     beer={beer}
-                    matchedFields={matchedFields}
                     onClick={() => onBeerSelected({ beer })} />
             </Box>
         )
