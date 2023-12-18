@@ -2,46 +2,22 @@ import { debounce } from 'lodash-es';
 import { UploadManager } from '@bytescale/sdk';
 import download from 'downloadjs';
 import { createAsyncThunk } from '@reduxjs/toolkit';
-import { setBeerLetters, setLockedBeerLetterIdxs } from "./beersSlice";
 import { isAtoZ } from '@/lib/utils/utils';
-import { setPersonsName } from '../searchSlice';
-import { setChallengeModeSpinCount, setIsChallengeMode } from '../challengeModeSlice';
 import { pretendServerBeerSearch, pretendServerGetDefaultBeers } from './thunksServer';
 
+// this doesn't have to be async with the current implementation...
 export const generateBeerBanner = createAsyncThunk(
     'beers/generateBeerBanner',
-    async ({personsName, venueName}, {dispatch, getState}) => {
+    async ({personsName}) => {
 
-    const beerLetters = []
-
-    let beerDefaults = getState().beers.beerDefaultsPerLetter
-    if (Object.keys(beerDefaults).length === 0) {
-        beerDefaults = await pretendServerGetDefaultBeers(venueName)
-    }
-
-    Array.from(personsName).forEach( (letter, idx) => {
-        if(!isAtoZ(letter)) {
-            beerLetters.push({
-                letter, 
-                isSpecialCharacter: true,
-            })
-        } else {
-            const beerOptions = beerDefaults[letter.toLowerCase()]
-            beerLetters.push({
-                letter: letter.toUpperCase(),
-                userGeneratedBeer: {},
-                beer: beerOptions?.[0],
-            })
+    return Array.from(personsName).map(letter => {
+        return {
+            letter: letter.toUpperCase(),
+            isSpecialCharacter: !isAtoZ(letter),
+            userGeneratedBeer: {},
+            beer: {},
         }
     })
-
-    if (freshBanner) {
-        dispatch(setIsChallengeMode(false))
-        dispatch(setChallengeModeSpinCount(0))
-        dispatch(setLockedBeerLetterIdxs(new Array(beerLetters.length).fill(false)))
-    }
-    dispatch(setPersonsName(personsName))
-    dispatch(setBeerLetters(beerLetters))
 });
 
 export const uploadSocialMedia = createAsyncThunk(

@@ -1,6 +1,6 @@
 import { getFromSessionStorage, setInSessionStorage } from '@/lib/utils/sessionStorage';
 import { createSlice } from '@reduxjs/toolkit';
-import { downloadImage, generateBeerDefaults, searchForBeerThunk, uploadSocialMedia } from './thunks';
+import { downloadImage, generateBeerBanner, generateBeerDefaults, searchForBeerThunk, uploadSocialMedia } from './thunks';
 
 const initialState = {
     beerLetters: JSON.parse(getFromSessionStorage('beers.beerLetters', '[]')),
@@ -30,10 +30,6 @@ export const beersSlice = createSlice({
             state.beerLetters = action.payload
             setInSessionStorage('beers.beerLetters', JSON.stringify(action.payload))
         },
-        setLockedBeerLetterIdxs: (state, action) => {
-            state.lockedBeerLetterIdxs = action.payload
-            setInSessionStorage('beers.lockedBeerLetterIdxs', JSON.stringify(action.payload))
-        },
         toggleLockedBeerLetterIdx: (state, action) => {
             const tempLockedBeerLetterIdxs = [...state.lockedBeerLetterIdxs]
             tempLockedBeerLetterIdxs[action.payload] = !tempLockedBeerLetterIdxs[action.payload]
@@ -54,7 +50,14 @@ export const beersSlice = createSlice({
         },
     },
     extraReducers: (builder) => {
-        builder.addCase(downloadImage.pending, (state) => {
+        builder.addCase(generateBeerBanner.fulfilled, (state, action) => {
+            state.beerLetters = action.payload
+            setInSessionStorage('beers.beerLetters', JSON.stringify(action.payload))
+
+            state.lockedBeerLetterIdxs = new Array(action.payload.length).fill(false)
+            setInSessionStorage('beers.lockedBeerLetterIdxs', JSON.stringify(state.lockedBeerLetterIdxs))
+        })
+        .addCase(downloadImage.pending, (state) => {
             state.downloadGeneratedImageStatus = 'downloading';
         })
         .addCase(downloadImage.fulfilled, (state) => {
@@ -84,6 +87,6 @@ export const beersSlice = createSlice({
     }
 });
 
-export const { setBeerLetterAtIndex, setBeerLetters, setLockedBeerLetterIdxs, toggleLockedBeerLetterIdx, setBeerDefaultsPerLetter, setOpenBeerIdx, setBeerSearchResults, setUploadedSocialMediaData } = beersSlice.actions;
+export const { setBeerLetterAtIndex, setBeerLetters, toggleLockedBeerLetterIdx, setBeerDefaultsPerLetter, setOpenBeerIdx, setBeerSearchResults, setUploadedSocialMediaData } = beersSlice.actions;
 
 export default beersSlice.reducer;

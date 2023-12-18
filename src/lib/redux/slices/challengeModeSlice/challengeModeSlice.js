@@ -1,5 +1,6 @@
 import { getFromSessionStorage, setInSessionStorage } from '@/lib/utils/sessionStorage';
 import { createSlice } from '@reduxjs/toolkit';
+import { generateBeerBanner } from '../beersSlice';
 
 const initialState = {
     isChallengeMode: getFromSessionStorage('challengeMode.isChallangeMode', "false") === "true",
@@ -19,17 +20,21 @@ export const challengeModeSlice = createSlice({
             state.challengeModeSpinCount = state.challengeModeSpinCount + 1
             setInSessionStorage('challengeMode.challengeModeSpinCount', state.challengeModeSpinCount)
         },
-        setChallengeModeSpinCount: (state, action) => {
-            state.challengeModeSpinCount = action.payload
-            setInSessionStorage('challengeMode.challengeModeSpinCount', action.payload)
-        },
         setIsChallengeModeExplainerDisplayed: (state, action) => {
             state.isChallengeModeExplainerDisplayed = action.payload
         },
-
+    },
+    extraReducers: (builder) => {
+        builder.addCase(generateBeerBanner.fulfilled, (state) => {
+            state.isChallengeMode = false
+            setInSessionStorage('challengeMode.isChallangeMode', false)
+            
+            state.challengeModeSpinCount = 0
+            setInSessionStorage('challengeMode.challengeModeSpinCount', 0)
+        })
     }
 });
 
-export const { setIsChallengeMode, incrementChallengeModeSpinCount, setChallengeModeSpinCount, setIsChallengeModeExplainerDisplayed } = challengeModeSlice.actions;
+export const { setIsChallengeMode, incrementChallengeModeSpinCount, setIsChallengeModeExplainerDisplayed } = challengeModeSlice.actions;
 
 export default challengeModeSlice.reducer;
