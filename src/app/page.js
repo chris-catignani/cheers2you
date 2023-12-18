@@ -27,11 +27,13 @@ export default function Page() {
     }
   }, [dispatch, venues])
 
-  if (!venueName && venues?.[0]) {
-    const newSearchParams = new URLSearchParams(searchParams)
-    newSearchParams.set('venue', venues?.[0]?.venueUrl)
-    router.replace('/?' + newSearchParams)
-  }
+  useEffect(() => {
+    if (!venueName && venues?.[0]) {
+      const newSearchParams = new URLSearchParams(searchParams)
+      newSearchParams.set('venue', venues?.[0]?.venueUrl)
+      router.replace('/?' + newSearchParams)
+    }
+  }, [router, venueName, venues, searchParams])
 
   return (
     <Box m='3'>
