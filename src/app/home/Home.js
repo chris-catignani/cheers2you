@@ -5,6 +5,7 @@ import { useEffect } from "react"
 import { useDispatch, useSelector } from "react-redux"
 import { Box, Button, Container, Flex, Heading, Image, Input, Text, List, UnorderedList, OrderedList, ListItem, ListIcon } from "@chakra-ui/react"
 import { useRouter, useSearchParams } from 'next/navigation'
+import { upperCase } from "lodash-es"
 
 export const Home = ({venueName}) => {
     const dispatch = useDispatch();
@@ -58,7 +59,10 @@ export const Home = ({venueName}) => {
                     <Input
                         width='100%'
                         placeholder='Type a name'
+                        _placeholder={{letterSpacing:'normal', textTransform:'none'}}
+                        letterSpacing='4px'
                         textAlign='left'
+                        textTransform='upperCase'
                         variant='dark'
                         value={personsName}
                         onChange={e => dispatch(setPersonsName(e.target.value))}
