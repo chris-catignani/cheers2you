@@ -97,7 +97,7 @@ export const BeerSlotMachine = ({ beerOptionsPerReel, lockedReelIndexes, spin, s
 }
 
 const BeerImages = ({ beers, size }) => {
-    const buildImage = (beer, idx) => (
+    const buildImage = ({beer}, idx) => (
         <Image
             key={`slot-reel-${idx}-option-${idx}`}
             src={beer.beer_label_file}

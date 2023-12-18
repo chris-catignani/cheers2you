@@ -194,8 +194,8 @@ const BeerLetters = ({ generatedPicRef, isSpinning, setSpinning }) => {
     const beerOptionsPerSlotReel = beerLetters.map( ({letter, beer, userGeneratedBeer, isSpecialCharacter}) => {
         const beers = isSpecialCharacter ? [] : [
             beer || userGeneratedBeer,
-            ...(beerDefaultsPerLetter[letter.toLowerCase()] || []).filter((aBeer) => (
-                aBeer.beer_name !== beer?.beer_name && aBeer.brewer_name !== beer?.brewer_name
+            ...(beerDefaultsPerLetter[letter.toLowerCase()] || []).filter((beerDefault) => (
+                beerDefault.beer.beer_name !== beer?.beer_name && beerDefault.beer.brewer_name !== beer?.brewer_name
             ))
         ]
         return {
@@ -388,7 +388,7 @@ const BeerModal = () => {
 
     const onChangeBeerSearchQuery = (beerSearchQuery) => {
         if (!beerSearchQuery) {
-            dispatch(setBeerSearchResults(beerDefaultsPerLetter[letter].map(beer => { return { beer } })))
+            dispatch(setBeerSearchResults(beerDefaultsPerLetter[letter]))
         } else {
             dispatch(searchForBeer({
                 query: beerSearchQuery,
@@ -400,7 +400,7 @@ const BeerModal = () => {
     // Open the Modal if we have an openBeerIndex
     useEffect(() => {
         if (openBeerIdx !== -1) {
-            dispatch(setBeerSearchResults(beerDefaultsPerLetter[letter].map(beer => { return { beer } })))
+            dispatch(setBeerSearchResults(beerDefaultsPerLetter[letter]))
             onOpen()
         }
     }, [openBeerIdx, onOpen, letter, beerDefaultsPerLetter, dispatch])

@@ -100,7 +100,7 @@ const formatBeers = (beers) => {
 const getBeerDefaultsPerLetter = (beers) => {
     const sortProps = ['beerNameFirstLetterMatches', 'brewerFirstLetterMatches', 'beerTypeFirstLetterMatches', 'brewerNameSecondWordMatches', 'beerNameSecondWordMatches', 'beerNameThirdWordMatches', 'beerNameFourthWordMatches']
     const ariclesToIgnore = new Set(['a', 'it', 'an', 'the', 'of', 'to', 'in', 'on', 'for', 'or', 'to', 'no', 'at', 'are'])
-    const alphaRegex = new RegExp(/\b([a-z]\w*)/, 'g')
+    const alphaRegex = new RegExp(/\b[a-z]\w*/, 'g')
 
     const getAlphaWord = (string, wordIdx, ignoreArticles) => {
         const wordMatches = [...string.matchAll(alphaRegex)]
@@ -109,10 +109,20 @@ const getBeerDefaultsPerLetter = (beers) => {
         }
 
         if (!ignoreArticles) {
-            return wordMatches[wordIdx][0]
+            return {
+                word: wordMatches[wordIdx][0],
+                index: wordMatches[wordIdx]['index'],
+            }
         } else {
             const wordMatchesNoArticles = wordMatches.filter(wordMatch => !ariclesToIgnore.has(wordMatch[0]))
-            return wordIdx < wordMatchesNoArticles.length ? wordMatchesNoArticles[wordIdx][0] : undefined
+            if (wordIdx >= wordMatchesNoArticles.length) {
+                return undefined
+            }
+
+            return {
+                word: wordMatchesNoArticles[wordIdx][0],
+                index: wordMatchesNoArticles[wordIdx]['index'],
+            }
         }
     }
     
@@ -127,9 +137,17 @@ const getBeerDefaultsPerLetter = (beers) => {
         })
     }
 
-    const assignBucket = (beerField, wordIdx, listToAddTo, beer, ignoreArticles) => {
+    const assignBucket = (beerField, beerFieldName, wordIdx, listToAddTo, beer, ignoreArticles) => {
         const beerWordMatch = getAlphaWord(beerField, wordIdx, ignoreArticles)
-        if (beerWordMatch) beerSortOrderLists[beerWordMatch.charAt(0)][listToAddTo].push(beer)
+        if (beerWordMatch) {
+            beerSortOrderLists[beerWordMatch.word.charAt(0)][listToAddTo].push({
+                beer,
+                matchedFields: [{
+                    field: beerFieldName,
+                    index: beerWordMatch.index
+                }]
+            })
+        }
     }
 
     // 2. populate sort buckets for each letter
@@ -138,13 +156,13 @@ const getBeerDefaultsPerLetter = (beers) => {
         const brewerName = beer.brewer_name.toLowerCase()
         const beerType = beer.beer_type.toLowerCase()
 
-        assignBucket(beerName, 0, 'beerNameFirstLetterMatches', beer, false)
-        assignBucket(brewerName, 0, 'brewerFirstLetterMatches', beer, false)
-        assignBucket(beerType, 0, 'beerTypeFirstLetterMatches', beer, false)
-        assignBucket(brewerName, 1, 'brewerNameSecondWordMatches', beer, true)
-        assignBucket(beerName, 1, 'beerNameSecondWordMatches', beer, true)
-        assignBucket(beerName, 2, 'beerNameThirdWordMatches', beer, true)
-        assignBucket(beerName, 3, 'beerNameFourthWordMatches', beer, true)
+        assignBucket(beerName, 'beer_name', 0, 'beerNameFirstLetterMatches', beer, false)
+        assignBucket(brewerName, 'brewer_name', 0, 'brewerFirstLetterMatches', beer, false)
+        assignBucket(beerType, 'beer_type', 0, 'beerTypeFirstLetterMatches', beer, false)
+        assignBucket(brewerName, 'brewer_name', 1, 'brewerNameSecondWordMatches', beer, true)
+        assignBucket(beerName, 'beer_name', 1, 'beerNameSecondWordMatches', beer, true)
+        assignBucket(beerName, 'beer_name', 2, 'beerNameThirdWordMatches', beer, true)
+        assignBucket(beerName, 'beer_name', 3, 'beerNameFourthWordMatches', beer, true)
     })
 
     // 3. combine the sort buckets into a single list of beers
@@ -225,7 +243,10 @@ const fuseSearch = (query, venueName, {limit = 10} = {}) => {
         })
 
         // currently only returning one field
-        return [ biggestMatch['match']['key'] ]
+        return [{
+            field: biggestMatch['match']['key'],
+            index: biggestMatch['match']['indices'][0][0],
+        }]
     }
 
     const fuse = fusesByVenue[venueName]?.fuse || fusesByVenue[beerLists[0].urlParam].fuse
