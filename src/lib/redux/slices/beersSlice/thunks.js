@@ -1,4 +1,4 @@
-import { debounce, sample } from 'lodash-es';
+import { debounce } from 'lodash-es';
 import { UploadManager } from '@bytescale/sdk';
 import download from 'downloadjs';
 import { createAsyncThunk } from '@reduxjs/toolkit';
@@ -32,7 +32,7 @@ export const generateBeerBanner = createAsyncThunk(
             beerLetters.push({
                 letter: letter.toUpperCase(),
                 userGeneratedBeer: {},
-                beer: sample(beerOptions),
+                beer: beerOptions?.[0],
             })
         }
     })
