@@ -99,8 +99,7 @@ const BeersHeader = ({ onSpinUnlockedBeersPressed, onChallengeModePressed, share
         headerContent = (
             <Button
                 width='sm'
-                variant='primary'
-                background='black'
+                variant='dark'
                 onClick={onSpinUnlockedBeersPressed}
                 isLoading={areBeersSpinning}
                 isDisabled={maxSpinsReached}
@@ -185,9 +184,10 @@ const BeerLetters = ({ generatedPicRef, showDefaultBeer }) => {
 
             const maxSpinsReached = challengeModeSpinCount >= MAX_CHALLANEGE_MODE_SPINS
             const lockButtonText = lockedBeerIdxs[idx] ? 'Unlock' : 'Lock Beer'
+            const buttonVariant = lockedBeerIdxs[idx] ? 'secondary' : 'primary'
             lockButtons.push(
                 <Button
-                    variant='primary'
+                    variant={buttonVariant}
                     width={letterImageSize}
                     size='sm'
                     mx='5'
