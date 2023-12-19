@@ -64,8 +64,8 @@ export const BeerSlotMachine = ({ beerOptionsPerReel, lockedReelIndexes, randomi
             return ''
         }
 
-        const minY = (beerOptionsPerReel[idx].beers.length) * 140
-        const duration = (beerOptionsPerReel[idx].beers.length) * 0.1
+        const minY = (beerOptionsPerReel[idx].beers.length) * 130 //140
+        const duration = (beerOptionsPerReel[idx].beers.length) * 0.15 //0.1
         
         const slotLoop = keyframes({
             '0%': {
