@@ -78,7 +78,7 @@ export const BeerSlotMachine = ({ beerOptionsPerReel, lockedReelIndexes, randomi
         return `${slotLoop} ${duration}s linear infinite`
     }
 
-    const BeerDescription = ({beer, idx}) => {
+    const BeerDescription = ({beer, letter, idx}) => {
         if (Object.keys(beer || {}).length !== 0) {
             return (
                 <Letter beer={!spinningReels.includes(idx) && beer} />
@@ -87,7 +87,7 @@ export const BeerSlotMachine = ({ beerOptionsPerReel, lockedReelIndexes, randomi
             return (
                 <Flex my='8' height='100%' alignItems='center'>
                     <Text>
-                        Tap to choose a beer
+                        Pick a beer for <Box as='span' color='orangered'>{letter}</Box>
                     </Text>
                 </Flex>
             )
@@ -96,7 +96,7 @@ export const BeerSlotMachine = ({ beerOptionsPerReel, lockedReelIndexes, randomi
 
     return (
         <Flex justifyContent='safe center' overflowX='auto'>
-            {beerOptionsPerReel.map(({ beers, isSpecialCharacter }, idx) => {
+            {beerOptionsPerReel.map(({ beers, letter, isSpecialCharacter }, idx) => {
                 const size = isSpecialCharacter ? specialCharacterSize : letterImageSize
                 return (
                     <Flex key={`slot-reel-${idx}`} mx='5' flexDirection='column' width={size} textAlign='center' onClick={() => onBeerClicked(idx)}>
@@ -105,7 +105,7 @@ export const BeerSlotMachine = ({ beerOptionsPerReel, lockedReelIndexes, randomi
                                 <BeerImages beers={beers} size={size} />
                             </Box>
                         </Box>
-                        <BeerDescription beer={beers[0]} idx={idx} />
+                        <BeerDescription beer={beers[0]} letter={letter} idx={idx} />
                     </Flex>
                 )
             })}

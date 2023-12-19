@@ -216,6 +216,7 @@ const BeerLetters = ({ generatedPicRef, showDefaultBeer }) => {
         }
 
         return {
+            letter,
             isSpecialCharacter,
             beers: beers
         }
