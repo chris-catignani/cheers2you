@@ -110,17 +110,17 @@ const BeersHeader = ({ onSpinUnlockedBeersPressed, onChallengeModePressed, share
             </Button>
         )
     } else {
+        /* <Text as="span" whiteSpace='nowrap'>
+        Tap the suggested beers to choose your own.
+        </Text>*/
         headerContent = (
             <Heading as='h5' size='sm' textAlign='center'>
                 <Flex justifyContent='center' flexDirection='column'>
-                    <Text as="span" whiteSpace='nowrap'>
-                        Tap the suggested beers to choose your own.
-                    </Text>
                     <Text as="span" mt='1' whiteSpace='nowrap'>
                         <Text as="span" _after={{content: '" "'}}>
                             Feeling frisky? Try the
                         </Text>
-                        <Button onClick={onChallengeModePressed} variant='link'>Beer Spin Challenge</Button>
+                        <Button onClick={onChallengeModePressed} variant='link' textDecoration='underline'>Beer Spin Challenge</Button>
                     </Text>
                 </Flex>
             </Heading>
