@@ -80,7 +80,7 @@ export const Home = ({venueName}) => {
                         Celebrate birthdays, graduations, engagements, births, marriages etc.
                     </Text>
                     <Text mt='2'>
-                        Share the badge on your socials or use it to create a memorable gift, card, plaque, poster, t-shirt, anything!
+                        Share the badge on your socials and use it to create a personalised gift, card, plaque, poster, t-shirt, anything!
                     </Text>
                 </Box>
                 <Box border='1px' borderColor='lightgray'>
