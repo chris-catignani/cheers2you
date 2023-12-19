@@ -34,7 +34,7 @@ export const Letter = ({ beer: {beer, matchedFields}, onClick } = {}) => {
         }
 
         return (
-            <Text maxHeight='2.3em' overflow='hidden' lineHeight='1.1em' height='2.3em' fontFamily={`'Inter Tight Variable', sans-serif`}>
+            <Text maxHeight='2.3em' lineHeight='1.1em' height='2.3em' noOfLines='2' fontFamily={`'Inter Tight Variable', sans-serif`}>
                 {textContent}
             </Text>
         )
