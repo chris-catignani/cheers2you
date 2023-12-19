@@ -29,17 +29,22 @@ export const Beers = ({ venueName }) => {
 
     const [isLandscapePhone] = useMediaQuery('(max-height: 450px)')
     const [isSpinning, setSpinning] = useState(false);
+    const [showDefaultBeer, setShowDefaultBeers] = useState(false)
 
     // CHRIS: Possibly should add an ignore flag in useEffects above too?
     useEffect(() => {
         let ignore = false;
-        if (!ignore) setSpinning(true)
+        if (!ignore) {
+            setShowDefaultBeers(true)
+            setSpinning(true)
+        }
         return () => ignore = true
-    },[setSpinning]);
+    }, [setSpinning, setShowDefaultBeers]);
 
     const generatedPicRef = useRef(null)
 
     const spinUnlockedBeers = () => {
+        setShowDefaultBeers(false)
         setSpinning(true)
         dispatch(incrementChallengeModeSpinCount())
     }
@@ -62,6 +67,7 @@ export const Beers = ({ venueName }) => {
                 isLoading={isSpinning} />
             <BeerLetters
                 isSpinning={isSpinning}
+                showDefaultBeer={showDefaultBeer}
                 setSpinning={setSpinning}
                 generatedPicRef={generatedPicRef} />
             <ChallengeModeModal
@@ -131,7 +137,7 @@ const BeersHeader = ({ onSpinUnlockedBeersPressed, onChallengeModePressed, share
 }
 
 // TODO refactor this. Use a helper to do the layout stuff, pass in react components
-const BeerLetters = ({ generatedPicRef, isSpinning, setSpinning }) => {
+const BeerLetters = ({ generatedPicRef, isSpinning, showDefaultBeer, setSpinning }) => {
     const dispatch = useDispatch();
 
     const isChallengeMode = useSelector(selectIsChallangeMode);
@@ -198,6 +204,11 @@ const BeerLetters = ({ generatedPicRef, isSpinning, setSpinning }) => {
                 beerDefault.beer.beer_name !== beer?.beer_name && beerDefault.beer.brewer_name !== beer?.brewer_name
             ))
         ]
+
+        if(!showDefaultBeer && Object.keys(beers[0]).length === 0) {
+            beers.shift()
+        }
+
         return {
             isSpecialCharacter,
             beers: beers
@@ -240,6 +251,7 @@ const BeerLetters = ({ generatedPicRef, isSpinning, setSpinning }) => {
                         <BeerSlotMachine
                             spin={isSpinning}
                             spinMode={isChallengeMode ? 'individual' : 'all'}
+                            randomize={isChallengeMode}
                             onSpinningFinished={onSpinningFinished}
                             beerOptionsPerReel={beerOptionsPerSlotReel}
                             lockedReelIndexes={lockedBeerIdxs}
@@ -247,7 +259,6 @@ const BeerLetters = ({ generatedPicRef, isSpinning, setSpinning }) => {
                             specialCharacterSize={specialCharacterSize}
                             onBeerClicked={beerClicked} />
                     </Box>
-
                 </Box>
             </Box>
         </Flex>

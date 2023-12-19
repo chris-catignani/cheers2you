@@ -41,7 +41,7 @@ export const Letter = ({ beer: {beer, matchedFields}, onClick } = {}) => {
     }
 
     return (
-        <Box paddingTop='2' paddingBottom='2' textAlign='center' onClick={onClick} fontFamily={`'Inter Tight Variable', sans-serif`}>
+        <Box my='2' textAlign='center' onClick={onClick} fontFamily={`'Inter Tight Variable', sans-serif`}>
             {buildTextField('brewer_name')}
             {buildTextField('beer_name', 2)}
             {buildTextField('beer_type', 2)}

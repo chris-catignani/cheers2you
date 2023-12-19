@@ -1,9 +1,9 @@
 import { useEffect, useState } from "react";
-import { Box, Flex, Image, keyframes } from "@chakra-ui/react";
+import { Box, Flex, Image, Text, keyframes } from "@chakra-ui/react";
 import { Letter } from "./Letter";
 import { getFallbackImageUrl } from "@/lib/utils/ui";
 
-export const BeerSlotMachine = ({ beerOptionsPerReel, lockedReelIndexes, spin, spinMode, onSpinningFinished, onBeerClicked, letterImageSize, specialCharacterSize }) => {
+export const BeerSlotMachine = ({ beerOptionsPerReel, lockedReelIndexes, randomize, spin, spinMode, onSpinningFinished, onBeerClicked, letterImageSize, specialCharacterSize }) => {
 
     useEffect(() => {
         if (spin) {
@@ -18,8 +18,8 @@ export const BeerSlotMachine = ({ beerOptionsPerReel, lockedReelIndexes, spin, s
             if (lockedReelIndexes[idx] || isSpecialCharacter) {
                 rollResults.push(beers[0])
             } else {
-                const randomOption = Math.floor(Math.random() * beers.length);
-                rollResults.push(beers[randomOption])
+                const beerIdx = randomize ? Math.floor(Math.random() * beers.length) : 0
+                rollResults.push(beers[beerIdx])
                 newSpinningReels.push(idx)
             }
             return [newSpinningReels, rollResults]
@@ -78,18 +78,34 @@ export const BeerSlotMachine = ({ beerOptionsPerReel, lockedReelIndexes, spin, s
         return `${slotLoop} ${duration}s linear infinite`
     }
 
+    const BeerDescription = ({beer, idx}) => {
+        if (Object.keys(beer || {}).length !== 0) {
+            return (
+                <Letter beer={!spinningReels.includes(idx) && beer} />
+            )
+        } else {
+            return (
+                <Flex my='2' height='100%' alignItems='center'>
+                    <Text>
+                        Tap to select your beer!
+                    </Text>
+                </Flex>
+            )
+        }
+    }
+
     return (
         <Flex justifyContent='safe center' overflowX='auto'>
             {beerOptionsPerReel.map(({ beers, isSpecialCharacter }, idx) => {
                 const size = isSpecialCharacter ? specialCharacterSize : letterImageSize
                 return (
                     <Flex key={`slot-reel-${idx}`} mx='5' flexDirection='column' width={size} textAlign='center' onClick={() => onBeerClicked(idx)}>
-                        <Box height={size} overflow='hidden'>
+                        <Box height={size} minHeight={size} overflow='hidden'>
                             <Box mt='-40px' animation={generateAnimationProperty(idx)}>
                                 <BeerImages beers={beers} size={size} />
                             </Box>
                         </Box>
-                        <Letter beer={!spinningReels.includes(idx) && beers?.[0]} />
+                        <BeerDescription beer={beers[0]} idx={idx} />
                     </Flex>
                 )
             })}
@@ -103,9 +119,10 @@ const BeerImages = ({ beers, size }) => {
             key={`slot-reel-${idx}-option-${idx}`}
             src={beer?.beer_label_file}
             fallbackSrc={getFallbackImageUrl()}
-            alt={beer?.beer_name + ' ' + beer?.beer_type}
+            alt={beer ? `${beer.beer_name} ${beer.beer_type}` : 'choose your beer'}
             boxSize={size}
             my='40px'
+            objectPosition={!beer ? 'right' : ''} // the default image is "left heavy", so shift it right
             fit='contain' />
     )
 

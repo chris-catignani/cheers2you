@@ -131,13 +131,5 @@
     "beer_label_file_big": "https://assets.untappd.com/site/beer_logos_hd/beer-2118515_2d032_hd.jpeg",
     "brewer_name": "Aspall",
     "brewer_logo_file_big": "https://assets.untappd.com/site/brewery_logos_hd/brewery-3468_4ee08_hd.jpeg"
-},
-   "X1": {
-    "beer_name": "choose",
-    "beer_type": "a beer",
-    "beer_label_file_big": "/c2y_orange_mug_logo.png",
-    "brewer_name": "Tap to",
-    "brewer_logo_file_big": "/c2y_orange_mug_logo.png"
   }
 }
-
