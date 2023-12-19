@@ -1,6 +1,5 @@
 import { debounce } from 'lodash-es';
 import { UploadManager } from '@bytescale/sdk';
-import download from 'downloadjs';
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import { isAtoZ } from '@/lib/utils/utils';
 import { pretendServerBeerSearch, pretendServerGetDefaultBeers } from './thunksServer';
@@ -59,15 +58,6 @@ export const uploadSocialMedia = createAsyncThunk(
             fileId,
             fileUrl,
         }
-    }
-)
-
-export const downloadImage = createAsyncThunk(
-    'beers/downloadImage',
-    async (canvasPromise) => {
-        const canvas = await canvasPromise
-        const dataUrl = canvas.toDataURL('image/jpeg')
-        download(dataUrl, 'my-pic.jpg');
     }
 )
 

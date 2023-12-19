@@ -2,10 +2,9 @@
 
 import { useDispatch, useSelector } from 'react-redux';
 import React, { useEffect, useRef, useState } from 'react';
-import { DownloadIcon } from '@chakra-ui/icons';
 import { SocialShareModal } from './components/SocialShareModal';
 import { SelectBeerModal } from './components/SelectBeerModal';
-import { downloadImage, searchForBeer, selectBeerLetters, selectBeerSearchResults, selectDownloadGeneratedImageStatus, selectLockedBeerLetterIdxs, selectOpenBeerIdx, setBeerLetterAtIndex, setBeerSearchResults, setOpenBeerIdx, toggleLockedBeerLetterIdx, uploadSocialMedia, selectUploadSocialMediaStatus, selectUploadedSocialMediaData, setUploadedSocialMediaData, generateBeerDefaults, selectBeerDefaultsPerLetter, selectPersonsName, selectIsChallangeMode, selectIsChallengeModeExplainerDisplayed, setIsChallengeModeExplainerDisplayed, setIsChallengeMode, incrementChallengeModeSpinCount, selectChallengeModeSpinCount, selectVenueName, setBeerLetters, selectAreBeersSpinning, setBeersSpinning } from '@/lib/redux';
+import { searchForBeer, selectBeerLetters, selectBeerSearchResults, selectLockedBeerLetterIdxs, selectOpenBeerIdx, setBeerLetterAtIndex, setBeerSearchResults, setOpenBeerIdx, toggleLockedBeerLetterIdx, uploadSocialMedia, selectUploadSocialMediaStatus, selectUploadedSocialMediaData, setUploadedSocialMediaData, generateBeerDefaults, selectBeerDefaultsPerLetter, selectPersonsName, selectIsChallangeMode, selectIsChallengeModeExplainerDisplayed, setIsChallengeModeExplainerDisplayed, setIsChallengeMode, incrementChallengeModeSpinCount, selectChallengeModeSpinCount, selectVenueName, setBeerLetters, selectAreBeersSpinning, setBeersSpinning } from '@/lib/redux';
 import { Box, Button, ButtonGroup, Container, Flex, Heading, IconButton, Show, Text, useDisclosure, useMediaQuery } from '@chakra-ui/react';
 import { getSocialMediaShareUrl } from '@/lib/utils/utils';
 import html2canvas from 'html2canvas';
@@ -275,19 +274,7 @@ const BeerLetters = ({ generatedPicRef, showDefaultBeer }) => {
 const ShareButtons = ({ generatedPicRef }) => {
     const dispatch = useDispatch();
     const personsName = useSelector(selectPersonsName)
-    const downloadGeneratedImageStatus = useSelector(selectDownloadGeneratedImageStatus);
     const uploadSocialMediaStatus = useSelector(selectUploadSocialMediaStatus)
-
-    const donwloadOutput = async () => {
-        const node = generatedPicRef.current;
-        const canvasPromise = html2canvas(node, {
-            backgroundColor: 'white',
-            width: node.scrollWidth,
-            height: node.scrollHeight,
-            proxy: '/beers/api/imageProxy',
-        })
-        dispatch(downloadImage(canvasPromise))
-    }
 
     const uploadOutput = async () => {
         const node = generatedPicRef.current;
@@ -308,10 +295,6 @@ const ShareButtons = ({ generatedPicRef }) => {
     return (
         <ButtonGroup>
             <Button isLoading={uploadSocialMediaStatus === 'uploading'} onClick={() => uploadOutput()}>Share</Button>
-            <IconButton
-                isLoading={downloadGeneratedImageStatus === 'downloading'}
-                onClick={() => donwloadOutput()}
-                icon={<DownloadIcon />} />
         </ButtonGroup>
     )
 }
@@ -355,6 +338,7 @@ const ShareModal = () => {
     const personsName = useSelector(selectPersonsName)
     const uploadedSocialMediaData = useSelector(selectUploadedSocialMediaData)
     const shareUrl = getSocialMediaShareUrl(uploadedSocialMediaData['fileId'])
+    const imageUrl = uploadedSocialMediaData['fileUrl']
 
     // Open the Modal if we have uploaded the image data
     useEffect(() => {
@@ -372,6 +356,7 @@ const ShareModal = () => {
             isOpen={isOpen}
             onClose={clearDataOnClose}
             shareUrl={shareUrl}
+            imageUrl={imageUrl}
             personsName={personsName}
         />
     )

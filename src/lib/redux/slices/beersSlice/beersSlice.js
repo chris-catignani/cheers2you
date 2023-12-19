@@ -1,6 +1,6 @@
 import { getFromSessionStorage, setInSessionStorage } from '@/lib/utils/sessionStorage';
 import { createSlice } from '@reduxjs/toolkit';
-import { downloadImage, generateBeerBanner, generateBeerDefaults, searchForBeerThunk, uploadSocialMedia } from './thunks';
+import { generateBeerBanner, generateBeerDefaults, searchForBeerThunk, uploadSocialMedia } from './thunks';
 
 const initialState = {
     beerLetters: JSON.parse(getFromSessionStorage('beers.beerLetters', '[]')),
@@ -11,7 +11,6 @@ const initialState = {
     beerSearchResults: [],
     uploadedSocialMediaData: {},
     
-    downloadGeneratedImageStatus: '',
     uploadSocialMediaStatus: '',
 };
 
@@ -49,9 +48,6 @@ export const beersSlice = createSlice({
         setUploadedSocialMediaData: (state, action) => {
             state.uploadedSocialMediaData = action.payload
         },
-        setDownloadGeneratedImageStatus: (state, action) => {
-            state.downloadGeneratedImageStatus = action.payload
-        },
     },
     extraReducers: (builder) => {
         builder.addCase(generateBeerBanner.fulfilled, (state, action) => {
@@ -60,15 +56,6 @@ export const beersSlice = createSlice({
 
             state.lockedBeerLetterIdxs = new Array(action.payload.length).fill(false)
             setInSessionStorage('beers.lockedBeerLetterIdxs', JSON.stringify(state.lockedBeerLetterIdxs))
-        })
-        .addCase(downloadImage.pending, (state) => {
-            state.downloadGeneratedImageStatus = 'downloading';
-        })
-        .addCase(downloadImage.fulfilled, (state) => {
-            state.downloadGeneratedImageStatus = ''
-        })
-        .addCase(downloadImage.rejected, (state) => {
-            state.downloadGeneratedImageStatus = ''
         })
         .addCase(uploadSocialMedia.pending, (state) => {
             state.uploadSocialMediaStatus = 'uploading';
