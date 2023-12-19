@@ -1,3 +1,3 @@
 export const getFallbackImageUrl = () => {
-    return 'c2y_orange_mug_logo_sml.png'
+    return 'c2y_orange_mug_logo_sml_offset.png'
 }
