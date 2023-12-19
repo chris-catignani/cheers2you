@@ -85,9 +85,9 @@ export const BeerSlotMachine = ({ beerOptionsPerReel, lockedReelIndexes, randomi
             )
         } else {
             return (
-                <Flex my='2' height='100%' alignItems='center'>
+                <Flex my='8' height='100%' alignItems='center'>
                     <Text>
-                        Tap to select your beer!
+                        Tap to choose a beer
                     </Text>
                 </Flex>
             )
