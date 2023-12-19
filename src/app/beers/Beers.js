@@ -249,7 +249,7 @@ const BeerLetters = ({ generatedPicRef, showDefaultBeer }) => {
             {/* padding defined below so that border of the element inside it shows in the screencapture */}
             <Box mt='1' p='1' ref={generatedPicRef}>
                 {/* padding top here to ensure the border is not directly on top of the letters */}
-                <Box pt='3' border='3px double black'>
+                <Box pt='3' boxShadow='5px 5px 5px darkgrey' border='4px double black'>
                     <Flex justifyContent='safe center'>
                         {headers}
                     </Flex>
