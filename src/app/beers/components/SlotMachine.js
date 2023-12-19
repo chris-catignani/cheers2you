@@ -122,7 +122,6 @@ const BeerImages = ({ beers, size }) => {
             alt={beer ? `${beer.beer_name} ${beer.beer_type}` : 'choose your beer'}
             boxSize={size}
             my='40px'
-            objectPosition={!beer ? 'right' : ''} // the default image is "left heavy", so shift it right
             fit='contain' />
     )
 
