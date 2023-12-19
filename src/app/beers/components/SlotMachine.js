@@ -99,7 +99,7 @@ export const BeerSlotMachine = ({ beerOptionsPerReel, lockedReelIndexes, randomi
             {beerOptionsPerReel.map(({ beers, letter, isSpecialCharacter }, idx) => {
                 const size = isSpecialCharacter ? specialCharacterSize : letterImageSize
                 return (
-                    <Flex key={`slot-reel-${idx}`} mx='5' flexDirection='column' width={size} textAlign='center' onClick={() => onBeerClicked(idx)}>
+                    <Flex key={`slot-reel-${idx}`} mx='5' flexDirection='column' width={size} textAlign='center' cursor='pointer' onClick={() => onBeerClicked(idx)}>
                         <Box height={size} minHeight={size} overflow='hidden'>
                             <Box mt='-40px' animation={generateAnimationProperty(idx)}>
                                 <BeerImages beers={beers} size={size} />

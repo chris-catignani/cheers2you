@@ -117,7 +117,7 @@ const BeerPickerModalContent = ({isInBeerUGCMode, letter, useHorizontalLayout, o
 
     const beerSearchResultsAsLetters = beerSearchResults.map( (beer, idx) => {
         return (
-            <Box key={`beer-picker-${idx}}`} width='100px' minW='100px'>
+            <Box key={`beer-picker-${idx}}`} width='100px' minW='100px' cursor='pointer'>
                 <Image
                     src={beer?.beer?.beer_label_file}
                     fallbackSrc={getFallbackImageUrl()}
