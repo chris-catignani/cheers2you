@@ -1,4 +1,4 @@
-import { Box, Text } from "@chakra-ui/react"
+import { Box, Flex, Text } from "@chakra-ui/react"
 
 export const Letter = ({ beer: {beer, matchedFields}, onClick } = {}) => {    
 
@@ -7,7 +7,7 @@ export const Letter = ({ beer: {beer, matchedFields}, onClick } = {}) => {
      * Text has a method noOfLines which uses webkit-box under the hood.
      * our library which captures the images does not support webkit-box. So it renders funny in downloads/screenshots
      */
-    const buildTextField = (fieldName, mt=0) => {
+    const LetterText = ({fieldName}) => {
         let textContent = beer?.[fieldName]
 
         // if the field should be bolded
@@ -34,17 +34,17 @@ export const Letter = ({ beer: {beer, matchedFields}, onClick } = {}) => {
         }
 
         return (
-            <Text maxHeight='2.3em' overflow='hidden' lineHeight='1.1em' height='2.3em' mt={mt}>
+            <Text maxHeight='2.3em' overflow='hidden' lineHeight='1.1em' height='2.3em' fontFamily={`'Inter Tight Variable', sans-serif`}>
                 {textContent}
             </Text>
         )
     }
 
     return (
-        <Box my='2' textAlign='center' onClick={onClick} fontFamily={`'Inter Tight Variable', sans-serif`}>
-            {buildTextField('brewer_name')}
-            {buildTextField('beer_name', 2)}
-            {buildTextField('beer_type', 2)}
-        </Box>
+        <Flex my='2' textAlign='center' flexDirection='column' gap='2' onClick={onClick}>
+            <LetterText fieldName='brewer_name' />
+            <LetterText fieldName='beer_name' />
+            <LetterText fieldName='beer_type' />
+        </Flex>
     )
 }

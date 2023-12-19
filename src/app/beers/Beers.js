@@ -5,7 +5,7 @@ import React, { useEffect, useRef, useState } from 'react';
 import { DownloadIcon } from '@chakra-ui/icons';
 import { SocialShareModal } from './components/SocialShareModal';
 import { SelectBeerModal } from './components/SelectBeerModal';
-import { downloadImage, searchForBeer, selectBeerLetters, selectBeerSearchResults, selectDownloadGeneratedImageStatus, selectLockedBeerLetterIdxs, selectOpenBeerIdx, setBeerLetterAtIndex, setBeerSearchResults, setOpenBeerIdx, toggleLockedBeerLetterIdx, uploadSocialMedia, selectUploadSocialMediaStatus, selectUploadedSocialMediaData, setUploadedSocialMediaData, generateBeerDefaults, selectBeerDefaultsPerLetter, selectPersonsName, selectIsChallangeMode, selectIsChallengeModeExplainerDisplayed, setIsChallengeModeExplainerDisplayed, setIsChallengeMode, incrementChallengeModeSpinCount, selectChallengeModeSpinCount, selectVenueName, setBeerLetters } from '@/lib/redux';
+import { downloadImage, searchForBeer, selectBeerLetters, selectBeerSearchResults, selectDownloadGeneratedImageStatus, selectLockedBeerLetterIdxs, selectOpenBeerIdx, setBeerLetterAtIndex, setBeerSearchResults, setOpenBeerIdx, toggleLockedBeerLetterIdx, uploadSocialMedia, selectUploadSocialMediaStatus, selectUploadedSocialMediaData, setUploadedSocialMediaData, generateBeerDefaults, selectBeerDefaultsPerLetter, selectPersonsName, selectIsChallangeMode, selectIsChallengeModeExplainerDisplayed, setIsChallengeModeExplainerDisplayed, setIsChallengeMode, incrementChallengeModeSpinCount, selectChallengeModeSpinCount, selectVenueName, setBeerLetters, selectAreBeersSpinning, setBeersSpinning } from '@/lib/redux';
 import { Box, Button, ButtonGroup, Container, Flex, Heading, IconButton, Show, Text, useDisclosure, useMediaQuery } from '@chakra-ui/react';
 import { getSocialMediaShareUrl } from '@/lib/utils/utils';
 import html2canvas from 'html2canvas';
@@ -28,7 +28,8 @@ export const Beers = ({ venueName }) => {
     }, [dispatch, beerDefaultsPerLetter, venueName])
 
     const [isLandscapePhone] = useMediaQuery('(max-height: 450px)')
-    const [isSpinning, setSpinning] = useState(false);
+
+    // CHRIS: TODO move this into redux?
     const [showDefaultBeer, setShowDefaultBeers] = useState(false)
 
     // CHRIS: Possibly should add an ignore flag in useEffects above too?
@@ -36,21 +37,25 @@ export const Beers = ({ venueName }) => {
         let ignore = false;
         if (!ignore) {
             setShowDefaultBeers(true)
-            setSpinning(true)
+            dispatch(setBeersSpinning(true))
         }
         return () => ignore = true
-    }, [setSpinning, setShowDefaultBeers]);
+    }, [dispatch, setShowDefaultBeers]);
 
     const generatedPicRef = useRef(null)
 
     const spinUnlockedBeers = () => {
-        setShowDefaultBeers(false)
-        setSpinning(true)
+        dispatch(setBeersSpinning(true))
         dispatch(incrementChallengeModeSpinCount())
     }
 
     const onChallengeModePressed = () => {
         dispatch(setIsChallengeModeExplainerDisplayed(true))
+    }
+
+    const onOptIntoChallengeMode = () => {
+        setShowDefaultBeers(false)
+        spinUnlockedBeers()
     }
 
     const shareButtons = (
@@ -63,15 +68,12 @@ export const Beers = ({ venueName }) => {
             <BeersHeader
                 onSpinUnlockedBeersPressed={spinUnlockedBeers}
                 onChallengeModePressed={onChallengeModePressed}
-                shareButtons={isLandscapePhone && shareButtons}
-                isLoading={isSpinning} />
+                shareButtons={isLandscapePhone && shareButtons} />
             <BeerLetters
-                isSpinning={isSpinning}
                 showDefaultBeer={showDefaultBeer}
-                setSpinning={setSpinning}
                 generatedPicRef={generatedPicRef} />
             <ChallengeModeModal
-                onOptIntoChallengeMode={spinUnlockedBeers} />
+                onOptIntoChallengeMode={onOptIntoChallengeMode} />
             <BeerModal />
             <ShareModal />
             <Box float='right'>
@@ -86,7 +88,8 @@ export const Beers = ({ venueName }) => {
     )
 }
 
-const BeersHeader = ({ onSpinUnlockedBeersPressed, onChallengeModePressed, shareButtons, isLoading }) => {
+const BeersHeader = ({ onSpinUnlockedBeersPressed, onChallengeModePressed, shareButtons }) => {
+    const areBeersSpinning = useSelector(selectAreBeersSpinning)
     const isChallengeMode = useSelector(selectIsChallangeMode);
     const challengeModeSpinCount = useSelector(selectChallengeModeSpinCount)
 
@@ -100,7 +103,7 @@ const BeersHeader = ({ onSpinUnlockedBeersPressed, onChallengeModePressed, share
                 variant='primary'
                 background='black'
                 onClick={onSpinUnlockedBeersPressed}
-                isLoading={isLoading}
+                isLoading={areBeersSpinning}
                 isDisabled={maxSpinsReached}
             >
                 {maxSpinsReached ? 'No more spins. Drink up!' : 'Spin unlocked beers'}
@@ -137,9 +140,10 @@ const BeersHeader = ({ onSpinUnlockedBeersPressed, onChallengeModePressed, share
 }
 
 // TODO refactor this. Use a helper to do the layout stuff, pass in react components
-const BeerLetters = ({ generatedPicRef, isSpinning, showDefaultBeer, setSpinning }) => {
+const BeerLetters = ({ generatedPicRef, showDefaultBeer }) => {
     const dispatch = useDispatch();
 
+    const areBeersSpinning = useSelector(selectAreBeersSpinning)
     const isChallengeMode = useSelector(selectIsChallangeMode);
     const challengeModeSpinCount = useSelector(selectChallengeModeSpinCount)
     const beerLetters = useSelector(selectBeerLetters);
@@ -188,7 +192,7 @@ const BeerLetters = ({ generatedPicRef, isSpinning, showDefaultBeer, setSpinning
                     mx='5'
                     key={`beer-letter-lock-${idx}`}
                     onClick={() => dispatch(toggleLockedBeerLetterIdx(idx))}
-                    isDisabled={maxSpinsReached || isSpinning}
+                    isDisabled={maxSpinsReached || areBeersSpinning}
                 >
                     {lockButtonText}
                 </Button>
@@ -225,7 +229,7 @@ const BeerLetters = ({ generatedPicRef, isSpinning, showDefaultBeer, setSpinning
                 }
             })
             dispatch(setBeerLetters(newBeerLetters))
-            setSpinning(false)
+            dispatch(setBeersSpinning(false))
         } else {
             dispatch(setBeerLetterAtIndex({
                 idx,
@@ -249,7 +253,7 @@ const BeerLetters = ({ generatedPicRef, isSpinning, showDefaultBeer, setSpinning
                     </Flex>
                     <Box mt='5'>
                         <BeerSlotMachine
-                            spin={isSpinning}
+                            spin={areBeersSpinning}
                             spinMode={isChallengeMode ? 'individual' : 'all'}
                             randomize={isChallengeMode}
                             onSpinningFinished={onSpinningFinished}
