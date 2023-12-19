@@ -2,40 +2,58 @@ import { defineStyleConfig } from '@chakra-ui/react'
 
 export const ThemedButton = defineStyleConfig({
     variants: {
-        primary: {
+        primary: () => ({
             background: 'orangered',
             color: 'white',
             _hover: {
-                background: 'orange.500',
                 _disabled: {
                     background: 'orangered',
-                }
+                },
             },
-        },
-        secondary: {
+
+            // rules if hover is supported
+            "@media(hover: hover)": {
+                _hover: {
+                    background: 'orange.500',
+                },
+            },
+        }),
+        secondary: () => ({
             background: 'white',
             color: 'orangered',
             borderWidth: '2px',
             borderColor: 'orangered',
             _hover: {
-                background: 'orange.100',
                 _disabled: {
                     background: 'white',
                 }
             },
-        },
-        dark: {
+
+            // rules if hover is supported
+            '@media(hover: hover)': {
+                _hover: {
+                    background: 'orange.100',
+                },
+            },
+        }),
+        dark: () => ({
             background: 'gray.900',
             color: 'white',
             _hover: {
-                background: 'gray.700',
                 _disabled: {
                     background: 'gray.900',
                 }
             },
-        },
+
+            // rules if hover is supported
+            '@media(hover: hover)': {
+                _hover: {
+                    background: 'gray.700',
+                },
+            },
+        }),
         link: {
             color: 'orangered',
-        }
+        },
     },
 })
