@@ -3,12 +3,12 @@
         "_comment": "If the user does not specify a venue, this first venue will be the default",
         "venueName": "big bar",
         "urlParam": "big_bar",
-        "fileNames": ["saxon_xrch.json", "aha_bmth.json", "sputnic_lisbon.json", "fill_in_beers.json"]
+        "fileNames": ["uk_beers_popular_20k.json", "fill_in_beers.json"]
     },
     {
-        "venueName": "small bar",
-        "urlParam": "small_bar",
-        "fileNames": ["beers.json"]
+        "venueName": "uk_beers_popular_20k",
+        "urlParam": "uk_top_20",
+        "fileNames": ["uk_beers_popular_20k.json"]
     },
     {
         "venueName": "sputnic_lisbon",
