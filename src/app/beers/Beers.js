@@ -12,7 +12,7 @@ import { BeerSlotMachine } from './components/SlotMachine';
 import { PhoneRotationSuggestion } from './components/PhoneRotationSuggestion';
 
 
-const MAX_CHALLANEGE_MODE_SPINS = 3
+const MAX_CHALLANEGE_MODE_SPINS = 4
 
 
 export const Beers = ({ venueName }) => {
