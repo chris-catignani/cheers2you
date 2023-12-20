@@ -16,18 +16,15 @@ export const getSocialMediaImageUrl = (fileId) => {
 }
 
 export const convertImageToBase64 = async (imageUrl) => {
-
-    const _convertImageToBase64 = async (imageUrl, callback) => {
-        const image = await fetch(imageUrl)
-        const blob = await image.blob()
-
+    const image = await fetch(imageUrl)
+    const blob = await image.blob()
+    
+    return new Promise(resolve => {
         const reader = new FileReader();
         reader.readAsDataURL(blob);
         reader.onloadend = () => {
             const base64data = reader.result;
-            callback(base64data)
+            resolve(base64data)
         };
-    }
-
-    return new Promise(resolve => _convertImageToBase64(imageUrl, resolve))
+    })
 }
