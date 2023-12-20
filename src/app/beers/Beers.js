@@ -112,9 +112,9 @@ const BeersHeader = ({ onSpinUnlockedBeersPressed, onChallengeModePressed, share
         Tap the suggested beers to choose your own.
         </Text>*/
         headerContent = (
-            <Heading as='h5' size='sm' textAlign='center'>
+            <Heading as='h5' size='sm' my='auto' textAlign='center'>
                 <Flex justifyContent='center' flexDirection='column'>
-                    <Text as="span" mt='1' whiteSpace='nowrap'>
+                    <Text as="span" whiteSpace='nowrap'>
                         <Text as="span" _after={{content: '" "'}}>
                             Feeling frisky? Try the
                         </Text>
