@@ -117,6 +117,7 @@ const BeerImages = ({ beers, size }) => {
     const buildImage = ({beer}, idx) => (
         <Image
             key={`slot-reel-${idx}-option-${idx}`}
+            className={`slot-reel slot-reel-image-${idx}`}
             src={beer?.beer_label_file}
             fallbackSrc={getFallbackImageUrl()}
             alt={beer ? `${beer.beer_name} ${beer.beer_type}` : 'choose your beer'}

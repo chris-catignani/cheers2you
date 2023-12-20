@@ -3,7 +3,6 @@ import { UploadManager } from '@bytescale/sdk';
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import { convertImageToBase64, isAtoZ } from '@/lib/utils/utils';
 import { pretendServerBeerSearch, pretendServerGetDefaultBeers } from './thunksServer';
-import { getFallbackImageUrl } from '@/lib/utils/ui';
 import { domToBlob } from 'modern-screenshot'
 
 // this doesn't have to be async with the current implementation...
@@ -29,29 +28,27 @@ export const uploadSocialMedia = createAsyncThunk(
             apiKey: "free", // Get API key: https://www.bytescale.com/get-started
         });
 
-        const imagePlaceholder = await convertImageToBase64(getFallbackImageUrl())
-
         const data = await domToBlob(node, {
             backgroundColor: 'white',
             width: node.scrollWidth,
             height: node.scrollHeight,
             quality: 0.95,
-            debug: true,
             type: 'image/jpeg',
 
             // Not sure why, but CORS is having issues with modern-screenshot.
             // https://github.com/qq15725/modern-screenshot/issues/67
             // So using our image proxy endpoint until the above issue is addressed
             fetchFn: async (imageUrl) => {
-                // TODO: only need to fetch displayed images!
                 return convertImageToBase64(`/beers/api/imageProxy?url=${imageUrl}`)
-            }
+            },
+            filter: (node) => {
+                // optimization to filter out slot reel images which are hidden
+                if (node.tagName === 'IMG' && node.classList.contains('slot-reel')) {
+                    return node.classList.contains('slot-reel-image-0')
+                }
 
-            /**
-             [modern-screenshot] embed node: 1128.641845703125 ms
-index.mjs:105 [modern-screenshot] image to canvas: 1040.033935546875 ms
-index.mjs:105 [modern-screenshot] canvas to blob: 81.672119140625 ms
-                */
+                return true
+            },
         })
 
         const { fileUrl } = await uploadManager.upload({
