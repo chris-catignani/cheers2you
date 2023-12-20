@@ -1,6 +1,7 @@
-import { CopyIcon } from "@chakra-ui/icons"
+import { CopyIcon, DownloadIcon } from "@chakra-ui/icons"
 import { Button, Center, Flex, IconButton, Image, Modal, ModalBody, ModalCloseButton, ModalContent, ModalFooter, ModalHeader, ModalOverlay, Text, useBreakpointValue } from "@chakra-ui/react"
 import { EmailIcon, EmailShareButton, FacebookIcon, FacebookShareButton, TwitterShareButton, WhatsappIcon, WhatsappShareButton, XIcon } from "react-share"
+import download from 'downloadjs'
 
 export const SocialShareModal = ({isOpen, onClose, shareUrl, imageUrl, personsName}) => {
 
@@ -31,7 +32,7 @@ export const SocialShareModal = ({isOpen, onClose, shareUrl, imageUrl, personsNa
                         Or use one of our handy share buttons below:
                     </Text>
                     <Center>
-                        <ShareButtons shareUrl={shareUrl} personsName={personsName} title={title} />
+                        <ShareButtons shareUrl={shareUrl} imageUrl={imageUrl} personsName={personsName} title={title} />
                     </Center>
                 </ModalBody>
                 <ModalFooter>
@@ -44,7 +45,7 @@ export const SocialShareModal = ({isOpen, onClose, shareUrl, imageUrl, personsNa
     )
 }
 
-const ShareButtons = ({shareUrl, personsName, title}) => {
+const ShareButtons = ({shareUrl, imageUrl, personsName, title}) => {
     return (
         <Flex gap='2' mt='3'>
             <FacebookShareButton
@@ -75,6 +76,10 @@ const ShareButtons = ({shareUrl, personsName, title}) => {
             >
                 <EmailIcon size={40} round />
             </EmailShareButton>
+            <IconButton
+                isRound={true}
+                onClick={() => fetch(imageUrl).then(response => response.blob().then(blob => download(blob, 'Beer Banner.jpeg')))}
+                icon={<DownloadIcon />} />
             <IconButton
                 isRound={true}
                 onClick={() => navigator.clipboard.writeText(shareUrl)}
