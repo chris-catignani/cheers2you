@@ -3,9 +3,9 @@ import { Button, ButtonGroup, Center, Modal, ModalBody, ModalCloseButton, ModalC
 
 export const ChallangeModeExplainerModal = ({isOpen, onClose, onOptIn}) => {
     return (
-        <Modal isOpen={isOpen} onClose={onClose} size='xl'>
+        <Modal isOpen={isOpen} onClose={onClose} size='xl' isCentered={true}>
             <ModalOverlay />
-            <ModalContent margin='auto'>
+            <ModalContent>
             <ModalHeader margin='auto'>The Beer Spin Challenge</ModalHeader>
             <ModalCloseButton />
             <ModalBody fontWeight={500}>

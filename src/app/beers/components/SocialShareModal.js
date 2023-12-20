@@ -17,7 +17,7 @@ export const SocialShareModal = ({isOpen, onClose, shareUrl, imageUrl, personsNa
     )
 
     return (
-        <Modal isOpen={isOpen} onClose={onClose} size={modalSize}>
+        <Modal isOpen={isOpen} onClose={onClose} size={modalSize} allowPinchZoom={true}>
             <ModalOverlay />
             <ModalContent>
                 <ModalHeader margin='auto'>Share your plaque</ModalHeader>

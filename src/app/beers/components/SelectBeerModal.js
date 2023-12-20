@@ -44,9 +44,16 @@ export const SelectBeerModal = ({isOpen, onClose, letter, onBeerSelected, onChan
     }
 
     return (
-        <Modal initialFocusRef={initialFocusRef} isOpen={isOpen} onClose={onCloseInner} scrollBehavior='inside' size={modalSize}>
+        <Modal
+            initialFocusRef={initialFocusRef}
+            isOpen={isOpen}
+            onClose={onCloseInner}
+            isCentered={true}
+            scrollBehavior='inside'
+            size={modalSize}>
+
             <ModalOverlay />
-            <ModalContent margin='auto'>
+            <ModalContent>
                 <BeerModalHeader
                     {...headerFooterProps}
                     letter={letter}
