@@ -3,8 +3,8 @@ import { UploadManager } from '@bytescale/sdk';
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import { convertImageToBase64, isAtoZ } from '@/lib/utils/utils';
 import { pretendServerBeerSearch, pretendServerGetDefaultBeers } from './thunksServer';
-import { toBlob } from 'html-to-image';
 import { getFallbackImageUrl } from '@/lib/utils/ui';
+import { domToBlob } from 'modern-screenshot'
 
 // this doesn't have to be async with the current implementation...
 export const generateBeerBanner = createAsyncThunk(
@@ -31,14 +31,27 @@ export const uploadSocialMedia = createAsyncThunk(
 
         const imagePlaceholder = await convertImageToBase64(getFallbackImageUrl())
 
-        const data = await toBlob(node, {
+        const data = await domToBlob(node, {
             backgroundColor: 'white',
-            cacheBust: true,
             width: node.scrollWidth,
             height: node.scrollHeight,
-            includeQueryParams: true,
             quality: 0.95,
-            imagePlaceholder: imagePlaceholder,
+            debug: true,
+            type: 'image/jpeg',
+
+            // Not sure why, but CORS is having issues with modern-screenshot.
+            // https://github.com/qq15725/modern-screenshot/issues/67
+            // So using our image proxy endpoint until the above issue is addressed
+            fetchFn: async (imageUrl) => {
+                // TODO: only need to fetch displayed images!
+                return convertImageToBase64(`/beers/api/imageProxy?url=${imageUrl}`)
+            }
+
+            /**
+             [modern-screenshot] embed node: 1128.641845703125 ms
+index.mjs:105 [modern-screenshot] image to canvas: 1040.033935546875 ms
+index.mjs:105 [modern-screenshot] canvas to blob: 81.672119140625 ms
+                */
         })
 
         const { fileUrl } = await uploadManager.upload({
