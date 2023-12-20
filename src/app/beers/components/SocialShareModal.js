@@ -1,5 +1,5 @@
 import { CopyIcon } from "@chakra-ui/icons"
-import { Button, Flex, IconButton, Image, Modal, ModalBody, ModalCloseButton, ModalContent, ModalFooter, ModalHeader, ModalOverlay, Text, useBreakpointValue } from "@chakra-ui/react"
+import { Button, Center, Flex, IconButton, Image, Modal, ModalBody, ModalCloseButton, ModalContent, ModalFooter, ModalHeader, ModalOverlay, Text, useBreakpointValue } from "@chakra-ui/react"
 import { EmailIcon, EmailShareButton, FacebookIcon, FacebookShareButton, TwitterShareButton, WhatsappIcon, WhatsappShareButton, XIcon } from "react-share"
 
 export const SocialShareModal = ({isOpen, onClose, shareUrl, imageUrl, personsName}) => {
@@ -20,20 +20,25 @@ export const SocialShareModal = ({isOpen, onClose, shareUrl, imageUrl, personsNa
         <Modal isOpen={isOpen} onClose={onClose} size={modalSize}>
             <ModalOverlay />
             <ModalContent>
-            <ModalHeader margin='auto'>Share your plaque</ModalHeader>
-            <ModalCloseButton />
-            <ModalBody>
-                <Image src={imageUrl} alt={`${personsName} beer plaque`} />
-                <Text mt='5' textAlign='center'>
-                    Long press on your plaque above to save or share it with friends!
-                </Text>
-                {/* <ShareButtons shareUrl={shareUrl} personsName={personsName} title={title} /> */}
-            </ModalBody>
-            <ModalFooter>
-                <Button onClick={onClose}>
-                    Cancel
-                </Button>
-            </ModalFooter>
+                <ModalHeader margin='auto'>Share your plaque</ModalHeader>
+                <ModalCloseButton />
+                <ModalBody>
+                    <Image src={imageUrl} alt={`${personsName} beer plaque`} />
+                    <Text mt='5' textAlign='center'>
+                        Long press on your plaque above to save or share it with friends!
+                    </Text>
+                    <Text mt='2' textAlign='center'>
+                        Or use one of our handy share buttons below:
+                    </Text>
+                    <Center>
+                        <ShareButtons shareUrl={shareUrl} personsName={personsName} title={title} />
+                    </Center>
+                </ModalBody>
+                <ModalFooter>
+                    <Button onClick={onClose}>
+                        Cancel
+                    </Button>
+                </ModalFooter>
             </ModalContent>
         </Modal>
     )
@@ -41,7 +46,7 @@ export const SocialShareModal = ({isOpen, onClose, shareUrl, imageUrl, personsNa
 
 const ShareButtons = ({shareUrl, personsName, title}) => {
     return (
-        <Flex gap='2' mt='2'>
+        <Flex gap='2' mt='3'>
             <FacebookShareButton
                 url={shareUrl}
                 hashtag={'#Cheers2You'}
