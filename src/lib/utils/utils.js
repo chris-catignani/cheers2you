@@ -14,3 +14,20 @@ export const getSocialMediaShareUrl = (fileId) => {
 export const getSocialMediaImageUrl = (fileId) => {
     return `https://upcdn.io/W142hJk/raw/demo/${fileId}.jpeg`
 }
+
+export const convertImageToBase64 = async (imageUrl) => {
+
+    const _convertImageToBase64 = async (imageUrl, callback) => {
+        const image = await fetch(imageUrl)
+        const blob = await image.blob()
+
+        const reader = new FileReader();
+        reader.readAsDataURL(blob);
+        reader.onloadend = () => {
+            const base64data = reader.result;
+            callback(base64data)
+        };
+    }
+
+    return new Promise(resolve => _convertImageToBase64(imageUrl, resolve))
+}

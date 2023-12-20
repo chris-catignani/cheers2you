@@ -1,8 +1,10 @@
 import { debounce } from 'lodash-es';
 import { UploadManager } from '@bytescale/sdk';
 import { createAsyncThunk } from '@reduxjs/toolkit';
-import { isAtoZ } from '@/lib/utils/utils';
+import { convertImageToBase64, isAtoZ } from '@/lib/utils/utils';
 import { pretendServerBeerSearch, pretendServerGetDefaultBeers } from './thunksServer';
+import { toBlob } from 'html-to-image';
+import { getFallbackImageUrl } from '@/lib/utils/ui';
 
 // this doesn't have to be async with the current implementation...
 export const generateBeerBanner = createAsyncThunk(
@@ -21,13 +23,24 @@ export const generateBeerBanner = createAsyncThunk(
 
 export const uploadSocialMedia = createAsyncThunk(
     'beers/uploadSocialMedia',
-    async ({ blobPromise, personsName, eventName, imageHeight, imageWidth}) => {
+    async ({ node, personsName, eventName, imageHeight, imageWidth}) => {
 
         const uploadManager = new UploadManager({
             apiKey: "free", // Get API key: https://www.bytescale.com/get-started
         });
 
-        const data = await blobPromise
+        const imagePlaceholder = await convertImageToBase64(getFallbackImageUrl())
+
+        const data = await toBlob(node, {
+            backgroundColor: 'white',
+            cacheBust: true,
+            width: node.scrollWidth,
+            height: node.scrollHeight,
+            includeQueryParams: true,
+            quality: 0.95,
+            imagePlaceholder: imagePlaceholder,
+        })
+
         const { fileUrl } = await uploadManager.upload({
             data,
             mime: 'image/jpeg',

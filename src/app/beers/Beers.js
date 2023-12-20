@@ -10,7 +10,6 @@ import { getSocialMediaShareUrl } from '@/lib/utils/utils';
 import { ChallangeModeExplainerModal } from './components/ChallangeModeExplainerModal';
 import { BeerSlotMachine } from './components/SlotMachine';
 import { PhoneRotationSuggestion } from './components/PhoneRotationSuggestion';
-import { toBlob, toJpeg } from 'html-to-image';
 
 
 const MAX_CHALLANEGE_MODE_SPINS = 3
@@ -246,8 +245,8 @@ const BeerLetters = ({ generatedPicRef, showDefaultBeer }) => {
                 {isChallengeMode && lockButtons}
             </Flex>
             
-            {/* padding defined below so that border of the element inside it shows in the screencapture */}
-            <Box mt='1' p='1' ref={generatedPicRef}>
+            {/* padding defined below so that border and box shadow of the element inside it shows in the screencapture */}
+            <Box mt='1' pl='1' pb='2' pr='2' ref={generatedPicRef}>
                 {/* padding top here to ensure the border is not directly on top of the letters */}
                 <Box pt='3' boxShadow='5px 5px 5px darkgrey' border='4px double black'>
                     <Flex justifyContent='safe center'>
@@ -276,17 +275,10 @@ const ShareButtons = ({ generatedPicRef }) => {
     const personsName = useSelector(selectPersonsName)
     const uploadSocialMediaStatus = useSelector(selectUploadSocialMediaStatus)
 
-    const uploadOutput = async () => {
+    const uploadOutput = () => {
         const node = generatedPicRef.current;
-        const blobPromise = toBlob(node, {
-            backgroundColor: 'white',
-            width: node.scrollWidth,
-            height: node.scrollHeight,
-            includeQueryParams: true,
-            quality: 0.95,
-        })
         dispatch(uploadSocialMedia({
-            blobPromise,
+            node,
             personsName,
             imageHeight: node.scrollHeight,
             imageWidth: node.scrollWidth,
