@@ -23,7 +23,7 @@ export const ThemedInput = defineStyleConfig({
                 _placeholder: {
                     letterSpacing:'normal',
                     textTransform:'none',
-                    color:'orangered',
+                    color:'black',
                 },
                 _focus: {
                     color:'black',
