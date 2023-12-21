@@ -12,7 +12,7 @@ import { BeerSlotMachine } from './components/SlotMachine';
 import { PhoneRotationSuggestion } from './components/PhoneRotationSuggestion';
 
 
-const MAX_CHALLANEGE_MODE_SPINS = 3
+const MAX_CHALLANEGE_MODE_SPINS = 4
 
 
 export const Beers = ({ venueName }) => {
@@ -98,7 +98,7 @@ const BeersHeader = ({ onSpinUnlockedBeersPressed, onChallengeModePressed, share
         headerContent = (
             <Button
                 width='sm'
-                variant='dark'
+                variant={'secondary'}
                 onClick={onSpinUnlockedBeersPressed}
                 isLoading={areBeersSpinning}
                 isDisabled={maxSpinsReached}
@@ -287,7 +287,7 @@ const ShareButtons = ({ generatedPicRef }) => {
 
     return (
         <ButtonGroup>
-            <Button isLoading={uploadSocialMediaStatus === 'uploading'} onClick={() => uploadOutput()}>Share</Button>
+            <Button variant={'primary'} isLoading={uploadSocialMediaStatus === 'uploading'} onClick={() => uploadOutput()}>Share</Button>
         </ButtonGroup>
     )
 }

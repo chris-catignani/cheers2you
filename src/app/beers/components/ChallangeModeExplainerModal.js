@@ -10,17 +10,17 @@ export const ChallangeModeExplainerModal = ({isOpen, onClose, onOptIn}) => {
             <ModalCloseButton />
             <ModalBody fontWeight={500}>
                 <UnorderedList spacing={1}>
-                    <ListItem>It works like an old school slot or fruit machine.</ListItem>
-                    <ListItem>Lock the beers you like and spin the rest.</ListItem>
-                    <ListItem>You only get 3 spins then you have to drink!</ListItem>
+                    <ListItem>It works like an old school fruit machine.</ListItem>
+                    <ListItem>Hold the beers you like and spin the rest.</ListItem>
+                    <ListItem>You get 3 spins then you have to drink!</ListItem>
                 </UnorderedList>
             </ModalBody>
             <ModalFooter margin='auto'>
                 <ButtonGroup spacing='20'>
-                    <Button onClick={onOptIn}>
+                    <Button variant={'primary'} onClick={onOptIn}>
                         {"I'm in!"}
                     </Button>
-                    <Button onClick={onClose}>
+                    <Button variant={'secondary'} onClick={onClose}>
                         {"I'll choose my own"}
                     </Button>
                 </ButtonGroup>

@@ -12,21 +12,21 @@ export const BeerUGCInput = ({onClick}) => {
         <>
             <Input
                 placeholder='add Brewer name'
-                _placeholder={{ color: 'orangered', fontWeight: '300' }}
+                variant='tango'
                 marginBottom='3px'
                 value={brewery}
                 onChange={e => setBrewery(e.target.value)}
             />
             <Input
                 placeholder='add Beer name'
-                _placeholder={{ color: 'orangered', fontWeight: '300' }}
+                variant='tango'
                 value={beerName}
                 marginBottom='3px'
                 onChange={e => setBeerName(e.target.value)}
             />
             <Input
                 placeholder='add Beer type'
-                _placeholder={{ color: 'orangered', fontWeight: '300' }}
+                variant='tango'
                 value={beerType}
                 marginBottom='3px'
                 onChange={e => setBeerType(e.target.value)}

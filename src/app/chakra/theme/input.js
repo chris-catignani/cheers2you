@@ -14,5 +14,22 @@ export const ThemedInput = defineStyleConfig({
                 },
             },
         },
+        tango: {
+            field: {
+                borderWidth: '2px',
+                borderColor: 'orangered',
+                textAlign:'left',
+                color:'black',
+                _placeholder: {
+                    letterSpacing:'normal',
+                    textTransform:'none',
+                    color:'orangered',
+                },
+                _focus: {
+                    color:'black',
+                    borderColor:'orangered',
+                },
+            },
+        },
     },
 })

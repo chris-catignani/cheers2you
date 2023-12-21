@@ -57,12 +57,9 @@ export const Home = ({venueName}) => {
                 <Box>
                     <Input
                         width='100%'
+                        variant='tango'
                         placeholder='Type a name'
-                        _placeholder={{letterSpacing:'normal', textTransform:'none'}}
-                        letterSpacing='4px'
-                        textAlign='left'
-                        textTransform='upperCase'
-                        variant='dark'
+                        _focus={{letterSpacing:'4px', textTransform:'upperCase', fontWeight:'bold'}}
                         value={personsName}
                         onChange={e => dispatch(setPersonsName(e.target.value))}
                     />

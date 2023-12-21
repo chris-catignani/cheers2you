@@ -91,8 +91,11 @@ const BeerModalHeader = ({onChangeBeerSearchQuery, beerSearchQuery, letter, py})
         <ModalHeader py={py}>
             <Center>
                 <Input
-                    placeholder={`Search for "${letter}" beers`}
-                    value={beerSearchQuery}
+                    placeholder={`Type to search for "${letter}" beers`}
+                 //   _placeholder={{color:'orangered'}}
+                 //   borderColor={'orangered'}     
+                 variant={'tango'}
+                 value={beerSearchQuery}
                     width='90%'
                     onChange={e => {
                         onChangeBeerSearchQuery(e.target.value);
@@ -187,7 +190,7 @@ const BeerModalFooter = ({initialFocusRef, onClose, onAddYourOwn, py}) => {
                 <AddYourOwn 
                     onClick={onAddYourOwn}
                 />
-                <Button onClick={onClose} ref={initialFocusRef} >
+                <Button variant={'secondary'} onClick={onClose} ref={initialFocusRef} >
                     Cancel
                 </Button>
             </Flex>
