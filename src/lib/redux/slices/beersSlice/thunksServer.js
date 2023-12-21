@@ -1,6 +1,6 @@
 import beerRules from './data/beer_rules.json';
 import beerLists from './data/beer_lists.json';
-import { escapeRegExp } from 'lodash-es';
+import { escapeRegExp, shuffle } from 'lodash-es';
 import Fuse from "fuse.js";
 
 const NUM_BEER_DEFAULTS_PER_LETTER = 10
@@ -190,7 +190,7 @@ const getBeerDefaultsPerLetter = (beers) => {
                 return beerDefaults
             }
             return beerDefaults.concat(
-                beerSortOrderLists[letter][sortProp].slice(0, NUM_BEER_DEFAULTS_PER_LETTER - beerDefaults.length)
+                shuffle(beerSortOrderLists[letter][sortProp]).slice(0, NUM_BEER_DEFAULTS_PER_LETTER - beerDefaults.length)
             )
         }, [])
     }
