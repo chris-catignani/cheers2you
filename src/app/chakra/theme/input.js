@@ -27,6 +27,7 @@ export const ThemedInput = defineStyleConfig({
                 },
                 _focus: {
                     color:'black',
+                    borderColor:'orangered',
                 },
             },
         },
