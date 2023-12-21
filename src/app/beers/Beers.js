@@ -98,7 +98,7 @@ const BeersHeader = ({ onSpinUnlockedBeersPressed, onChallengeModePressed, share
         headerContent = (
             <Button
                 width='sm'
-                variant='dark'
+                variant={'secondary'}
                 onClick={onSpinUnlockedBeersPressed}
                 isLoading={areBeersSpinning}
                 isDisabled={maxSpinsReached}
@@ -287,7 +287,7 @@ const ShareButtons = ({ generatedPicRef }) => {
 
     return (
         <ButtonGroup>
-            <Button isLoading={uploadSocialMediaStatus === 'uploading'} onClick={() => uploadOutput()}>Share</Button>
+            <Button variant={'primary'} isLoading={uploadSocialMediaStatus === 'uploading'} onClick={() => uploadOutput()}>Share</Button>
         </ButtonGroup>
     )
 }

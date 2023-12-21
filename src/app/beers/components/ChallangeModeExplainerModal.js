@@ -17,10 +17,10 @@ export const ChallangeModeExplainerModal = ({isOpen, onClose, onOptIn}) => {
             </ModalBody>
             <ModalFooter margin='auto'>
                 <ButtonGroup spacing='20'>
-                    <Button onClick={onOptIn}>
+                    <Button variant={'primary'} onClick={onOptIn}>
                         {"I'm in!"}
                     </Button>
-                    <Button onClick={onClose}>
+                    <Button variant={'secondary'} onClick={onClose}>
                         {"I'll choose my own"}
                     </Button>
                 </ButtonGroup>
