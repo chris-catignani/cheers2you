@@ -92,9 +92,10 @@ const BeerModalHeader = ({onChangeBeerSearchQuery, beerSearchQuery, letter, py})
             <Center>
                 <Input
                     placeholder={`Type to search for "${letter}" beers`}
-                    _placeholder={{color:'orangered'}}
-                    borderColor={'orangered'}     
-                    value={beerSearchQuery}
+                 //   _placeholder={{color:'orangered'}}
+                 //   borderColor={'orangered'}     
+                 variant={'tango'}
+                 value={beerSearchQuery}
                     width='90%'
                     onChange={e => {
                         onChangeBeerSearchQuery(e.target.value);

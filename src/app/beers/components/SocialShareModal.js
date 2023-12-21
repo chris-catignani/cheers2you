@@ -36,7 +36,7 @@ export const SocialShareModal = ({isOpen, onClose, shareUrl, imageUrl, personsNa
                     </Center>
                 </ModalBody>
                 <ModalFooter>
-                    <Button variant={'secodary'} onClick={onClose}>
+                    <Button variant={'secondary'} onClick={onClose}>
                         Cancel
                     </Button>
                 </ModalFooter>
