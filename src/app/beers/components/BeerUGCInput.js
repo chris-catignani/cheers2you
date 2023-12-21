@@ -36,7 +36,7 @@ export const BeerUGCInput = ({onClick}) => {
                 currentPicture={ugcBeerPic}
                 marginBottom='3px'
             />
-            <Button onClick={() => onClick({
+            <Button mt='1' variant='primary' onClick={() => onClick({
                 'beer_label_file': ugcBeerPic,
                 'beer_name': beerName,
                 'beer_type': beerType,

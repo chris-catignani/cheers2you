@@ -20,7 +20,7 @@ export const ThemedButton = defineStyleConfig({
         }),
         secondary: () => ({
             background: 'white',
-            color: 'orangered',
+            color: 'black',
             borderWidth: '2px',
             borderColor: 'orangered',
             _hover: {

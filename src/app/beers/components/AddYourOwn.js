@@ -5,8 +5,8 @@ export const AddYourOwn = ({onClick} = {}) => {
     return (
         <Box as='button' onClick={onClick}>
             <Center flexDirection='column'>
-                <AddIcon />
-                <Text>
+                <AddIcon color='orangered'/>
+                <Text color='orangered'>
                     Add your own
                 </Text>
             </Center>
