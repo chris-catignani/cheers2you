@@ -162,8 +162,8 @@ const BeerLetters = ({ generatedPicRef, showDefaultBeer }) => {
             size='xl'
             mx='5'
             color='black'
-//            textShadow='1px 2px 0px rgba(0,0,0,0.4)'   
-//            textShadow='2px 2px 1px rgba(0,0,0,0.4),0px 4px 6px rgba(0,0,0,0.1),0px 9px 12px rgba(0,0,0,0.1)'
+            textShadow='3px 2px 2px rgba(0,0,0,0.5)'   
+//           textShadow='2px 2px 1px rgba(0,0,0,0.4),0px 4px 6px rgba(0,0,0,0.1),0px 9px 12px rgba(0,0,0,0.1)'
             width={width}
             fontWeight='700'
             textAlign='center'
