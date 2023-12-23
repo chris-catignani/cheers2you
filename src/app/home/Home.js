@@ -32,8 +32,9 @@ export const Home = ({venueName}) => {
                 <Heading color='orangered' as='h2' size='2xl' textAlign='center'>
                     Cheers2You
                 </Heading>
-                    <Text as='span' as='h3' color='orangered' fontSize='1.2em' fontWeight='600' textAlign='center'>
-                        @The Drunk Monk</Text>
+                <Text as='h3' color='orangered' fontSize='1.2em' fontWeight='600' textAlign='center'>
+                    @The Drunk Monk
+                </Text>
                 <Box>
                     <Text>
                         Looking for a new way to celebrate a special occasion? 

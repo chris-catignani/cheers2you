@@ -34,7 +34,7 @@ export const SocialShareModal = ({isOpen, onClose, shareUrl, imageUrl, personsNa
                     <Center>
                         <ShareButtons shareUrl={shareUrl} imageUrl={imageUrl} personsName={personsName} title={title} />
                     </Center>
-                    <Box m='5'>
+                    <Box mt='5'>
                         <Text as='span'>Send feeback and ideas to </Text>
                         <Link href='mailto:teamcheers2you@gmail.com'  isExternal textDecoration='underline' >
                             teamcheers2you@gmail.com
