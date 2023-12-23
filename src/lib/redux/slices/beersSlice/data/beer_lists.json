@@ -23,7 +23,7 @@
     {
         "venueName": "drunk monk",
         "urlParam": "drunkmonk_wxm",
-        "fileNames": ["drunkmonk_wxm.json"]
+        "fileNames": ["drunkmonk_wxm.json", "non_beer_drinks.json"]
     },
     {
         "venueName": "All Hail Ale, Bournemouth",

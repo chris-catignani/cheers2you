@@ -47,6 +47,13 @@
       "beer_label_file_big": "https://www.masterofmalt.com/liqueurs/sheep-dog/sheep-dog-peanut-butter-liqueur.jpg",
       "brewer_name": "",
       "brewer_logo_file_big": "https://www.masterofmalt.com/liqueurs/sheep-dog/sheep-dog-peanut-butter-liqueur.jpg"
+  },
+  "K1": {
+    "beer_name": "Kraken",
+    "beer_type": "Spiced Rum",
+    "beer_label_file_big": "https://www.krakenrum.com/wp-content/uploads/2019/10/kraken-og-fb.png",
+    "brewer_name": "",
+    "brewer_logo_file_big": "https://foodinnovation.wales/wp-content/uploads/2022/09/NEW-LOGO.png"
   }
 }
 
