@@ -76,7 +76,7 @@ export const Home = ({venueName}) => {
                 <Box>
                     <Box mb='5'>
                         <Text as='span'>Send feeback and ideas to </Text>
-                        <Link href='mailto:teamcheers2you@gmail.com'  isExternal textDecoration='underline' >
+                        <Link href='mailto:teamcheers2you@gmail.com?subject=Feedback'  isExternal textDecoration='underline' >
                             teamcheers2you@gmail.com<EmailIcon mx='2px' />
                         </Link>
                     </Box>

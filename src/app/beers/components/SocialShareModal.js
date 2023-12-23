@@ -36,7 +36,7 @@ export const SocialShareModal = ({isOpen, onClose, shareUrl, imageUrl, personsNa
                     </Center>
                     <Box mt='5'>
                         <Text as='span'>Send feeback and ideas to </Text>
-                        <Link href='mailto:teamcheers2you@gmail.com'  isExternal textDecoration='underline' >
+                        <Link href='mailto:teamcheers2you@gmail.com?subject=Feedback'  isExternal textDecoration='underline' >
                             teamcheers2you@gmail.com
                         </Link>
                     </Box>
