@@ -3,7 +3,8 @@
 import { generateBeerBanner, generateBeerDefaults, setPersonsName, selectPersonsName } from "@/lib/redux"
 import { useEffect } from "react"
 import { useDispatch, useSelector } from "react-redux"
-import { Box, Button, Container, Flex, Heading, Image, Input, Text, List, UnorderedList, OrderedList, ListItem, ListIcon } from "@chakra-ui/react"
+import { Box, Button, Container, Flex, Heading, Image, Input, Text, Link, List, UnorderedList, OrderedList, ListItem, ListIcon } from "@chakra-ui/react"
+import { ExternalLinkIcon, EmailIcon } from '@chakra-ui/icons'
 import { useRouter, useSearchParams } from 'next/navigation'
 
 export const Home = ({venueName}) => {
@@ -31,9 +32,8 @@ export const Home = ({venueName}) => {
                 <Heading color='orangered' as='h2' size='2xl' textAlign='center'>
                     Cheers2You
                 </Heading>
-                <Text as='h3' fontSize='1.2em' fontWeight='600' textAlign='center'>
-                    The celebrate a name with beer app
-                </Text>
+                    <Text as='span' as='h3' color='orangered' fontSize='1.2em' fontWeight='600' textAlign='center'>
+                        @The Drunk Monk</Text>
                 <Box>
                     <Text>
                         Looking for a new way to celebrate a special occasion? 
@@ -42,7 +42,7 @@ export const Home = ({venueName}) => {
                         {"Here's how it works:"} 
                     </Text>
                     <UnorderedList spacing={1}>
-                        <ListItem>Visit a pub with your friends</ListItem>
+                        <ListItem>Visit The Monk with friends</ListItem>
                         <ListItem>To celebrate, each drink a different beer for every letter in a name</ListItem>
                         <ListItem>Then download and share our cool beer label trophy</ListItem>
                     </UnorderedList>
@@ -73,6 +73,12 @@ export const Home = ({venueName}) => {
                     </Button>
                 </Box>
                 <Box>
+                    <Box mb='5'>
+                        <Text as='span'>Send feeback and ideas to </Text>
+                        <Link href='mailto:teamcheers2you@gmail.com'  isExternal textDecoration='underline' >
+                            teamcheers2you@gmail.com<EmailIcon mx='2px' />
+                        </Link>
+                    </Box>
                     <Text>
                         Celebrate birthdays, graduations, engagements, births, marriages etc.
                     </Text>

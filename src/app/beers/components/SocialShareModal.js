@@ -1,5 +1,5 @@
 import { CopyIcon, DownloadIcon } from "@chakra-ui/icons"
-import { Button, Center, Flex, IconButton, Image, Modal, ModalBody, ModalCloseButton, ModalContent, ModalFooter, ModalHeader, ModalOverlay, Text, useBreakpointValue } from "@chakra-ui/react"
+import { Box, Button, Link, Center, Flex, IconButton, Image, Modal, ModalBody, ModalCloseButton, ModalContent, ModalFooter, ModalHeader, ModalOverlay, Text, useBreakpointValue } from "@chakra-ui/react"
 import { EmailIcon, EmailShareButton, FacebookIcon, FacebookShareButton, TwitterShareButton, WhatsappIcon, WhatsappShareButton, XIcon } from "react-share"
 import download from 'downloadjs'
 
@@ -34,6 +34,12 @@ export const SocialShareModal = ({isOpen, onClose, shareUrl, imageUrl, personsNa
                     <Center>
                         <ShareButtons shareUrl={shareUrl} imageUrl={imageUrl} personsName={personsName} title={title} />
                     </Center>
+                    <Box m='5'>
+                        <Text as='span'>Send feeback and ideas to </Text>
+                        <Link href='mailto:teamcheers2you@gmail.com'  isExternal textDecoration='underline' >
+                            teamcheers2you@gmail.com
+                        </Link>
+                    </Box>
                 </ModalBody>
                 <ModalFooter>
                     <Button variant={'secondary'} onClick={onClose}>
