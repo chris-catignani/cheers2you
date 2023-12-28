@@ -32,12 +32,12 @@ export const Home = ({venueName}) => {
                 <Heading color='orangered' as='h2' size='2xl' textAlign='center'>
                     Cheers2You
                 </Heading>
-                <Text as='h3' color='orangered' fontSize='1.2em' fontWeight='600' textAlign='center'>
+                <Text mt='-2' as='h3' color='orangered' fontSize='1.2em' fontWeight='600' textAlign='center'>
                     @The Drunk Monk
                 </Text>
                 <Box>
                     <Text>
-                        Looking for a new way to celebrate a special occasion? 
+                        Looking for a new way to celebrate a birthday, stag or hen party, graduations, births, marriages etc.
                     </Text>                 
                     <Text mt='3' mb='3'>
                         {"Here's how it works:"} 
@@ -56,6 +56,9 @@ export const Home = ({venueName}) => {
                         htmlHeight={500}/>
                 </Box>
                 <Box>
+                    <Text mb='5'>
+                        Share it on your socials and use it to create a personalised gift, card, plaque, poster, t-shirt, anything!
+                    </Text>
                     <Input
                         width='100%'
                         variant='tango'
@@ -74,18 +77,10 @@ export const Home = ({venueName}) => {
                     </Button>
                 </Box>
                 <Box>
-                    <Box mb='5'>
-                        <Text as='span'>Send feeback and ideas to </Text>
+                        <Text mb='5' as='span'>Send feeback and ideas to </Text>
                         <Link href='mailto:teamcheers2you@gmail.com?subject=Feedback'  isExternal textDecoration='underline' >
                             teamcheers2you@gmail.com<EmailIcon mx='2px' />
                         </Link>
-                    </Box>
-                    <Text>
-                        Celebrate birthdays, graduations, engagements, births, marriages etc.
-                    </Text>
-                    <Text mt='2'>
-                        Share the badge on your socials and use it to create a personalised gift, card, plaque, poster, t-shirt, anything!
-                    </Text>
                 </Box>
                 <Box border='1px' borderColor='lightgray'>
                     <Image
